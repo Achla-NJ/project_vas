@@ -34,7 +34,6 @@ class UpdateUserRequest extends FormRequest
             'salary' => 'required',
             'email' => 'required|email:rfc,dns|unique:users,email,'.$user->id,
             'mobile' => 'required|unique:users,mobile,'.$user->id,
-            'department_id' => 'required_if:role,==,user',
         ];
     }
 }

@@ -31,7 +31,7 @@ class StoreUserRequest extends FormRequest
             'salary' => 'required',
             'email' => 'required|email:rfc,dns|unique:users,email',
             'mobile' => 'required|unique:users,mobile',
-            'department_id' => 'required_if:role,==,3',
+            
         ];
     }
 }

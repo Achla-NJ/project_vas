@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Department;
+
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreUserRequest;
@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function create() 
     {
-        return view('admin.users.manage',['roles' => Role::latest()->get(),'disp'=>'1','departments'=>Department::latest()->get()]);
+        return view('admin.users.manage',['roles' => Role::latest()->get(),'disp'=>'1']);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserController extends Controller
         return view('admin.users.manage', [
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
-            'roles' => Role::latest()->get(),'disp'=>'1','departments'=>Department::latest()->get()
+            'roles' => Role::latest()->get(),'disp'=>'1'
         ]);
     }
 

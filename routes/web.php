@@ -7,7 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TaskStatusController;
 
 /*
@@ -34,8 +33,5 @@ Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('projects', ProjectController::class);
-    Route::resource('tasks', TaskController::class);
-    // Route::post('task-detail',[TaskController::class,'taskDetail'])->name('task-detail');
-    Route::resource('task-statuses', TaskStatusController::class);
-    Route::resource('departments', DepartmentController::class);
+    
 });

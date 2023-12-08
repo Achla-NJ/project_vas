@@ -117,16 +117,7 @@
                                             name="date_of_hire" 
                                             placeholder="Date of hire" >
                                     </div>
-                                    <div class="col-lg-6 {{isset($userRole) && $userRole[0] == 'user' ? '' : 'd-none'}}" id="department_id">
-                                        <label for="department_id" class="form-label">Department
-                                        </label>
-                                        <select  class="form-select"  name="department_id" >
-                                            <option value="">-Select-</option>
-                                            @foreach ($departments as $department)
-                                                <option value="{{$department->id}}" {{(isset($user->department_id ) && $department->id == $user->department_id) ? 'selected': ''}}>{{$department->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    
                                 </div>
                             @if (isset($disp) && $disp =='1')
                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -143,13 +134,6 @@
 @endsection
 
 @section('script')
-<script>
-    $("#role").on('change',function(){
-        if($("#role").val()=='3'){
-            $("#department_id").removeClass('d-none');
-        }else{
-            $("#department_id").addClass('d-none');
-        }
-    });
-</script>
+
+
 @endsection
