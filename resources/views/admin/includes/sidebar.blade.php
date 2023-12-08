@@ -45,8 +45,8 @@
                 </a>               
             </li>
             <li class="sidebar-item active">
-                <a href="{{route('admin.projects.index')}}" class="sidebar-link">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Projects</span>
+                <a href="{{route('admin.companies.index')}}" class="sidebar-link">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Companies</span>
                 </a>               
             </li>
             

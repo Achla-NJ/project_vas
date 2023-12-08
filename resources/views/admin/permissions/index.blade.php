@@ -11,15 +11,7 @@
                 class="btn btn-primary btn-sm text-right">Add Permission</a>
         </div>
         <div class="row">
-            <div class="col-12">
-                @if (Session::has('success'))
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        <div class="alert-message">
-                            {{Session::get('success')}}
-                        </div>
-                    </div>
-                @endif
+            <div class="col-12"> 
                 <div class="card">
                     <div class="card-body">
                         <table id="datatables-reponsive"

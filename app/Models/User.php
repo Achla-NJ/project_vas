@@ -31,9 +31,6 @@ class User extends Authenticatable
         'name',
         'email',
         'mobile',
-        'job_title',
-        'date_of_hire',
-        'salary',
         'password',
     ];
 
@@ -67,9 +64,9 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function projects()
+    public function companies()
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsToMany(Comapny::class);
     }
 
 }

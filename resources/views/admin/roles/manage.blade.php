@@ -13,18 +13,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                <div class="alert-message">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{$error}}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        @endif
                         <form method="POST" action="{{(isset($role->id)) ? route('admin.roles.update',[$role->id]) : route('admin.roles.store') }}">
                             @if(isset($role->id))@method('PUT')@endif
                             @csrf

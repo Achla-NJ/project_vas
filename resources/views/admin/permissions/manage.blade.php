@@ -14,18 +14,6 @@
 
                 <div class="card">
                     <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                <div class="alert-message">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{$error}}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        @endif
                         <form method="POST" action="{{(isset($permission->id)) ? route('admin.permissions.update',[$permission->id]) : route('admin.permissions.store') }}">
                             @if(isset($permission->id))@method('PUT')@endif
                             @csrf

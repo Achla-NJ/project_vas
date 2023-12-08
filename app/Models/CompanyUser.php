@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectUser extends Model
+class Company extends Model
 {
     use HasFactory;
 
@@ -16,8 +16,8 @@ class ProjectUser extends Model
         return $this->belongsTo(User::class,'user_id'); 
     }
 
-    public function project()
+    public function company()
     {
-        return $this->belongsTo(Project::class,'project_id'); 
+        return $this->belongsTo(Company::class,'company_id'); 
     }
 }

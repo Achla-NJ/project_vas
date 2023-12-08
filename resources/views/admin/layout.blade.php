@@ -17,6 +17,8 @@
 
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link href="{{asset('assets/css/light.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('assets/plugins/toast/css/toastr.min.css')}}">
+
 @yield('css')
 </head>
 
@@ -45,6 +47,36 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
 	<script src="{{asset('assets/js/app.js')}}"></script>
-</body>
+	
+<script src="{{asset('assets/plugins/toast/js/toastr.min.js')}}"></script>
+
+<script>
+	$.toastr.config({
+		time: 5000,
+		// more options here
+	});
+  
+  function successToast(msg){
+	$.toastr.success(msg);
+  }
+  
+  function errorToast(msg){
+	$.toastr.error(msg);
+  }
+  </script>
+  @if (session()->has('success'))
+  <script>
+	successToast("{{session()->get('success')}}")
+  </script>
+  @endif
+  @if($errors->any())
+	@foreach ($errors->all() as $error)
+	  <script>
+		errorToast("{{$error}}")
+	  </script>
+	@endforeach
+  @endif
 @yield('script')
+
+</body>
 </html>

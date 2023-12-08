@@ -12,20 +12,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-body">
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                <div class="alert-message">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{$error}}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        @endif
-                        
+                    <div class="card-body">                        
                         <form method="POST" action="{{(isset($project->id)) ? route('admin.projects.update',[$project->id]) : route('admin.projects.store') }}">
                             @if(isset($project->id))@method('PUT')@endif
                             @csrf

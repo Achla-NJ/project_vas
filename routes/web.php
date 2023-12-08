@@ -5,10 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\TaskStatusController;
-
+use App\Http\Controllers\CompanyController; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,9 +26,9 @@ Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::get('/signout',[AuthController::class,'signOut'])->name('signout');
     Route::resource('roles', RoleController::class);
     Route::get('user-list/{type}',[UserController::class,'getUser'])->name('user-role');
-    Route::post('project-user',[ProjectController::class,'getProjectUser'])->name('project-user');
+    Route::post('company-user',[CompanyController::class,'getCompanyUser'])->name('company-user');
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
-    Route::resource('projects', ProjectController::class);
+    Route::resource('companies', CompanyController::class);
     
 });

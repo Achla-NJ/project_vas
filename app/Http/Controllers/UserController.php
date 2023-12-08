@@ -6,8 +6,7 @@ use App\Models\User;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserRequest;
 use Gate;
 use Illuminate\Http\Response;
 class UserController extends Controller
@@ -42,16 +41,14 @@ class UserController extends Controller
      * Store a newly created user
      * 
      * @param User $user
-     * @param StoreUserRequest $request
+     * @param UserRequest $request
      * 
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, StoreUserRequest $request) 
+    public function store(User $user, UserRequest $request) 
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        //For demo purposes only. When creating user or inviting a user
-        // you should create a generated random password and email it to the user
+        
         $user->create(array_merge($request->validated(), [
             'password' => $request->password 
         ]))->assignRole($request->role);
@@ -70,7 +67,6 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
         return view('admin.users.manage', [
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
@@ -82,14 +78,15 @@ class UserController extends Controller
      * Update user data
      * 
      * @param User $user
-     * @param UpdateUserRequest $request
+     * @param UserRequest $request
      * 
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user, UpdateUserRequest $request) 
+    public function update(User $user, UserRequest $request) 
     {
         abort_if(Gate::denies('user_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        
         $user->update($request->validated());
 
         $user->syncRoles($request->get('role'));

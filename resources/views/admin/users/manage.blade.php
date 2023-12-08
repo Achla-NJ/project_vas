@@ -12,22 +12,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        @if($errors->any())
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <div class="alert-icon">
-                                <i class="far fa-fw fa-bell"></i>
-                            </div>
-                            <div class="alert-message">
-                                <ul>
-                                @foreach ($errors as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                            </div>
-                        </div>
-                            
-                        @endif
                         <form method="POST" action="{{(isset($user->id)) ? route('admin.users.update',[$user->id]) : route('admin.users.store') }}">
                             @if(isset($user->id))@method('PUT')@endif
                             @csrf
@@ -73,7 +57,7 @@
                                 <div class="row mb-3">
                                     <div class="col-lg-6">
                                         <label for="username" class="form-label">Role</label>
-                                        <select class="form-select" name="role" required id="role">
+                                        <select class="form-select" name="role[]" required id="role" multiple>
                                             @foreach ($roles as $role)
                                                 <option value="{{$role->id}}" {{(isset($userRole) && in_array($role->name,$userRole)) ? 'selected': ''}}>{{$role->name}}</option>
                                             @endforeach
@@ -88,37 +72,6 @@
                                     </div>
                                 </div>
                                 
-                                <h4> Job Info</h4>
-                                <div class="row mb-3">
-                                    <div class="col-lg-6">
-                                        <label for="name" class="form-label">Job Title</label>
-                                        <input value="{{ $user->job_title ?? old('job_title') }}" 
-                                            type="text" 
-                                            class="form-control" 
-                                            name="job_title" 
-                                            placeholder="Job Title" required>
-                                    </div>        
-                                    <div class="col-lg-6">
-                                        <label for="name" class="form-label">Salary</label>
-                                        <input value="{{ $user->salary ?? old('salary') }}" 
-                                            type="text" 
-                                            class="form-control" 
-                                            name="salary" 
-                                            placeholder="Salary" required>
-                                    </div>                                
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-lg-6">
-                                        <label for="date_of_hire" class="form-label">Date of hire
-                                        </label>
-                                        <input value="{{ $user->date_of_hire ?? old('date_of_hire') }}"
-                                            type="date" 
-                                            class="form-control" 
-                                            name="date_of_hire" 
-                                            placeholder="Date of hire" >
-                                    </div>
-                                    
-                                </div>
                             @if (isset($disp) && $disp =='1')
                                 <button type="submit" class="btn btn-primary">Save</button>
                             @endif
