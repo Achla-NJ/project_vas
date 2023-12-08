@@ -39,10 +39,10 @@
                                     <td>{{ $role->name }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            @can('edit_role')
+                                            @can('role_update')
                                                 <a class="btn btn-info btn-sm" href="{{ route('admin.roles.edit', $role->id) }}">Edit</a>
                                             @endcan
-                                            @can('delete_role')
+                                            @can('role_delete')
                                                 <form action="{{route('admin.roles.destroy',
                                                 $role->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
                                                 @csrf

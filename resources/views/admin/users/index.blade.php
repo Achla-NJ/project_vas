@@ -51,11 +51,11 @@
                                         <div class="d-flex">
                                             <a href="{{ route('admin.users.show', $user->id) }}"
                                                 class="btn btn-success btn-sm">Show</a>
-                                            @can('edit_user')
+                                            @can('user_update')
                                                 <a href="{{ route('admin.users.edit', $user->id) }}"
                                                 class="btn btn-info btn-sm">Edit</a>
                                             @endcan
-                                            @can('delete_user')
+                                            @can('user_delete')
                                                 <form action="{{route('admin.users.destroy',
                                                     $user->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
                                                     @csrf
