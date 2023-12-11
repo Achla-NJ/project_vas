@@ -25,30 +25,44 @@
         <ul class="sidebar-nav">
             
             <li class="sidebar-item active">
+                @can('dashboard')
                 <a href="{{route('admin.dashboard')}}" class="sidebar-link">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                </a>               
+                </a>       
+                @endcan        
             </li>
+            @can('user_access')
             <li class="sidebar-item active">
                 <a href="{{route('admin.users.index')}}" class="sidebar-link">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Users</span>
                 </a>               
             </li>
+            @endcan        
+
+            @can('role_access')
             <li class="sidebar-item active">
                 <a href="{{route('admin.roles.index')}}" class="sidebar-link">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Roles</span>
                 </a>               
             </li>
+            @endcan        
+
+            @can('permission_access')
             <li class="sidebar-item active">
                 <a href="{{route('admin.permissions.index')}}" class="sidebar-link">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Permission</span>
                 </a>               
             </li>
+            @endcan        
+                 
+            @can('company_access')
             <li class="sidebar-item active">
                 <a href="{{route('admin.companies.index')}}" class="sidebar-link">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Companies</span>
                 </a>               
             </li>
+            @endcan        
+
             
             {{-- <li class="sidebar-item">
                 <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed">
@@ -60,11 +74,6 @@
                     <li class="sidebar-item"><a class="sidebar-link" href="{{route('admin.task-statuses.index')}}">Status</a></li>
                 </ul>
             </li> --}}
-
-
-            
-
-            
            
         </ul>
         

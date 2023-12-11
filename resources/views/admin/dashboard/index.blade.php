@@ -5,34 +5,19 @@
 
         <div class="row mb-2 mb-xl-3">
             <div class="col-auto d-none d-sm-block">
-                <h3><strong>Analytics</strong> Dashboard</h3>
+                <h3><strong>Dashboard</strong> </h3>
             </div>
         </div>
         <div class="row">
             <div class="col-xl-6 col-xxl-5 d-flex">
                 <div class="w-100">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col mt-0">
-                                            <h5 class="card-title">Sales</h5>
-                                        </div>
-
-                                        <div class="col-auto">
-                                            <div class="stat text-primary">
-                                                <i class="align-middle" data-feather="truck"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h1 class="mt-1 mb-3">2.382</h1>
-                                    <div class="mb-0">
-                                        <span class="badge badge-primary-light"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-                                        <span class="text-muted">Since last week</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-sm-6"> 
+                            <p>Login As: {{session()->get('active_role')['name']}}</p>
+                            
+                            @foreach ($roles as $role) 
+                                <a class="btn btn-sm btn-primary me-3" href="{{ route('admin.switch' , $role['slug'])}}">{{$role['name']}}</a>
+                            @endforeach
                         </div>
                     </div>
                 </div>

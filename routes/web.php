@@ -22,8 +22,10 @@ Route::group(['middleware'=>'guest'],function(){
 });
 
 Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
-    Route::get('dashboard',function(){return view('admin.dashboard.index');})->name('dashboard');
-    Route::get('/signout',[AuthController::class,'signOut'])->name('signout');
+    Route::get('dashboard',[UserController::class,'dashboard'])->name('dashboard');
+    Route::get('switch/{role}',[UserController::class,'switch'])->name('switch');
+
+    Route::get('signout',[AuthController::class,'signOut'])->name('signout');
     Route::resource('roles', RoleController::class);
     Route::get('user-list/{type}',[UserController::class,'getUser'])->name('user-role');
     Route::post('company-user',[CompanyController::class,'getCompanyUser'])->name('company-user');

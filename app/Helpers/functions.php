@@ -1,5 +1,8 @@
 <?php
 use App\Models\Activity;
+use App\Jobs\SendEmail;
+use App\Mail\CompanyMail;
+
 if (!function_exists('js_activity_log')) {
     function js_activity_log($user_id ,  $model , $operation , $model_id ,  $role_id =NULL,$updation =NULL)
     {
@@ -140,5 +143,11 @@ function js_send_email($subject, $data, $email, $view = 'general', DateTimeInter
         return SendEmail::dispatch($details)->delay($schedule);
     }else{
         return SendEmail::dispatchSync($details);
+    }
+}
+
+if(!function_exists("js_email")) {
+    function js_email($subject, $data, $email, $view  , $files = []) { 
+        return \Mail::to($email)->send(new CompanyMail($data,$subject , $view ,$files));
     }
 }

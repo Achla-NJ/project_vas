@@ -28,6 +28,13 @@ class AuthController extends Controller
         $remember_me = $request->has('remember_me');
         $login= Auth::attempt($user,$remember_me);
 
+        $user = Auth::user();
+
+        // Retrieve the first (or active) role associated with the user
+        $active_role = $user->roles->first();
+        
+        session()->put('active_role' ,$active_role);
+
         if($login){
             return redirect()->route('admin.dashboard');
         }

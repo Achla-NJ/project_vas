@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\UserRequest;
 use Gate;
+use Auth;
 use Illuminate\Http\Response;
 class UserController extends Controller
 {
@@ -16,6 +17,17 @@ class UserController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
+    public function dashboard() 
+    {
+        abort_if(Gate::denies('dashboard'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+ 
+        $user = Auth::user();
+ 
+        $roles = $user->roles;
+ 
+        return view('admin.dashboard.index', compact('roles'));
+    }
+
     public function index() 
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -129,5 +141,16 @@ class UserController extends Controller
         $users = User::role($type)->latest()->get();
 
         return view('admin.users.index', compact('users'));
+    }
+
+    public function switch($role) 
+    {
+        abort_if(Gate::denies('dashboard'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+  
+        $active_role = Role::query()->where('slug' , $role)->first();
+
+        session()->put('active_role' ,$active_role);
+
+        return redirect()->route('admin.dashboard');
     }
 }
