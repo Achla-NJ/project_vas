@@ -127,4 +127,56 @@ class AuthController extends Controller
             return redirect('reset-password');
         }
     }
+
+    public function sendOtp(Request $request, $method)
+    {
+        $sent_to = 'phone'; $phone_number = $email = $phone_code = $user = null;
+
+        switch($method) {
+            case 'forgot_password':
+                $request->validate([
+                    'email' => 'required|exists:users,email'
+                ]);
+                $user = User::query()->where('email', $request->input('email'))->first();
+                $email = $user->email;
+                $sent_to = "email";
+                break;
+        }
+
+        switch($sent_to){
+            case "email":
+                $channel = "email address";
+                break;
+            case "phone":
+                $channel = "phone number";
+                break;
+            default:
+                $channel = "phone number and email address";
+                break;
+        }
+
+        if($phone_number || $email){
+            $otp = js_get_sms_verification_otp($method, $email, $phone_number, $phone_code, $sent_to);
+            $message = __('app.auth.otp_message_text', ['user_name' => $user ? $user->name : 'User', 'otp' => $otp]);
+
+            switch($sent_to){
+                case "email":
+                    js_send_email(
+                        __('app.email_subject.otp_verification'),
+                        ['user_name' => $user ? $user->name : 'User', 'otp' => $otp, 'otp_timeout' => __('app.auth.otp_timeout')],
+                        $email,
+                        'otp-message'
+                    );
+                    break;
+                case "phone":
+                    js_send_otp_sms($otp, $phone_number);
+                    break;
+                default:
+                    break;
+            }
+            return js_response(null, __('app.auth.otp_sent', ['channel' => $channel]));
+        }
+
+        return js_response(null, __('app.auth.otp_sent_failed', ['channel' => $channel]), false);
+    }
 }

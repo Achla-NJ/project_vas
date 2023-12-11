@@ -30,5 +30,8 @@ Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('companies', CompanyController::class);
+    Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
+
+    Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
     
 });

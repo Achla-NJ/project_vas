@@ -20,11 +20,9 @@
                             <thead>
                                 <tr>
                                     <th>Sr No.</th>
-                                    <th>Title</th>
-                                    <th>Start Date</th>
-                                    <th>Deadline</th>
-                                    <th>Estimate Time</th>
-                                    <th>Status</th>
+                                    <th>Company Name</th>
+                                    <th>Trade Name</th>
+                                    <th>Firm Type</th> 
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -32,18 +30,16 @@
                                 @foreach ($companies as $key => $project)
                                 <tr>
                                     <td>{{ $project->id }}</td>
-                                    <td>{{ $project->name }}</td>
-                                    <td>{{date('M d, Y',strtotime($project->start_date))}}</td>
-                                    <td>{{date('M d, Y',strtotime($project->end_date))}}</td>
-                                    <td>{{$project->estimate_time}} {{$project->estimate_type}}</td>
-                                    <td>{{ucfirst($project->status)}}</td>
+                                    <td>{{ $project->company_name }}</td>
+                                    <td>{{ $project->trade_name }}</td>
+                                    <td>{{ ucwords(str_replace('_',' ',$project->firm_type)) }}</td> 
                                     <td>
                                         <div class="d-flex">
                                             <a class="btn btn-success btn-sm" href="{{ route('admin.companies.show', $project->id) }}">Show</a>
-                                            @can('edit_project')
+                                            @can('company_update')
                                             <a class="btn btn-info btn-sm" href="{{ route('admin.companies.edit', $project->id) }}">Edit</a>
                                             @endcan
-                                            @can('delete_project')
+                                            @can('company_delete')
                                                 <form action="{{route('admin.companies.destroy',
                                                 $project->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
                                                 @csrf

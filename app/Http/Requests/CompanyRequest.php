@@ -24,15 +24,28 @@ class CompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'client_id' => 'nullable',
-            'description' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'nullable',
-            'estimate_time' => 'required',
-            'estimate_type' => 'required',
-            'users' => 'required',
-            'status'=>'required'
+            'company_name' => 'required|string|max:255',
+            'trade_name' => 'required|string|max:255',
+            'firm_type' => 'required|string|in:private_limited,llp,sole_proprietorship,one_person_company',
+            'registered_address' => 'required|string',
+            'gstin_no' => 'required|string|max:20',
+            'business_website' => 'nullable|url',
+            'director_name' => 'required|string|max:255',
+            'aadhar_card_no' => 'required|string|max:20',
+            'pan_card_no' => 'required|string|max:20',
+            'mobile_no' => 'required|string|max:15',
+            'email_address' => 'required|email|max:255',
+            'local_address' => 'required|string',
+            'authorized_person_name' => 'required|string|max:255',
+            'contact_no' => 'required|string|max:15',
+            'authorized_person_aadhar' => 'required|string|max:20',
+            'authorized_person_pan' => 'required|string|max:20',
+            'sales_type' => 'required|string|in:b2b,b2c',
+            'aggregator_name' => 'nullable|string|max:255',
+            'employee_name' => 'nullable|string|max:255',
+            'due_date' => 'nullable',
+            'user_id' => 'nullable',
+            'role_id' => 'nullable',
         ];
     }
 }

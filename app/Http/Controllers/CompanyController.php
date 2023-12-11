@@ -33,18 +33,27 @@ class CompanyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function register()
+    {
+        abort_if(Gate::denies('company_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.companies.register', ['disp' => '1']);
+
+    }
+
     public function create()
     {
         abort_if(Gate::denies('company_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.companies.manage', ['clients' => User::role('client')->get(), 'users' => User::role('user')->get(), 'disp' => '1']);
+        return view('admin.companies.manage', ['disp' => '1']);
 
     }
 
     /**
      * Store a newly created user
      *
-     * @param Company $project
+     * @param Company $company
      * @param CompanyRequest $request
      *
      * @return \Illuminate\Http\Response
@@ -54,20 +63,12 @@ class CompanyController extends Controller
         abort_if(Gate::denies('company_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $data = $request->validated();
-        $data['users'] = "";
-        $project = Company::create($data);
+        $data['user_id'] = auth()->id();
+        $data['role_id'] = auth()->id();
+        $company = Company::create($data);
 
-        Activity::create([
-            'name' => $project->name,
-            'user_id' => Auth::user()->id,
-            'log_type' => 'project',
-            'activity' => 'added',
-            'log_id' => $project->id,
-        ]);
-        foreach ($request->users as $user) {
-            CompanyUser::create(['user_id' => $user, 'project_id' => $project->id]);
-        }
-
+        js_activity_log(auth()->id() , "App\Models\Company" , 'create' , $company->id);
+        
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company created successfully.'));
 
@@ -75,49 +76,35 @@ class CompanyController extends Controller
     /**
      * Edit user data
      *
-     * @param Company $project
+     * @param Company $company
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $project)
+    public function edit(Company $company)
     {
         abort_if(Gate::denies('company_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return view('admin.companies.manage', [
-            'project' => $project,
-            'clients' => User::role('client')->get(), 'users' => User::role('user')->get(),
-            'project_users' => CompanyUser::where('project_id', $project->id)->get(), 'disp' => '1',
-        ]);
+        $disp =1;
+        return view('admin.companies.manage', compact('company' , 'disp'));
 
     }
 
     /**
      * Update user data
      *
-     * @param Company $project
+     * @param Company $company
      * @param CompanyRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Company $project, CompanyRequest $request)
+    public function update(Company $company, CompanyRequest $request)
     {
         abort_if(Gate::denies('company_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        CompanyUser::where('project_id', $project->id)->delete();
-        $project->update($request->validated());
+        $company->update($request->validated());
 
-        Activity::create([
-            'name' => $project->name,
-            'user_id' => Auth::user()->id,
-            'log_type' => 'project',
-            'activity' => 'updated',
-            'log_id' => $project->id,
-            'updation' => json_encode($project->getChanges()),
-        ]);
+        js_activity_log(auth()->id() ,  "App\Models\Company" , 'update' , $company->id);
 
-        foreach ($request->users as $user) {
-            CompanyUser::create(['user_id' => $user, 'project_id' => $project->id]);
-        }
+        
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company updated successfully.'));
 
@@ -126,40 +113,28 @@ class CompanyController extends Controller
     /**
      * Delete user data
      *
-     * @param Company $project
+     * @param Company $company
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $project)
+    public function destroy(Company $company)
     {
         abort_if(Gate::denies('company_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $project->delete();
+        $company->delete();
+
+        js_activity_log(auth()->id() ,  "App\Models\Company" , 'delete' , $company->id);
 
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company deleted successfully.'));
 
     }
 
-    public function show(Company $project)
+    public function show(Company $company)
     {
         abort_if(Gate::denies('company_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.companies.manage', [
-            'project' => $project,
-            'clients' => User::role('client')->get(), 'users' => User::role('user')->get(),
-            'project_users' => CompanyUser::where('project_id', $project->id)->get(), 'disp' => '0',
-        ]);
+        return view('admin.companies.manage', compact('company'));
     }
-
-    public function getCompanyUser(Request $request)
-    {
-        $html = "<option value='0'>-Select-</option>";
-        $project_users = CompanyUser::where('project_id', $request->project_id)->get();
-        foreach ($project_users as $project_user) {
-            $user = User::find($project_user->user_id);
-            $html .= "<option value='$user->id'>$user->name</option>";
-        }
-        return \Response::json(['status' => true, 'data' => $html]);
-    }
+    
 }
