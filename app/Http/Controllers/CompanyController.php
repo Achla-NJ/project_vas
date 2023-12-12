@@ -67,7 +67,7 @@ class CompanyController extends Controller
         $data['role_id'] = session()->get('active_role')['id'];
         $company = Company::create($data);
 
-        js_activity_log(auth()->id() , "App\Models\Company" , 'create' , $company->id);
+        js_activity_log(auth()->id() , "App\Models\Company" , 'create' , $company->id , $data['role_id']);
         
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company created successfully.'));
@@ -105,7 +105,7 @@ class CompanyController extends Controller
         $data['role_id'] = session()->get('active_role')['id'];
         $company->update($data);
 
-        js_activity_log(auth()->id() ,  "App\Models\Company" , 'update' , $company->id);
+        js_activity_log(auth()->id() ,  "App\Models\Company" , 'update' , $company->id ,$data['role_id']);
 
         
         return redirect()->route('admin.companies.index')
@@ -123,10 +123,10 @@ class CompanyController extends Controller
     public function destroy(Company $company)
     {
         abort_if(Gate::denies('company_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+        $role_id  = $company->role_id;
         $company->delete();
 
-        js_activity_log(auth()->id() ,  "App\Models\Company" , 'delete' , $company->id);
+        js_activity_log(auth()->id() ,  "App\Models\Company" , 'delete' , $company->id ,$role_id);
 
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company deleted successfully.'));

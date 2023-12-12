@@ -88,5 +88,24 @@
 
 @section('script')
 
+    <script> 
 
+        @if (isset($disp) && $disp =='1')
+            $("form input").prop("disabled", false);
+            $("form textarea").prop("disabled", false);
+            $("form select").prop("disabled", false);
+            $("form radio").prop("disabled", false);
+            $("form checkbox").prop("disabled", false);
+            
+        @else
+            $("form input").prop("disabled", true);
+            $("form textarea").prop("disabled", true);
+            $("form select").prop("disabled", true);
+            $("form radio").prop("disabled", true);
+            $("form radio").prop("disabled", true);
+            $("form checkbox").prop("disabled", true);
+
+        @endif
+    
+    </script>
 @endsection

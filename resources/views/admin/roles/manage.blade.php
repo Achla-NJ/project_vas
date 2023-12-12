@@ -66,4 +66,5 @@
             $('input:checkbox').not(this).prop('checked', this.checked);
         });
     </script>
+
 @endsection

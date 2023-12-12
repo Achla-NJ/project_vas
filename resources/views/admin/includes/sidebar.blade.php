@@ -1,11 +1,11 @@
 <div class="app-sidebar">
     <div class="logo">
-        <a href="index.html" class="logo-icon"><span class="logo-text">Neptune</span></a>
-        <div class="sidebar-user-switcher user-activity-online">
+        <a href="{{route('admin.dashboard')}}" class="logo-icon"><span class="logo-text">{{ env('APP_NAME') }}</span></a>
+        {{-- <div class="sidebar-user-switcher user-activity-online">
             <a href="#">
                 <img src="{{asset('assets/images/avatars/avatar.png')}}"> 
             </a>
-        </div>
+        </div> --}}
     </div>
     <div class="app-menu">
         <ul class="accordion-menu">
@@ -48,6 +48,14 @@
             <li class="">
                 <a href="{{route('admin.companies.index')}}" >
                     <i class="material-icons-two-tone">analytics</i>Companies
+                </a>               
+            </li>
+            @endcan 
+
+            @can('history')
+            <li class="">
+                <a href="{{route('admin.history.index')}}" >
+                    <i class="material-icons-two-tone">analytics</i>History
                 </a>               
             </li>
             @endcan 

@@ -127,17 +127,17 @@
                             <div class="mb-3">
                                 <label for="sales_type" class="form-label">Sales Type:</label>
                                 <select class="form-select" id="sales_type" name="sales_type" required>
-                                    <option value="b2b" {{  isset($company->aggregator_name) && $company->aggregator_name == 'b2b'  ? 'selected' :'' }}>B2B</option>
-                                    <option value="b2c"{{  isset($company->aggregator_name) && $company->aggregator_name == 'b2c'  ? 'selected' :'' }}>B2C</option>
+                                    <option value="b2b" {{  isset($company->sales_type) && $company->sales_type == 'b2b'  ? 'selected' :'' }}>B2B</option>
+                                    <option value="b2c"{{  isset($company->sales_type) && $company->sales_type == 'b2c'  ? 'selected' :'' }}>B2C</option>
                                 </select>
                             </div>
 
-                            <div id="aggregator_name_container" style="display: none;" class="mb-3">
+                            <div id="aggregator_name_container" style="display: {{ isset($company->aggregator_name) && $company->sales_type == 'b2b'  ? 'block' : 'none'}};" class="mb-3">
                                 <label for="aggregator_name" class="form-label">Aggregator Name:</label>
                                 <input type="text" class="form-control" id="aggregator_name" name="aggregator_name" value="{{ $company->aggregator_name ?? old('aggregator_name')}}" >
                             </div>
 
-                            <div id="employee_name_container" style="display: none;" class="mb-3">
+                            <div id="employee_name_container" style="display: {{ isset($company->aggregator_name) && $company->sales_type == 'b2c'  ? 'block' : 'none'}};"  class="mb-3">
                                 <label for="employee_name" class="form-label">Vselek’s Employee Name:</label>
                                 <input type="text" class="form-control" id="employee_name" name="employee_name" value="{{ $company->employee_name ?? old('employee_name')}}" >
                             </div>
@@ -180,5 +180,23 @@
             
             document.getElementById('otp_verification').style.display = 'block';
         }
+
+        @if (isset($disp) && $disp =='1')
+            $("form input").prop("disabled", false);
+            $("form textarea").prop("disabled", false);
+            $("form select").prop("disabled", false);
+            $("form radio").prop("disabled", false);
+            $("form checkbox").prop("disabled", false);
+            
+        @else
+            $("form input").prop("disabled", true);
+            $("form textarea").prop("disabled", true);
+            $("form select").prop("disabled", true);
+            $("form radio").prop("disabled", true);
+            $("form radio").prop("disabled", true);
+            $("form checkbox").prop("disabled", true);
+
+        @endif
+       
     </script>
 @endsection

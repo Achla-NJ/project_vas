@@ -6,6 +6,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyController; 
+use App\Http\Controllers\ActivityController; 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +34,7 @@ Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::resource('permissions', PermissionController::class);
     Route::resource('companies', CompanyController::class);
     Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
+    Route::get('history',[ActivityController::class,'index'])->name('history.index');
 
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
     

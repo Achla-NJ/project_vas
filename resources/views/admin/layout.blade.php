@@ -9,7 +9,7 @@
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
     
-    <title>Neptune - Responsive Admin Dashboard Template</title>
+    <title>{{ env('APP_NAME') }}</title>
 
     <!-- Styles -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
