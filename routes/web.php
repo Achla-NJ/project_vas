@@ -24,6 +24,8 @@ Route::group(['middleware'=>'guest'],function(){
 
 Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::get('dashboard',[UserController::class,'dashboard'])->name('dashboard');
+    Route::get('profile',[UserController::class,'profile'])->name('profile');
+    Route::post('update-profile',[UserController::class,'updateProfile'])->name('update-profile');
     Route::get('switch/{role}',[UserController::class,'switch'])->name('switch');
 
     Route::get('signout',[AuthController::class,'signOut'])->name('signout');

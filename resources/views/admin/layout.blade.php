@@ -56,8 +56,15 @@
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
-                                <li class="nav-item hidden-on-mobile">
-                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="{{asset('assets/images/flags/us.png')}}" alt=""></a>
+                                <li class="nav-item hidden-on-mobile"> 
+
+                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="{{profile()}}" alt=""></a>
+                                    <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
+                                        <li><a class="dropdown-item" href="{{route('admin.profile')}}">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{route('admin.signout')}}">Log Out</a></li>
+                                        
+                                    </ul>
+
                                 
                                 </li>
                                 

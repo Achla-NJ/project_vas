@@ -153,4 +153,34 @@ class UserController extends Controller
 
         return redirect()->route('admin.dashboard');
     }
+
+    public function profile(Request $request) 
+    {
+        abort_if(Gate::denies('profile'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+   
+        $user = auth()->user();
+
+        return view('admin.users.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request) 
+    {
+        abort_if(Gate::denies('profile'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        
+        
+        $data = $request->validate([
+            'file' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
+        ]);
+        
+        $user = User::find(auth()->id());
+
+        if($request->hasfile('file')){
+            $file =$request->file('file')->store( 'uploads/profile', 'public');
+            $user->file =$file ;
+            $user->save();
+        }
+        
+
+        return redirect()->route('admin.profile')->withSuccess('Profile Updated successfully.');
+    }
 }

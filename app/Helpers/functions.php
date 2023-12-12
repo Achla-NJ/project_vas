@@ -1,6 +1,7 @@
 <?php
 use App\Models\Activity;
 use App\Jobs\SendEmail;
+use App\Models\User;
 use App\Mail\CompanyMail;
 
 if (!function_exists('js_activity_log')) {
@@ -149,5 +150,16 @@ function js_send_email($subject, $data, $email, $view = 'general', DateTimeInter
 if(!function_exists("js_email")) {
     function js_email($subject, $data, $email, $view  , $files = []) { 
         return \Mail::to($email)->send(new CompanyMail($data,$subject , $view ,$files));
+    }
+}
+
+if(!function_exists("profile")) {
+    function profile() { 
+        $user = User::find(auth()->id());
+        if(!empty($user->file)){
+            return asset('storage/'.$user->file);
+        }else{
+            return asset('assets/images/default_user.png');
+        }
     }
 }
