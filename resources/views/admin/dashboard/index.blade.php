@@ -1,30 +1,34 @@
 @extends('admin.layout')
 @section('content')
-<main class="content">
-    <div class="container-fluid p-0">
 
-        <div class="row mb-2 mb-xl-3">
-            <div class="col-auto d-none d-sm-block">
-                <h3><strong>Dashboard</strong> </h3>
-            </div>
+<div class="row">
+    <div class="col">
+        <div class="page-description">
+            <h1>Dashboard</h1> 
         </div>
-        <div class="row">
-            <div class="col-xl-6 col-xxl-5 d-flex">
-                <div class="w-100">
-                    <div class="row">
-                        <div class="col-sm-6"> 
-                            <p>Login As: {{session()->get('active_role')['name']}}</p>
-                            
-                            @foreach ($roles as $role) 
-                                <a class="btn btn-sm btn-primary me-3" href="{{ route('admin.switch' , $role['slug'])}}">{{$role['name']}}</a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
     </div>
-</main>
+</div>
+<div class="row">
+    <div class="col-xl-4">
+        <div class="card widget widget-list">
+            <div class="card-header">
+                <h5 class="card-title">Current Role<span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></h5>
+            </div>
+            <div class="card-body">
+                <span class="text-muted m-b-xs d-block">Other user roles:</span>
+                <ul class="widget-list-content list-unstyled d-flex">
+                    @foreach ($roles as $role) 
+                        <li class="widget-list-item widget-list-item-green">
+                            
+                            <span class="widget-list-item-description"> 
+                                <a class="badge badge-primary badge-style-light me-3 py-2 form-control-sm" href="{{ route('admin.switch' , $role['slug'])}}"> Switch To : {{$role['name']}}</a>
+                            </span>
+                        </li>     
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>    
+</div> 
+
 @endsection

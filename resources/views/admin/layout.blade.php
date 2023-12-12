@@ -1,82 +1,120 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="AdminKit">
-	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-	<meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Admin Dashboard Template">
+    <meta name="keywords" content="admin,dashboard">
+    <meta name="author" content="stacks">
     
-	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
+    <title>Neptune - Responsive Admin Dashboard Template</title>
+
+    <!-- Styles -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/perfectscroll/perfect-scrollbar.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/pace/pace.css')}}" rel="stylesheet">
+
     
+    <!-- Theme Styles -->
+    <link href="{{asset('assets/css/main.min.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
 
-	<title>@yield('title')</title>
-
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-	<link href="{{asset('assets/css/light.css')}}" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/images/neptune.png')}}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/neptune.png')}}" />
     <link rel="stylesheet" href="{{asset('assets/plugins/toast/css/toastr.min.css')}}">
 
-@yield('css')
+    @yield('css')
 </head>
-
-
-<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
-	<div class="wrapper">
-		@include('admin.includes.sidebar')
-
-		<div class="main">
-			@include('admin.includes.nav')
-
-			@yield('content')
-			<footer class="footer">
-				<div class="container-fluid">
-					<div class="row text-muted">
-						<div class="col-6 text-start">
-							<p class="mb-0">
-								<a href="https://adminkit.io/" target="_blank" class="text-muted"><strong>AdminKit</strong></a> &copy;
-							</p>
-						</div>
-					
-					</div>
-				</div>
-			</footer>
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
-	<script src="{{asset('assets/js/app.js')}}"></script>
+<body>
+    <div class="app align-content-stretch d-flex flex-wrap">
+        @include('admin.includes.sidebar')
+        <div class="app-container">
+            <div class="search">
+                <form>
+                    <input class="form-control" type="text" placeholder="Type here..." aria-label="Search">
+                </form>
+                <a href="#" class="toggle-search"><i class="material-icons">close</i></a>
+            </div>
+            <div class="app-header">
+                <nav class="navbar navbar-light navbar-expand-lg">
+                    <div class="container-fluid">
+                        <div class="navbar-nav" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
+                                </li>
+                                
+                            </ul>
+            
+                        </div>
+                        <div class="d-flex">
+                            <ul class="navbar-nav">
+                                <li class="nav-item hidden-on-mobile">
+                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="{{asset('assets/images/flags/us.png')}}" alt=""></a>
+                                
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="app-content">
+               
+                <div class="content-wrapper">
+                    <div class="container">
+                        @yield('content')
+                                              
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Javascripts -->
+    <script src="{{asset('assets/plugins/jquery/jquery-3.5.1.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/perfectscroll/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/pace/pace.min.js')}}"></script>
+    
+    <script src="{{asset('assets/js/main.min.js')}}"></script>
+    <script src="{{asset('assets/js/custom.js')}}"></script>
+    <script src="{{asset('assets/js/pages/dashboard.js')}}"></script>
 	
-<script src="{{asset('assets/plugins/toast/js/toastr.min.js')}}"></script>
-
-<script>
-	$.toastr.config({
-		time: 5000,
-		// more options here
-	});
-  
-  function successToast(msg){
-	$.toastr.success(msg);
-  }
-  
-  function errorToast(msg){
-	$.toastr.error(msg);
-  }
-  </script>
-  @if (session()->has('success'))
-  <script>
-	successToast("{{session()->get('success')}}")
-  </script>
-  @endif
-  @if($errors->any())
-	@foreach ($errors->all() as $error)
-	  <script>
-		errorToast("{{$error}}")
-	  </script>
-	@endforeach
-  @endif
-@yield('script')
-
-</body>
-</html>
+    <script src="{{asset('assets/plugins/toast/js/toastr.min.js')}}"></script>
+    <script>
+        $.toastr.config({
+            time: 5000,
+            // more options here
+        });
+      
+      function successToast(msg){
+        $.toastr.success(msg);
+      }
+      
+      function errorToast(msg){
+        $.toastr.error(msg);
+      }
+      </script>
+      @if (session()->has('success'))
+      <script>
+        successToast("{{session()->get('success')}}")
+      </script>
+      @endif
+      @if($errors->any())
+        @foreach ($errors->all() as $error)
+          <script>
+            errorToast("{{$error}}")
+          </script>
+        @endforeach
+      @endif
+    @yield('script')
+    
+    </body>
+    </html>
