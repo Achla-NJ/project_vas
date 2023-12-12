@@ -19,6 +19,7 @@
     <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/plugins/perfectscroll/perfect-scrollbar.css')}}" rel="stylesheet">
     <link href="{{asset('assets/plugins/pace/pace.css')}}" rel="stylesheet">
+    <link href="{{asset('assets/plugins/datatables/datatables.min.css')}}" rel="stylesheet">
 
     
     <!-- Theme Styles -->
@@ -88,6 +89,9 @@
     <script src="{{asset('assets/js/pages/dashboard.js')}}"></script>
 	
     <script src="{{asset('assets/plugins/toast/js/toastr.min.js')}}"></script>
+
+    <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
+    <script src="{{asset('assets/js/pages/datatables.js')}}"></script>
     <script>
         $.toastr.config({
             time: 5000,

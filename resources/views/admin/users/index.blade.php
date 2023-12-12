@@ -2,8 +2,7 @@
 @section('css')
 
 @endsection
-@section('content')
-<div class="bg-light">
+@section('content') 
     <main class="content">
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Users</h1>
@@ -15,8 +14,7 @@
             <div class="col-12"> 
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatables-reponsive"
-                            class="table table-striped" style="width:100%">
+                        <table id="datatables-reponsive"  class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Sr No.</th>
@@ -68,8 +66,6 @@
         </div>
 
     </main>
-
-</div>
 @endsection
 @section('script')
 <script src="{{asset('assets/js/datatables.js')}}"></script>

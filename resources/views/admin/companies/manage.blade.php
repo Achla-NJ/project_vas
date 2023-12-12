@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{asset('assets/css/select2.min.css')}}">
 @endsection
 @section('content')
-<div class="bg-light  rounded">
+
     <main class="content">
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Manage Company</h1>
@@ -73,7 +73,7 @@
                             <div class="mb-3">
                                 <label for="mobile_no" class="form-label">Mobile No (OTP Verified):</label>
                                 <input type="tel" class="form-control" id="mobile_no" name="mobile_no" required value="{{ $company->mobile_no ?? old('mobile_no')}}" >
-                                <button class="btn btn-sm btn-primary" type="button" onclick="generateAndSendOTP()">Get OTP</button>
+                                {{-- <button class="btn btn-sm btn-primary" type="button" onclick="generateAndSendOTP()">Get OTP</button> --}}
                             </div>
                             
                             <!-- OTP Verification Section (Initially Hidden) -->
@@ -154,7 +154,7 @@
         </div>
 
     </main>
-</div>
+    
 @endsection
 @section('script')
     <script src="{{asset('assets/js/select2.min.js')}}"></script>

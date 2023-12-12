@@ -3,7 +3,7 @@
     
 @endsection
 @section('content')
-<div class="bg-light">
+
     <main class="content">
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Companies</h1>
@@ -61,7 +61,6 @@
 
     </main>
 
-</div>
 @endsection
 
 @section('script')

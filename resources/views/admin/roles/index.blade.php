@@ -2,8 +2,7 @@
 @section('css')
     
 @endsection
-@section('content')
-<div class="bg-light">
+@section('content') 
     <main class="content">
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Roles</h1>
@@ -56,8 +55,7 @@
         </div>
 
     </main>
-
-</div>
+ 
 @endsection
 @section('script')
 <script src="{{asset('assets/js/datatables.js')}}"></script>
