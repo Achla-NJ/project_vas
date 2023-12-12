@@ -19,7 +19,13 @@ class ActivityController extends Controller
  
         $role_id = session()->get('active_role')['id'];
 
-        $activities = Activity::query()->where(['user_id' => $user->id , 'role_id' => $role_id ])->latest()->get();
+        if($role_id ==1){
+            $activities = Activity::query()->latest()->get();
+        }else{
+            $activities = Activity::query()->where(['user_id' => $user->id , 'role_id' => $role_id ])->latest()->get();
+        }
+
+        
  
         return view('admin.history.index', compact('activities'));
     }
