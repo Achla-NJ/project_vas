@@ -11,7 +11,9 @@ class Company extends Model
     use HasFactory,SoftDeletes;
 
     protected $guarded =[];
-    protected $dates = [ 'deleted_at' ];
+    protected $dates = [ 'deleted_at' , 'due_date'];
+
+    
 
     public function user()
     {

@@ -41,3 +41,36 @@ Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
     
 });
+
+
+
+
+Route::get('command/{command}', function ($command){
+    if($command == 'reset'){
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+        $result = \Illuminate\Support\Facades\Artisan::output();
+        dump($result);
+
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
+        $result = \Illuminate\Support\Facades\Artisan::output();
+        dump($result);
+
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        $result = \Illuminate\Support\Facades\Artisan::output();
+        dump($result);
+
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        $result = \Illuminate\Support\Facades\Artisan::output();
+        dump($result);
+
+        \Illuminate\Support\Facades\Artisan::call('config:cache');
+        $result = \Illuminate\Support\Facades\Artisan::output();
+        dump($result);
+        die;
+    }else{
+        \Illuminate\Support\Facades\Artisan::call($command);
+        $result = \Illuminate\Support\Facades\Artisan::output();
+    }
+    dd($result);
+    
+})->name('command.run');
