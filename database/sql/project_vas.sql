@@ -21,8 +21,8 @@ CREATE TABLE `activities` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `activities_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `activities_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+  CONSTRAINT `activities_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `activities_ibfk_4` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `activities` (`id`, `user_id`, `role_id`, `model`, `operation`, `model_id`, `updation`, `created_at`, `updated_at`) VALUES
@@ -339,4 +339,4 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `mobile`, `email_verifie
 (16,	'harpreet',	NULL,	'harpreet@njgraphica.com',	'7894561230',	NULL,	NULL,	'$2y$10$pCBUlw5XI/dodGqS1s.9RuFr6cGtlqc5L4Y4FzQwR/aY8EbFLdSpm',	'njpassword',	NULL,	'male',	NULL,	NULL,	'2023-12-12 07:21:19',	'2023-12-12 07:21:19',	NULL),
 (17,	'Ali Mclean',	NULL,	'gawexaz@mailinator.com',	'37',	NULL,	NULL,	'$2y$10$8Gqc2kp7HUNHtvrWu.c7g.GgsXEVbb3HvBVNOD/4FTkvRxxPJFMde',	'Fugiat obcaecati ex ',	NULL,	'female',	NULL,	NULL,	'2023-12-12 23:41:50',	'2023-12-12 23:41:50',	NULL);
 
--- 2023-12-13 07:04:33
+-- 2023-12-13 08:29:38
