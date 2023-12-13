@@ -7,12 +7,11 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable; 
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles ,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles ;
 
     /**
      * The database table used by the model.
@@ -25,8 +24,7 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array
-     */
-    protected $dates = [ 'deleted_at' ];
+     */ 
     protected $fillable = [
         'name',
         'email',
