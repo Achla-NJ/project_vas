@@ -37,22 +37,12 @@ class CompanyMail extends Mailable
      /**
      * Get the message envelope.
      */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: $this->subject,
-        );
-    }
+    
 
     /**
      * Get the message content definition.
      */
-    public function content(): Content
-    {
-        return new Content(
-            markdown: "{$this->view}",
-        );
-    }
+    
     
     public function build()
     {

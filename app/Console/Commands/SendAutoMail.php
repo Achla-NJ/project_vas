@@ -29,17 +29,18 @@ class SendAutoMail extends Command
  
 
             // Check if the current date is equal to or later than the reminder date
-            if ($currentDate->gte($reminder15Days)) {
+             
+            if ($currentDate->toDateString() == $reminder15Days->toDateString())  {
                 // Send 15 days reminder email
                 js_email('15 Days Reminder: subject', json_decode($company), $user->email, 'mail');
             }
 
-            if ($currentDate->gte($reminder1Week)) {
+            if ($currentDate->toDateString() == $reminder1Week->toDateString()) {
                 // Send 1 week reminder email
                 js_email('1 Week Reminder: subject', json_decode($company), $user->email, 'mail');
             }
 
-            if ($currentDate->gte($reminder24Hours)) {
+            if ($currentDate->toDateString() == $reminder24Hours->toDateString()) {
                 // Send 24 hours reminder email
                 js_email('24 Hours Reminder: subject', json_decode($company), $user->email, 'mail');
             }

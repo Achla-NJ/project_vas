@@ -9,8 +9,7 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $guarded =[];
-    protected $dates = [ 'due_date'];
+    protected $guarded =[]; 
 
     
 

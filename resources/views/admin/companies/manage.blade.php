@@ -117,8 +117,7 @@
                                 <input type="text" class="form-control" id="authorized_person_pan" name="authorized_person_pan" required value="{{ $company->authorized_person_pan ?? old('authorized_person_pan')}}" >
                             </div>
 
-                            <h2 class="mb-4">Sources of Sales</h2>
-
+                            <h2 class="mb-4">Sources of Sales</h2> 
                             <div class="mb-3">
                                 <label for="due_date" class="form-label">Due Date:</label>
                                 <input type="date" class="form-control" id="due_date" name="due_date" required value="{{ $company->due_date ?? old('due_date')}}" >
