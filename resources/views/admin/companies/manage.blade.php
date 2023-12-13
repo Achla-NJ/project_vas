@@ -161,7 +161,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="due_date" class="form-label">Due Date:</label>
-                                        <input type="date" class="form-control" id="due_date" name="due_date" required value="{{ $company->due_date->toDateString() ?? old('due_date')}}" >
+                                        <input type="date" class="form-control" id="due_date" name="due_date" required value="{{ isset($company->due_date)  ? $company->due_date->toDateString() : old('due_date')}}" >
                                     </div>
                                 </div>
                             </div>

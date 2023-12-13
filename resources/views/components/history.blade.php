@@ -10,11 +10,11 @@
                 @endphp
                 {{$model_name}}
                 @if ($model_name == 'Company') 
-                    ({{ $table->company_name ?? '' }})
+                    ({{ $table->company_name ?? $activity->name }})
                 @endif
 
                 @if ($model_name == 'User') 
-                    ({{ $table->name ?? '' }})
+                    ({{ $table->name ?? $activity->name }})
                 @endif
                 
                 

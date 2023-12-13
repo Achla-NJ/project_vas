@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Mail\CompanyMail;
 
 if (!function_exists('js_activity_log')) {
-    function js_activity_log($user_id ,  $model , $operation , $model_id ,  $role_id =NULL,$updation =NULL)
+    function js_activity_log($user_id ,  $model , $operation , $model_id ,  $role_id =NULL,$name =NULL)
     {
         Activity::create([
             'user_id' => $user_id,
@@ -13,7 +13,7 @@ if (!function_exists('js_activity_log')) {
             'model' => $model,
             'operation' => $operation,
             'model_id' => $model_id,
-            'updation' => $updation
+            'name' => $name
         ]);
     }
 }
@@ -168,4 +168,18 @@ function js_active_role_id(){
     if(session()->has('active_role')){
         return session()->get('active_role')['id'];
     }   
+}
+
+function js_model_name($model_full_name , $model_id){
+    $model =  explode("\\" , $model_full_name) ; 
+    $model_name = end($model);
+    $table = $model_full_name::find($model_id);
+
+    if ($model_name == 'Company') {
+        return $table->company_name;
+    }
+ 
+    if ($model_name == 'User') {
+       return  $table->name ;
+    }
 }

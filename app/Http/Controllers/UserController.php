@@ -76,9 +76,9 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         
-        $active_role = session()->get('active_role')['id']; 
-
-        $user->create(array_merge($request->validated(), [
+        $active_role = session()->get('active_role')['id'];        
+        
+        $add_user = $user->create(array_merge($request->validated(), [
             'password' => $request->password ,
             'save_password'=>$request->password,
             'gender'=>$request->gender,
@@ -86,9 +86,8 @@ class UserController extends Controller
             'role_id' => $active_role,
         ]))->assignRole($request->role);
 
-       
+        js_activity_log(auth()->id() , "App\Models\User" , 'create' , $user->id , $active_role ,js_model_name("App\Models\User" , $add_user->id));
 
-        js_activity_log(auth()->id() , "App\Models\User" , 'create' , $user->id , $active_role);
 
         return redirect()->route('admin.users.index')
             ->withSuccess(__('User created successfully.'));
@@ -133,7 +132,7 @@ class UserController extends Controller
 
         $user->syncRoles($request->get('role'));
 
-        js_activity_log(auth()->id() , "App\Models\User" , 'update' , $user->id , $active_role);
+        js_activity_log(auth()->id() , "App\Models\User" , 'update' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
         
 
         return redirect()->route('admin.users.index')
@@ -151,12 +150,14 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->delete();
+        
 
         $active_role = session()->get('active_role')['id']; 
 
-        js_activity_log(auth()->id() , "App\Models\User" , 'delete' , $user->id , $active_role);
+        js_activity_log(auth()->id() , "App\Models\User" , 'delete' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
 
+        $user->delete();
+        
         return redirect()->route('admin.users.index')
             ->withSuccess(__('User deleted successfully.'));
     }
