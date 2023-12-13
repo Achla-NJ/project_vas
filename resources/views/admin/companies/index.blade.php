@@ -5,8 +5,8 @@
 @section('content')
 
     <main class="content">
-        <div class="mb-3">
-            <h1 class="h3 d-inline align-middle">Companies</h1>
+        <div class="d-flex justify-content-between align-items-center mb-0 mb-md-3 pt-5 pb-3">
+            <h1 class="fw-bold d-inline align-middle">Companies</h1>
             <a href="{{ route('admin.companies.create') }}"
                 class="btn btn-success btn-sm text-right">Add Company</a>
         </div>
@@ -15,52 +15,54 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatables-reponsive"
-                            class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Company Name</th>
-                                    @if(auth()->user()->hasRole('admin'))
-                                    <th>Added By</th>
-                                    @endif
-                                    <th>Role</th> 
-                                    <th>Firm Type</th> 
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($companies as $key => $project)
-                                <tr>
-                                    <td>{{ $project->id }}</td>
-                                    <td>{{ $project->company_name }}</td>
-                                    @if(auth()->user()->hasRole('admin'))
-                                        <td>{{ $project->user->name }}</td>
-                                    @endif
-                                    <td><span class="badge badge-success badge-style-light form-control-sm">{{ $project->role->name }}</span></td>
-                                    <td>{{ $project->trade_name }}</td>
-                                    <td>{{ ucwords(str_replace('_',' ',$project->firm_type)) }}</td> 
-                                    <td>
-                                        <div class="d-flex">
-                                            <a class="btn btn-primary btn-sm" href="{{ route('admin.companies.show', $project->id) }}">Show</a>
-                                            @can('company_update')
-                                            <a class="btn btn-info btn-sm" href="{{ route('admin.companies.edit', $project->id) }}">Edit</a>
-                                            @endcan
-                                            @can('company_delete')
-                                                <form action="{{route('admin.companies.destroy',
-                                                $project->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
-                                                </form>
-                                            @endcan
-                                        </div>
-                                        
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="datatables-reponsive"
+                                class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Sr No.</th>
+                                        <th>Company Name</th>
+                                        @if(auth()->user()->hasRole('admin'))
+                                        <th>Added By</th>
+                                        @endif
+                                        <th>Role</th> 
+                                        <th>Firm Type</th> 
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($companies as $key => $project)
+                                    <tr>
+                                        <td>{{ $project->id }}</td>
+                                        <td>{{ $project->company_name }}</td>
+                                        @if(auth()->user()->hasRole('admin'))
+                                            <td>{{ $project->user->name }}</td>
+                                        @endif
+                                        <td><span class="badge badge-success badge-style-light form-control-sm">{{ $project->role->name }}</span></td>
+                                        <td>{{ $project->trade_name }}</td>
+                                        <td>{{ ucwords(str_replace('_',' ',$project->firm_type)) }}</td> 
+                                        <td>
+                                            <div class="d-flex">
+                                                <a class="btn btn-success btn-sm" href="{{ route('admin.companies.show', $project->id) }}">Show</a>
+                                                @can('company_update')
+                                                <a class="btn btn-info btn-sm" href="{{ route('admin.companies.edit', $project->id) }}">Edit</a>
+                                                @endcan
+                                                @can('company_delete')
+                                                    <form action="{{route('admin.companies.destroy',
+                                                    $project->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                            
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

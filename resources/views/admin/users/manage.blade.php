@@ -6,7 +6,7 @@
 @section('content')
 
     <main class="content">
-        <div class="mb-3">
+        <div class="mb-3 pt-5 pb-4">
             <h1 class="h3 d-inline align-middle">Manage Users</h1>
         </div>
         <div class="row">
@@ -72,11 +72,16 @@
                                             <label for="gender_female" class="">Female</label>
                                     </div>
                                 </div>
-                                
-                            @if (isset($disp) && $disp =='1')
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            @endif
-                            <a href="{{ route('admin.users.index') }}" class="btn btn-default">Back</a>                           
+                            <div class="row">
+                                <div class="col-6">
+                                    <a href="{{ route('admin.users.index') }}" class="btn back-btn">Back</a> 
+                                </div>
+                                <div class="col-6 text-end">
+                                    @if (isset($disp) && $disp =='1')
+                                        <button type="submit" class="btn btn-success">Save</button>
+                                    @endif
+                                </div>
+                            </div>                            
                         </form>
                     </div>
                 </div>

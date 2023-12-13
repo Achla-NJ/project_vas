@@ -4,8 +4,8 @@
 @endsection
 @section('content') 
     <main class="content">
-        <div class="mb-3">
-            <h1 class="h3 d-inline align-middle">Users</h1>
+        <div class="d-flex justify-content-between align-items-center mb-3 pt-5 pb-3">
+            <h1 class="fw-bold d-inline align-middle">Users</h1>
             <a href="{{ route('admin.users.create') }}"
                 class="btn btn-success btn-sm text-right">Add new user</a>
         </div>
@@ -33,14 +33,14 @@
                                     <td>
                                         @foreach($user->roles as $role)
                                         <span
-                                            class="badge bg-success">{{ $role->name }}
+                                            class="badge bg-success fw-light pt-2">{{ $role->name }}
                                         </span>
                                         @endforeach
                                     </td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ route('admin.users.show', $user->id) }}"
-                                                class="btn btn-primary btn-sm">Show</a>
+                                                class="btn btn-success btn-sm">Show</a>
                                             @if($user->id != 1)
                                                 @can('user_update')
                                                     <a href="{{ route('admin.users.edit', $user->id) }}"

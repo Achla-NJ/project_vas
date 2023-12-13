@@ -31,20 +31,21 @@
    
 </head>
 <body>
-    <div class="app app-auth-sign-in align-content-stretch d-flex flex-wrap justify-content-end">
-         
-        <div class="app-auth-container">
-            <div class="logo">
-                <a href="javascript:void(0)">{{ env('APP_NAME') }}</a>
+    <div class="app app-auth-sign-in align-content-center d-flex flex-wrap justify-content-center">
+        <div class="app-auth-container text-center">
+            <div class="logo mb-3">
+                <a href="javascript:void(0)">
+                    <img src="{{asset('assets/images/neptune.png')}}" alt="" height="50px" class="me-2">
+                    {{ env('APP_NAME') }}</a>
             </div>
-            <h3 class="my-3">Join As: </h3>
-
-            @foreach ($user->roles as $role)
-                @if ($role->id != 1)
-                    <a href="{{ route('admin.join-as' , $role->slug)}}"><span class="badge badge-success badge-style-light form-control-sm my-2"> {{$role->name}} </span></a>
-                @endif
-            @endforeach 
-             
+            <h3 class="my-3">Login As </h3>
+            <div class="d-flex justify-content-center flex-wrap">
+                @foreach ($user->roles as $role)
+                    @if ($role->id != 1)
+                        <a href="{{ route('admin.join-as' , $role->slug)}}"><span class="badge badge-success badge-style-light form-control-lg my-2 login-btn"> {{$role->name}} </span></a>
+                    @endif
+                @endforeach 
+            </div>
         </div>
     </div>
 </body>

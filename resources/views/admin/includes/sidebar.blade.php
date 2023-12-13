@@ -7,34 +7,22 @@
             </a>
         </div> --}}
     </div>
+    @php
+        $route_name =  \Route::currentRouteName();
+    @endphp
     <div class="app-menu">
-        <ul class="accordion-menu">
-            <li class="sidebar-title">
+        <ul class="accordion-menu mt-4">
+            {{-- <li class="sidebar-title">
                 Apps
-            </li>
+            </li> --}}
             {{-- <li class="active-page">
                 <a href="index.html" class="active"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
             </li> --}}
             @can('dashboard')
-                <li class="active-page">
+                <li class="{{ $route_name == 'admin.dashboard' ?  'active-page' : '' }}">
                     <a href="{{route('admin.dashboard')}}" class="active"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
                 </li>
-            @endcan    
-            @can('user_access')
-            <li class="">
-                <a href="{{route('admin.users.index')}}" >
-                    <i class="material-icons-two-tone">sentiment_satisfied_alt</i>Users
-                </a>               
-            </li>
-            @endcan        
-
-            @can('role_access')
-            <li class="">
-                <a href="{{route('admin.roles.index')}}" >
-                    <i class="material-icons-two-tone">edit</i>Roles
-                </a>               
-            </li>
-            @endcan        
+            @endcan           
 
             {{-- @can('permission_access')
             <li class="">
@@ -45,7 +33,7 @@
             @endcan         --}}
                  
             @can('company_access')
-            <li class="">
+            <li class="{{ $route_name == 'admin.companies.index' ?  'active-page' : '' }}">
                 <a href="{{route('admin.companies.index')}}" >
                     <i class="material-icons-two-tone">analytics</i>Companies
                 </a>               
@@ -53,14 +41,30 @@
             @endcan 
 
             @can('history')
-            <li class="">
+            <li class="{{ $route_name == 'admin.history.index' ?  'active-page' : '' }}">
                 <a href="{{route('admin.history.index')}}" >
                     <i class="material-icons-two-tone">analytics</i>History
                 </a>               
             </li>
             @endcan 
+
+            @can('user_access')
+            <li class="{{ $route_name == 'admin.users.index' ?  'active-page' : '' }}">
+                <a href="{{route('admin.users.index')}}" >
+                    <i class="material-icons-two-tone">sentiment_satisfied_alt</i>Users
+                </a>               
+            </li>
+            @endcan        
+
+            @can('role_access')
+            <li class="{{ $route_name == 'admin.roles.index' ?  'active-page' : '' }}">
+                <a href="{{route('admin.roles.index')}}" >
+                    <i class="material-icons-two-tone">edit</i>Roles
+                </a>               
+            </li>
+            @endcan 
             
-            <li class="">
+            <li>
                 <a href="{{route('admin.signout')}}" >
                     <i class="material-icons-two-tone">done</i>Log out
                 </a>               

@@ -4,12 +4,12 @@
 @endsection
 @section('content')
 
-    <main class="content">
+    <main class="content pt-5">
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Profile</h1>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.update-profile')}}" enctype="multipart/form-data">
@@ -41,9 +41,9 @@
                                             name="file"   >
                                     </div>
 
-                                    <img id="blah" src="{{profile()}}" alt="your image" style="width: 100px; height:100px;"  class="my-2"/>
+                                    <img id="blah" src="{{profile()}}" alt="your image" style="width: 100px;"  class="my-2"/>
                                 </div> 
-                                <button type="submit" class="btn btn-primary">Save</button>                      
+                                <button type="submit" class="btn btn-success">Save</button>                      
                         </form>
                     </div>
                 </div>

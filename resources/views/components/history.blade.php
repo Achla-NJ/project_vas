@@ -1,7 +1,7 @@
 <ul class="widget-list-content list-unstyled"> 
     @foreach ($activities as $activity) 
         <li class="widget-list-item widget-list-item-green">                            
-            <h5 class="card-title">{{ $activity->user->name }}  
+            <h5 class="card-title history-wrapper">{{ $activity->user->name }}  
                 {{ $activity->operation}}
                 @php
                     $model =  explode("\\" , $activity->model) ; 
@@ -17,8 +17,10 @@
                     ({{ $table->name ?? '' }})
                 @endif
                 
-                at
-                {{ $activity->updated_at->diffForHumans()  }}
+                
+                <div class="history-time">
+                    {{ $activity->updated_at->diffForHumans()  }}
+                </div>
 
             </h5>
         </li>     

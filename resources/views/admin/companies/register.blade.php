@@ -5,7 +5,7 @@
 @section('content')
 <div class="bg-light  rounded">
     <main class="content">
-        <div class="mb-3">
+        <div class="mb-3 pt-5 pb-4">
             <h1 class="h3 d-inline align-middle">Register Company</h1>
         </div>
 

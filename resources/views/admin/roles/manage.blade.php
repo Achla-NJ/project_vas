@@ -5,7 +5,7 @@
 @section('content')
 
     <main class="content">
-        <div class="mb-3">
+        <div class="mb-3 pt-5 pb-4">
             <h1 class="h3 d-inline align-middle">Manage roles</h1>
         </div>
 
@@ -26,30 +26,30 @@
                             </div>
                             
                             <label for="permissions" class="form-label">Assign Permissions</label>
-                
-                            <table class="table table-striped">
-                                <thead>
-                                    <th scope="col" width="1%"><input type="checkbox" name="all_permission" id="checkAll"></th>
-                                    <th scope="col" width="20%">Name</th>
-                                    <th scope="col" width="1%">Guard</th> 
-                                </thead>
-                
-                                @foreach($permissions as $key=>$permission)
-                                
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" 
-                                            name="permission[{{ $permission->name }}]"
-                                            value="{{ $permission->name }}"
-                                            class='permission' {{(isset($rolePermissions) && in_array($permission->name,$rolePermissions) )? 'checked' : ''}}>
-                                        </td>
-                                        <td>{{ $permission->name }}</td>
-                                        <td>{{ $permission->guard_name }}</td>
-                                    </tr>
-                                @endforeach
-                            </table>
-                
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <th scope="col" width="1%"><input type="checkbox" name="all_permission" id="checkAll"></th>
+                                        <th scope="col" width="20%">Name</th>
+                                        <th scope="col" width="1%">Guard</th> 
+                                    </thead>
+                    
+                                    @foreach($permissions as $key=>$permission)
+                                    
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" 
+                                                name="permission[{{ $permission->name }}]"
+                                                value="{{ $permission->name }}"
+                                                class='permission' {{(isset($rolePermissions) && in_array($permission->name,$rolePermissions) )? 'checked' : ''}}>
+                                            </td>
+                                            <td>{{ $permission->name }}</td>
+                                            <td>{{ $permission->guard_name }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                            <button type="submit" class="btn btn-success">Save</button>
                             <a href="{{ route('admin.roles.index') }}" class="btn btn-default">Back</a>
                         </form>
                     </div>

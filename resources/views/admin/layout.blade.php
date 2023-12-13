@@ -59,7 +59,7 @@
                                             <li class="nav-item d-flex align-items-center">
                                                 
                                                 <span class="widget-list-item-description"> 
-                                                    <a class="badge badge-success badge-style-light me-3 py-2 form-control-sm" href="{{ route('admin.switch' , $role['slug'])}}"> Switch To : {{$role['name']}}</a>
+                                                    <a class="badge badge-success badge-style-light me-3 py-2 form-control-sm" href="{{ route('admin.switch' , $role['slug'])}}"> Switch : {{$role['name']}}</a>
                                                 </span>
                                             </li>    
                                         @endif
@@ -71,12 +71,15 @@
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
-                                <li class="nav-item hidden-on-mobile"> 
+                                <li class="nav-item"> 
 
-                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="{{profile()}}" alt="">
-                                        <b>{{ auth()->user()->name}}</b></a>
+                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown">
+                                        <span class="badge badge-success badge-style-light form-control-sm me-2 d-none d-md-inline">{{session()->get('active_role')['name']}}</span>
+                                        <img src="{{profile()}}" alt="">
+                                        <b>{{ auth()->user()->name}}</b>
+                                    </a>
                                     <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
-                                        <li><span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></li>
+                                        <li class="d-block d-md-none"><span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></li>
                                         <li><a class="dropdown-item" href="{{route('admin.profile')}}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{{route('admin.signout')}}">Log Out</a></li>
                                         

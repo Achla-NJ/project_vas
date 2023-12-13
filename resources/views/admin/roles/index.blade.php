@@ -4,8 +4,8 @@
 @endsection
 @section('content')
 <main class="content">
-    <div class="mb-3">
-        <h1 class="h3 d-inline align-middle">Roles</h1>
+    <div class="mb-3 pt-5 pb-3">
+        <h1 class="fw-bold d-inline align-middle">Roles</h1>
         {{-- <a href="{{ route('admin.roles.create') }}" class="btn btn-success
         btn-sm text-right">Add Role</a> --}}
     </div>

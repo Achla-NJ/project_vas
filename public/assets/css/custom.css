@@ -1,1 +1,116 @@
 /* Your Custom CSS Goes here */
+:root {
+    --green: #4BAD48;
+    --lt-green: #E6FCF0;
+}
+/* login */
+.app-auth-sign-in{
+    background-color: #e7f8f0;
+}
+.app-auth-container{
+    height: auto !important;
+    padding: 40px 60px !important;
+    max-width: 600px;
+}
+.app-auth-container .logo a{
+    background: unset;
+    padding-left: 0;
+    justify-content: center;
+}
+.login-btn{
+    margin: 0.5rem;
+    background-color: var(--green) !important;
+    color: #fff !important;
+    border: 1px solid var(--green);
+}
+.login-btn:hover{
+    background-color: var(--lt-green) !important;
+    color: var(--green) !important;
+    border: 1px solid var(--green);
+}
+
+/* dashboard */
+.app-container{
+    background-color: #e7f8f0;
+}
+.app-header::before{
+    background: #4bad4875;
+}
+.app-menu>ul>li.active-page>a, .app-menu>ul>li.open>a, .app-menu>ul>li>a:hover{
+    color: var(--green);
+}
+.app-menu>ul>li>a:hover>i:not(.has-sub-menu).material-icons-two-tone, .app-menu>ul>li.open>a>i:not(.has-sub-menu).material-icons-two-tone, .app-menu>ul>li.active-page>a>i:not(.has-sub-menu).material-icons-two-tone, .app-menu>ul>li:hover>a>i:not(.has-sub-menu).material-icons-two-tone, .accordion-item .accordion-button i, .pricing-basic.pricing-selected .plan-list li::before{
+    filter: brightness(0) saturate(100%) invert(70%) sepia(97%) saturate(7488%) hue-rotate(106deg) brightness(92%) contrast(114%);
+}
+.app-menu>ul>li>a:hover>i:not(.has-sub-menu).material-icons-two-tone{
+    transition: none;
+}
+.app-content .page-description{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* history */
+.history-wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+.history-wrapper .history-time{
+    color: var(--green);
+}
+
+/* company */
+.company-form h5{
+    color: var(--green);
+    font-weight: bold;
+}
+.form-control[readonly]{
+    background-color: var(--lt-green);
+}
+.back-btn{
+    padding-left: 0;
+    text-decoration: underline;
+}
+.company-form .back-btn:hover{
+    color: var(--green);
+    text-decoration: underline !important;
+}
+
+/* sidebar */
+.app-sidebar .logo-icon .logo-text{
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width: 767px) {
+    .history-wrapper{
+        flex-wrap: wrap;
+    }
+    .history-wrapper .history-time{
+        flex-basis: 100%;
+        text-align: right;
+    }
+    .app-sidebar .logo-icon .logo-text{
+        visibility: hidden;
+    }
+    .card .card-body {
+        padding: 25px 15px;
+    }
+    div.dataTables_wrapper div.dataTables_filter, div.dataTables_length{
+        text-align: left  !important;
+    }
+    div.dataTables_length{
+        margin-bottom: 10px;
+    }
+    nav.navbar.navbar-light.navbar-expand-lg {
+        padding-left: 0;
+    }
+    .app-content .page-description {
+        padding-bottom: 20px;
+    }
+    .app-header .navbar{
+        height: 110px;
+    }
+}
