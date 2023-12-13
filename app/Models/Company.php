@@ -11,7 +11,7 @@ class Company extends Model
 
     protected $guarded =[]; 
 
-    
+    protected $dates = ['due_date'];
 
     public function user()
     {
