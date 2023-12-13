@@ -7,7 +7,7 @@
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Users</h1>
             <a href="{{ route('admin.users.create') }}"
-                class="btn btn-primary btn-sm text-right">Add new user</a>
+                class="btn btn-success btn-sm text-right">Add new user</a>
         </div>
 
         <div class="row">
@@ -33,27 +33,29 @@
                                     <td>
                                         @foreach($user->roles as $role)
                                         <span
-                                            class="badge bg-primary">{{ $role->name }}
+                                            class="badge bg-success">{{ $role->name }}
                                         </span>
                                         @endforeach
                                     </td>
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ route('admin.users.show', $user->id) }}"
-                                                class="btn btn-success btn-sm">Show</a>
-                                            @can('user_update')
-                                                <a href="{{ route('admin.users.edit', $user->id) }}"
-                                                class="btn btn-info btn-sm">Edit</a>
-                                            @endcan
-                                            @can('user_delete')
-                                                <form action="{{route('admin.users.destroy',
-                                                    $user->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
-                                                </form>
-                                            @endcan
+                                                class="btn btn-primary btn-sm">Show</a>
+                                            @if($user->id != 1)
+                                                @can('user_update')
+                                                    <a href="{{ route('admin.users.edit', $user->id) }}"
+                                                    class="btn btn-info btn-sm">Edit</a>
+                                                @endcan
+                                                @can('user_delete')
+                                                    <form action="{{route('admin.users.destroy',
+                                                        $user->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
+                                                    </form>
+                                                @endcan
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

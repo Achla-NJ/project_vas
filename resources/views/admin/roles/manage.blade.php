@@ -22,7 +22,7 @@
                                     type="text" 
                                     class="form-control" 
                                     name="name" 
-                                    placeholder="Name" required>
+                                    placeholder="Name" required readonly>
                             </div>
                             
                             <label for="permissions" class="form-label">Assign Permissions</label>

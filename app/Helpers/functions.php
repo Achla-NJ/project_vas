@@ -163,3 +163,9 @@ if(!function_exists("profile")) {
         }
     }
 }
+
+function js_active_role_id(){
+    if(session()->has('active_role')){
+        return session()->get('active_role')['id'];
+    }   
+}

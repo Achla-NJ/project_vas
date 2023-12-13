@@ -32,6 +32,8 @@ class User extends Authenticatable
         'email',
         'mobile',
         'password',
+        'save_password',
+        'gender'
     ];
 
     /**
@@ -67,6 +69,11 @@ class User extends Authenticatable
     public function companies()
     {
         return $this->belongsToMany(Comapny::class);
+    } 
+
+    public function userRoles()
+    {
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
 
 }

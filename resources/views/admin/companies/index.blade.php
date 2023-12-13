@@ -8,7 +8,7 @@
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Companies</h1>
             <a href="{{ route('admin.companies.create') }}"
-                class="btn btn-primary btn-sm text-right">Add Company</a>
+                class="btn btn-success btn-sm text-right">Add Company</a>
         </div>
 
         <div class="row">
@@ -21,7 +21,10 @@
                                 <tr>
                                     <th>Sr No.</th>
                                     <th>Company Name</th>
-                                    <th>Trade Name</th>
+                                    @if(auth()->user()->hasRole('admin'))
+                                    <th>Added By</th>
+                                    @endif
+                                    <th>Role</th> 
                                     <th>Firm Type</th> 
                                     <th>Action</th>
                                 </tr>
@@ -31,11 +34,15 @@
                                 <tr>
                                     <td>{{ $project->id }}</td>
                                     <td>{{ $project->company_name }}</td>
+                                    @if(auth()->user()->hasRole('admin'))
+                                        <td>{{ $project->user->name }}</td>
+                                    @endif
+                                    <td><span class="badge badge-success badge-style-light form-control-sm">{{ $project->role->name }}</span></td>
                                     <td>{{ $project->trade_name }}</td>
                                     <td>{{ ucwords(str_replace('_',' ',$project->firm_type)) }}</td> 
                                     <td>
                                         <div class="d-flex">
-                                            <a class="btn btn-success btn-sm" href="{{ route('admin.companies.show', $project->id) }}">Show</a>
+                                            <a class="btn btn-primary btn-sm" href="{{ route('admin.companies.show', $project->id) }}">Show</a>
                                             @can('company_update')
                                             <a class="btn btn-info btn-sm" href="{{ route('admin.companies.edit', $project->id) }}">Edit</a>
                                             @endcan

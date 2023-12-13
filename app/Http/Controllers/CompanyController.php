@@ -23,7 +23,15 @@ class CompanyController extends Controller
     {
         abort_if(Gate::denies('company_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $companies = Company::latest()->get();
+        $active_role = session()->get('active_role')['id'];        
+        
+        if(auth()->user()->hasRole('admin')){
+            $companies = Company::query()->where(['role_id' => $active_role ])->latest()->get();
+        }
+        else{
+            $companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->latest()->get();
+        }
+ 
 
         return view('admin.companies.index', compact('companies'));
     }

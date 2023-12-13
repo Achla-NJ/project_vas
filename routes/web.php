@@ -22,8 +22,10 @@ Route::group(['middleware'=>'guest'],function(){
     Route::post('/signin',[AuthController::class,'signin'])->name('signin');
 });
 
-Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
+Route::as('admin.')->middleware(['is_admin', 'is_join'])->prefix('admin')->group(function(){
     Route::get('dashboard',[UserController::class,'dashboard'])->name('dashboard');
+    Route::get('join',[AuthController::class,'join'])->name('join');
+    Route::get('join-as/{role}',[AuthController::class,'joinAs'])->name('join-as');
     Route::get('profile',[UserController::class,'profile'])->name('profile');
     Route::post('update-profile',[UserController::class,'updateProfile'])->name('update-profile');
     Route::get('switch/{role}',[UserController::class,'switch'])->name('switch');
@@ -34,8 +36,11 @@ Route::as('admin.')->middleware('is_admin')->prefix('admin')->group(function(){
     Route::post('company-user',[CompanyController::class,'getCompanyUser'])->name('company-user');
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
+    
+    // Route::get('companies/{sale_type}',[CompanyController::class,'index'])->name('company.index');
+    // Route::get('company/create/{sale_type}',[CompanyController::class,'create'])->name('company.create');
     Route::resource('companies', CompanyController::class);
-    Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
+    // Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
     Route::get('history',[ActivityController::class,'index'])->name('history.index');
 
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');

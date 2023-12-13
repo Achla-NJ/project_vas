@@ -50,6 +50,21 @@
                                 <li class="nav-item">
                                     <a class="nav-link hide-sidebar-toggle-button" href="#"><i class="material-icons">first_page</i></a>
                                 </li>
+                                @php
+                                    $roles = auth()->user()->roles;
+                                @endphp
+                                @if (isset($roles) && count($roles) >1 ) 
+                                    @foreach ($roles as $role) 
+                                        @if($role->id != session()->get('active_role')['id'] && $role->id != 1)
+                                            <li class="nav-item d-flex align-items-center">
+                                                
+                                                <span class="widget-list-item-description"> 
+                                                    <a class="badge badge-success badge-style-light me-3 py-2 form-control-sm" href="{{ route('admin.switch' , $role['slug'])}}"> Switch To : {{$role['name']}}</a>
+                                                </span>
+                                            </li>    
+                                        @endif
+                                    @endforeach
+                                @endif
                                 
                             </ul>
             
@@ -58,16 +73,15 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item hidden-on-mobile"> 
 
-                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="{{profile()}}" alt=""></a>
+                                    <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown"><img src="{{profile()}}" alt="">
+                                        <b>{{ auth()->user()->name}}</b></a>
                                     <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
+                                        <li><span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></li>
                                         <li><a class="dropdown-item" href="{{route('admin.profile')}}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{{route('admin.signout')}}">Log Out</a></li>
                                         
-                                    </ul>
-
-                                
-                                </li>
-                                
+                                    </ul>                                
+                                </li>                                
                             </ul>
                         </div>
                     </div>

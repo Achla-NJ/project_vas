@@ -36,13 +36,13 @@
             </li>
             @endcan        
 
-            @can('permission_access')
+            {{-- @can('permission_access')
             <li class="">
                 <a href="{{route('admin.permissions.index')}}" >
                     <i class="material-icons-two-tone">grid_on</i>Permissions
                 </a>               
             </li>
-            @endcan        
+            @endcan         --}}
                  
             @can('company_access')
             <li class="">

@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 use Hash;
 use Session;
 use Illuminate\Support\Facades\Auth;
@@ -28,21 +29,40 @@ class AuthController extends Controller
         $remember_me = $request->has('remember_me');
         $login= Auth::attempt($user,$remember_me);
 
-        $user = Auth::user();
+        if( $login){
+            $user = Auth::user();
 
-        // Retrieve the first (or active) role associated with the user
-        $active_role = $user->roles->first();
+            if(count($user->roles) > 1 ){
+
+                return redirect()->route('admin.join');
+            }
+
+            else{ 
+
+                $active_role = $user->roles->first();
+                
+                session()->put('active_role' ,$active_role);
         
-        session()->put('active_role' ,$active_role);
-
-        if($login){
-            return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard');
+            }
         }
         else{
             $msg = 'Login details are not valid';
             $request->session()->flash('error-msg',$msg);
             return redirect()->route('login');
         }
+    }
+
+    public function join() {
+        $user = User::find(auth()->id());
+        return view('admin.auth.join' , compact('user'));
+    }
+
+    public function joinAs( $role) {
+        $role = Role::query()->where('slug',$role)->first(); 
+        session()->put('active_role' , $role);
+        
+        return redirect()->route('admin.dashboard');
     }
 
     public function signOut() {

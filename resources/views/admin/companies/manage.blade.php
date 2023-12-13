@@ -126,21 +126,25 @@
 
                             <div class="mb-3">
                                 <label for="sales_type" class="form-label">Sales Type:</label>
-                                <select class="form-select" id="sales_type" name="sales_type" required>
-                                    <option value="b2b" {{  isset($company->sales_type) && $company->sales_type == 'b2b'  ? 'selected' :'' }}>B2B</option>
-                                    <option value="b2c"{{  isset($company->sales_type) && $company->sales_type == 'b2c'  ? 'selected' :'' }}>B2C</option>
-                                </select>
+                                <input type="text" class="form-control" id="sales_type" readonly name="sales_type" required value="{{  session()->get('active_role')->slug}}" >
                             </div>
 
-                            <div id="aggregator_name_container" style="display: {{ isset($company->aggregator_name) && $company->sales_type == 'b2b'  ? 'block' : 'none'}};" class="mb-3">
-                                <label for="aggregator_name" class="form-label">Aggregator Name:</label>
-                                <input type="text" class="form-control" id="aggregator_name" name="aggregator_name" value="{{ $company->aggregator_name ?? old('aggregator_name')}}" >
-                            </div>
+                             @if (session()->get('active_role')->slug == 'b2b')
+                                <div id="aggregator_name_container"  class="mb-3">
+                                    <label for="aggregator_name" class="form-label">Aggregator Name:</label>
+                                    <input type="text" class="form-control" id="aggregator_name" name="aggregator_name" value="{{ $company->aggregator_name ?? old('aggregator_name')}}" >
+                                </div>
+                             @endif
 
-                            <div id="employee_name_container" style="display: {{ isset($company->aggregator_name) && $company->sales_type == 'b2c'  ? 'block' : 'none'}};"  class="mb-3">
-                                <label for="employee_name" class="form-label">Vselek’s Employee Name:</label>
-                                <input type="text" class="form-control" id="employee_name" name="employee_name" value="{{ $company->employee_name ?? old('employee_name')}}" >
-                            </div>
+                             @if (session()->get('active_role')->slug == 'b2c')
+                                <div id="employee_name_container"    class="mb-3">
+                                    <label for="employee_name" class="form-label">Vselek’s Employee Name:</label>
+                                    <input type="text" class="form-control" id="employee_name" name="employee_name" value="{{ $company->employee_name ?? old('employee_name')}}" >
+                                </div>
+                             @endif
+                            
+
+                            
 
                             @if (isset($disp) && $disp =='1')
                                 <button type="submit" class="btn btn-primary">Save</button>

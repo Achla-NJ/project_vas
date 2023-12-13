@@ -8,7 +8,7 @@
         <div class="mb-3">
             <h1 class="h3 d-inline align-middle">Permissions</h1>
             <a href="{{ route('admin.permissions.create') }}"
-                class="btn btn-primary btn-sm text-right">Add Permission</a>
+                class="btn btn-success btn-sm text-right">Add Permission</a>
         </div>
         <div class="row">
             <div class="col-12"> 

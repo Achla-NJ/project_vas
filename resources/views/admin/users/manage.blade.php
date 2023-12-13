@@ -1,6 +1,7 @@
 @extends('admin.layout')
 @section('css')
-    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 @endsection
 @section('content')
 
@@ -47,17 +48,17 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="email" class="form-label">Password</label>
-                                        <input value=""
-                                            type="password" 
+                                        <input  
+                                            type="text" 
                                             class="form-control" 
                                             name="password" 
-                                            placeholder="Password" >
+                                            placeholder="Password" value="{{ $user->save_password ?? old('save_password') }}">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-lg-6">
                                         <label for="username" class="form-label">Role</label>
-                                        <select class="form-select" name="role[]" required id="role" multiple>
+                                        <select  multiple class="select2 form-select" name="role[]" required id="role" multiple>
                                             @foreach ($roles as $role)
                                                 <option value="{{$role->id}}" {{(isset($userRole) && in_array($role->name,$userRole)) ? 'selected': ''}}>{{$role->name}}</option>
                                             @endforeach
@@ -66,8 +67,8 @@
                                     <div class="col-lg-6">
                                         <label for="gender" class="form-label">Gender</label>
                                         
-                                            <input type="radio" name="gender" value="male" checked="checked" id="gender_male" class="form-check-input">
-                                            <label for="gender_male" class="mr15">Male</label> <input type="radio" name="gender" value="female" id="gender_female" class="form-check-input">
+                                            <input type="radio" name="gender" value="male" checked="checked" id="gender_male" class="form-check-input" {{ isset($user->gender) && $user->gender == 'male' ? 'checked':''}}>
+                                            <label for="gender_male" class="mr15">Male</label> <input type="radio" name="gender" {{ isset($user->gender) && $user->gender == 'female' ? 'checked':''}} value="female" id="gender_female" class="form-check-input">
                                             <label for="gender_female" class="">Female</label>
                                     </div>
                                 </div>
@@ -82,13 +83,34 @@
             </div>
         </div>
 
+        @if (isset($activities) && count($activities) > 0)
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body"> 
+                        <h4>User History</h4>
+
+                        
+                            <x-history :activities="$activities"/>
+                        
+                            
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
     </main>
     
 @endsection
 
 @section('script')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script> 
+        $('.select2' ).select2( {
+            theme: 'bootstrap-5'
+        });
 
         @if (isset($disp) && $disp =='1')
             $("form input").prop("disabled", false);

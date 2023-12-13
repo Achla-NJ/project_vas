@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\UserRequest;
 use Gate;
+use App\Models\Activity;
 use Auth;
 use Illuminate\Http\Response;
 class UserController extends Controller
@@ -31,9 +32,23 @@ class UserController extends Controller
     public function index() 
     {
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
-        $users = User::latest()->get();
 
+        $active_role = session()->get('active_role')['id']; 
+ 
+        if(auth()->user()->hasRole('admin')){
+            if($active_role == '1'){
+                $users = User::query()->latest()->get();
+            }else{   
+                $users = User::whereHas('userRoles', function ($query) use ($active_role) {
+                    $query->where('role_id', $active_role);
+                })->latest()->get(); 
+ 
+            }            
+        }
+        else{
+            $users = User::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->latest()->get();
+        }
+        
         return view('admin.users.index', compact('users'));
     }
 
@@ -61,9 +76,19 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         
+        $active_role = session()->get('active_role')['id']; 
+
         $user->create(array_merge($request->validated(), [
-            'password' => $request->password 
+            'password' => $request->password ,
+            'save_password'=>$request->password,
+            'gender'=>$request->gender,
+            'added_by' => auth()->id(),
+            'role_id' => $active_role,
         ]))->assignRole($request->role);
+
+       
+
+        js_activity_log(auth()->id() , "App\Models\User" , 'create' , $user->id , $active_role);
 
         return redirect()->route('admin.users.index')
             ->withSuccess(__('User created successfully.'));
@@ -97,11 +122,19 @@ class UserController extends Controller
     public function update(User $user, UserRequest $request) 
     {
         abort_if(Gate::denies('user_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         
-        $user->update($request->validated());
+        $active_role = session()->get('active_role')['id']; 
+
+        $data = $request->validated();
+        $data['save_password'] = $request->password;
+        $data['added_by'] = auth()->id();
+        $data['role_id'] = $active_role;
+        $user->update($data);
 
         $user->syncRoles($request->get('role'));
+
+        js_activity_log(auth()->id() , "App\Models\User" , 'update' , $user->id , $active_role);
+        
 
         return redirect()->route('admin.users.index')
             ->withSuccess(__('User updated successfully.'));
@@ -120,6 +153,10 @@ class UserController extends Controller
 
         $user->delete();
 
+        $active_role = session()->get('active_role')['id']; 
+
+        js_activity_log(auth()->id() , "App\Models\User" , 'delete' , $user->id , $active_role);
+
         return redirect()->route('admin.users.index')
             ->withSuccess(__('User deleted successfully.'));
     }
@@ -128,11 +165,14 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $activities = Activity::query()->where(['user_id' => $user->id ])->latest()->get();
+
 
         return view('admin.users.manage', [
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
-            'roles' => Role::latest()->get(),'disp'=>'0'
+            'roles' => Role::latest()->get(),'disp'=>'0' , 
+            'activities' => $activities
         ]);
     }
 

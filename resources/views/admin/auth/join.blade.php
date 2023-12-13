@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,57 +32,23 @@
 </head>
 <body>
     <div class="app app-auth-sign-in align-content-stretch d-flex flex-wrap justify-content-end">
-        <div class="app-auth-background">
-
-        </div>
+         
         <div class="app-auth-container">
             <div class="logo">
                 <a href="javascript:void(0)">{{ env('APP_NAME') }}</a>
             </div>
-            <p class="auth-description">Please sign-in to your account and continue to the dashboard. </p>
+            <h3 class="my-3">Join As: </h3>
 
-			<form action="{{route('signin')}}" method="post">
-				@csrf
-				@if ($errors->any() || Session::has('error-msg'))
-				<div class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					<div class="alert-message">
-						@foreach ($errors->all() as $error)
-							<div>{{$error}}</div>
-						@endforeach
-
-						<div> {{ Session::get('error-msg') ?? ''}}</div>
-					</div>
-				</div>
-				@endif
-				<div class="mb-3">
-					<label class="form-label">Email</label>
-					<input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
-				</div>
-				<div class="mb-3">
-					<label class="form-label">Password</label>
-					<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
-					{{-- <small>
-						<a href="pages-reset-password.html">Forgot password?</a>
-					</small> --}}
-				</div>
-				<div>
-					<label class="form-check">
-						<input class="form-check-input" type="checkbox" value="remember-me" name="remember-me" checked>
-						<span class="form-check-label">
-							Remember me next time
-						</span>
-					</label>
-				</div>
-				<div class="text-center mt-3">
-					<button type="submit" class="btn btn-lg btn-success">Sign in</button>
-				</div>
-			</form>
-
-            
-            <div class="divider"></div> 
+            @foreach ($user->roles as $role)
+                @if ($role->id != 1)
+                    <a href="{{ route('admin.join-as' , $role->slug)}}"><span class="badge badge-success badge-style-light form-control-sm my-2"> {{$role->name}} </span></a>
+                @endif
+            @endforeach 
+             
         </div>
     </div>
 </body>
 </html>
 
+
+ 
