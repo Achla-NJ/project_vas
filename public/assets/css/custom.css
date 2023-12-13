@@ -34,7 +34,7 @@
     background-color: #e7f8f0;
 }
 .app-header::before{
-    background: #4bad4875;
+    background: #9fd5a3;
 }
 .app-menu>ul>li.active-page>a, .app-menu>ul>li.open>a, .app-menu>ul>li>a:hover{
     color: var(--green);
@@ -83,7 +83,14 @@
     opacity: 1;
     visibility: visible;
 }
-
+@media (max-width: 992px){
+    .navbar>.container-fluid{
+        align-items: start;
+    }
+    .navbar-nav{
+        flex-direction: row;
+    }
+}
 @media (max-width: 767px) {
     .history-wrapper{
         flex-wrap: wrap;
@@ -111,6 +118,10 @@
         padding-bottom: 20px;
     }
     .app-header .navbar{
-        height: 110px;
+        height: 92px;
+    }
+    .app-header .navbar .navbar-nav>li>a{
+        padding-left: 0;
+        padding-right: 0;
     }
 }

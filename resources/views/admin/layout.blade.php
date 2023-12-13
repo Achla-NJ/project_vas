@@ -74,12 +74,12 @@
                                 <li class="nav-item"> 
 
                                     <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown">
-                                        <span class="badge badge-success badge-style-light form-control-sm me-2 d-none d-md-inline">{{session()->get('active_role')['name']}}</span>
+                                        <span class="badge badge-success badge-style-light form-control-sm me-2 d-none d-lg-inline">{{session()->get('active_role')['name']}}</span>
                                         <img src="{{profile()}}" alt="">
                                         <b>{{ auth()->user()->name}}</b>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end language-dropdown" aria-labelledby="languageDropDown">
-                                        <li class="d-block d-md-none"><span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></li>
+                                        <li class="d-block d-lg-none"><span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></li>
                                         <li><a class="dropdown-item" href="{{route('admin.profile')}}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{{route('admin.signout')}}">Log Out</a></li>
                                         

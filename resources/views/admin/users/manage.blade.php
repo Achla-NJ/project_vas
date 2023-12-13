@@ -41,7 +41,7 @@
                                     <div class="col-lg-6">
                                         <label for="mobile" class="form-label">Mobile</label>
                                         <input value="{{ $user->mobile ?? old('mobile') }}"
-                                            type="number" 
+                                            type="tel" 
                                             class="form-control" 
                                             name="mobile" 
                                             placeholder="Mobile" required>
