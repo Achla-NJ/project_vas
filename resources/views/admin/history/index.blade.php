@@ -36,7 +36,7 @@
                         
                         <div class="col-md-4 mt-3">
                             <button type="submit" class="btn btn-info">Apply Filters</button>
-                            <a href="{{ route('admin.companies.index')}}" class="btn btn-danger">Reset Filters</a>
+                            <a href="{{ route('admin.history.index')}}" class="btn btn-danger">Reset Filters</a>
                         </div>
                     </div>
                 </form>
