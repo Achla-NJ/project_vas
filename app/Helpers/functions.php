@@ -154,8 +154,13 @@ if(!function_exists("js_email")) {
 }
 
 if(!function_exists("profile")) {
-    function profile() { 
-        $user = User::find(auth()->id());
+    function profile($id ='') { 
+        if(empty($id)){
+            $user = User::find(auth()->id());
+        }else{
+            $user = User::find($id);
+        }
+        
         if(!empty($user->file)){
             return asset('storage/'.$user->file);
         }else{

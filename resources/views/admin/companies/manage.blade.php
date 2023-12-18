@@ -1,6 +1,8 @@
 @extends('admin.layout')
 @section('css')
 <link rel="stylesheet" href="{{asset('assets/css/select2.min.css')}}">
+<!-- Include Date Range Picker CSS from CDN -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 @endsection
 @section('content')
 
@@ -13,7 +15,7 @@
             <div class="col-lg-8">
                 <div class="card company-form">
                     <div class="card-body">
-                        <form method="POST" action="{{(isset($company->id)) ? route('admin.companies.update',[$company->id]) : route('admin.companies.store') }}">
+                        <form method="POST" action="{{(isset($company->id)) ? route('admin.companies.update',[$company->id]) : route('admin.companies.store') }}" enctype="multipart/form-data" novalidate>
                             @if(isset($company->id))@method('PUT')@endif
                             @csrf
                             <h5 class="mb-4">Company Information</h5>
@@ -59,6 +61,15 @@
                                         <input type="text" class="form-control" id="gstin_no" name="gstin_no" required value="{{ $company->gstin_no ?? old('gstin_no')}}" placeholder="29ABCDE1234F1Z5">
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="gst_file" class="form-label">GSTIN File:</label>
+                                        <input type="file" class="form-control" id="gst_file" name="gst_file" required  >
+                                        <a href="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="business_website" class="form-label">Business Website:</label>
@@ -82,6 +93,13 @@
                                         <input type="text" class="form-control" id="aadhar_card_no" name="aadhar_card_no" required value="{{ $company->aadhar_card_no ?? old('aadhar_card_no')}}" placeholder="xxxx-xxxx-xxxx">
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="aadhar_card_file" class="form-label">Aadhar Card File:</label>
+                                        <input type="file" class="form-control" id="aadhar_card_file" name="aadhar_card_file" required  >
+                                        <a href="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                    </div>
+                                </div>
                             </div>
                             
                             <div class="row">
@@ -89,6 +107,13 @@
                                     <div class="mb-3">
                                         <label for="pan_card_no" class="form-label">Pan Card No:</label>
                                         <input type="text" class="form-control" id="pan_card_no" name="pan_card_no" required value="{{ $company->pan_card_no ?? old('pan_card_no')}}" placeholder="ABCTY1234D">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="pan_card_file" class="form-label">Pan Card File:</label>
+                                        <input type="file" class="form-control" id="pan_card_file" name="pan_card_file" required  >
+                                        <a href="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -161,7 +186,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="due_date" class="form-label">Due Date:</label>
-                                        <input type="date" class="form-control" id="due_date" name="due_date" required value="{{ isset($company->due_date)  ? $company->due_date->toDateString() : old('due_date')}}" >
+                                        <input type="text" class="form-control" id="due_date" name="due_date" required value="{{ isset($company->due_date)  ? $company->due_date->toDateString() : old('due_date')}}" >
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +237,9 @@
 @section('script')
     <script src="{{asset('assets/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/js/main.js')}}"></script>
-    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script>
         document.getElementById('sales_type').addEventListener('change', function() {
@@ -252,4 +279,15 @@
         @endif
        
     </script>
+<script>
+    $(function() {
+      $('input[name="due_date"]').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+          format: 'D-MM-YYYY'
+        }
+      });
+    });
+    </script>
+
 @endsection

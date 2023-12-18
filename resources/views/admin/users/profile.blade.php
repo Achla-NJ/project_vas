@@ -41,7 +41,7 @@
                                             name="file"   >
                                     </div>
 
-                                    <img id="blah" src="{{profile()}}" alt="your image" style="width: 100px;"  class="my-2"/>
+                                    <img id="blah" src="{{profile($user->id)}}" alt="your image" style="width: 100px;"  class="my-2"/>
                                 </div> 
                                 <button type="submit" class="btn btn-success">Save</button>                      
                         </form>

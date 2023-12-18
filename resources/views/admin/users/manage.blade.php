@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{(isset($user->id)) ? route('admin.users.update',[$user->id]) : route('admin.users.store') }}">
+                        <form method="POST" action="{{(isset($user->id)) ? route('admin.users.update',[$user->id]) : route('admin.users.store') }}" enctype="multipart/form-data">
                             @if(isset($user->id))@method('PUT')@endif
                             @csrf
                             
@@ -49,11 +49,13 @@
                                     <div class="col-lg-6">
                                         <label for="email" class="form-label">Password</label>
                                         <input  
-                                            type="text" 
+                                            type="password" 
                                             class="form-control" 
-                                            name="password" 
+                                            name="password"   id="password"
                                             placeholder="Password" value="{{ $user->save_password ?? old('save_password') }}">
+                                            <input type="checkbox" id="showPassword"> 
                                     </div>
+                                    
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-lg-6">
@@ -71,7 +73,18 @@
                                             <label for="gender_male" class="mr15">Male</label> <input type="radio" name="gender" {{ isset($user->gender) && $user->gender == 'female' ? 'checked':''}} value="female" id="gender_female" class="form-check-input">
                                             <label for="gender_female" class="">Female</label>
                                     </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="file" class="form-label">Profile</label>
+                                        <input  
+                                        onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"
+                                            type="file" 
+                                            class="form-control" 
+                                            name="file"   >
+                                    </div>
+
+                                    <img id="blah" src="{{profile($user->id ?? '')}}" alt="your image" style="width: 100px;"  class="my-2"/>
                                 </div>
+                                
                             <div class="row">
                                 <div class="col-6">
                                     <a href="{{ route('admin.users.index') }}" class="btn back-btn">Back</a> 
@@ -135,4 +148,25 @@
         @endif
     
     </script>
+
+<script>
+    $(document).ready(function() {
+        // Function to toggle password visibility
+        function togglePassword() {
+            var passwordInput = $('#password');
+            var showPasswordCheckbox = $('#showPassword');
+
+            if (showPasswordCheckbox.prop('checked')) {
+                passwordInput.attr('type', 'text');
+            } else {
+                passwordInput.attr('type', 'password');
+            }
+        }
+
+        // Bind the function to the checkbox change event
+        $('#showPassword').change(function() {
+            togglePassword();
+        });
+    });
+</script>
 @endsection

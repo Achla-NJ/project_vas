@@ -22,7 +22,8 @@ class CompanyRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
+        $id = $this->route('company')->id ?? '';
         return [
             'company_name' => 'required|string|max:255',
             'trade_name' => 'required|string|max:255',
@@ -46,6 +47,9 @@ class CompanyRequest extends FormRequest
             'due_date' => 'nullable',
             'user_id' => 'nullable',
             'role_id' => 'nullable',
+            'gst_file'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png',
+            'aadhar_card_file'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png',
+            'pan_card_file'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png', 
         ];
     }
 }

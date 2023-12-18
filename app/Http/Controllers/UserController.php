@@ -9,8 +9,11 @@ use Spatie\Permission\Models\Role;
 use App\Http\Requests\UserRequest;
 use Gate;
 use App\Models\Activity;
+use App\Models\Company;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
@@ -23,10 +26,34 @@ class UserController extends Controller
         abort_if(Gate::denies('dashboard'), Response::HTTP_FORBIDDEN, '403 Forbidden');
  
         $user = Auth::user();
- 
+        
+        $currentMonth = Carbon::now()->format('m'); // Get the current month
+
         $roles = $user->roles;
+
+        $active_role = session()->get('active_role')['id'];        
+        
+        if(auth()->user()->hasRole('admin')){
+            $companies = Company::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
+            $activities = Activity::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
+
+            // Your Eloquent query
+            $due_date_companies = Company::query()->where('role_id' , $active_role)->whereMonth('created_at', $currentMonth)
+                ->whereYear('due_date', Carbon::now()->year)
+                ->orderBy('due_date')
+                ->get();
+        }
+        else{
+            $companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->latest()->limit(10)->get();
+            $activities = Activity::query()->where(['user_id' => $user->id , 'role_id' => $active_role ])->latest()->latest()->limit(10)->get();
+            $due_date_companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->whereMonth('created_at', $currentMonth)
+                ->whereYear('due_date', Carbon::now()->year)
+                ->orderBy('due_date')
+                ->get();
+        }
+
  
-        return view('admin.dashboard.index', compact('roles'));
+        return view('admin.dashboard.index', compact('roles' , 'companies' ,'activities' , 'due_date_companies'));
     }
 
     public function index() 
@@ -78,7 +105,9 @@ class UserController extends Controller
         
         $active_role = session()->get('active_role')['id'];        
         
-        $add_user = $user->create(array_merge($request->validated(), [
+        $add_user = $user->create(array_merge($request->validated([
+            'file' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
+        ]), [
             'password' => $request->password ,
             'save_password'=>$request->password,
             'gender'=>$request->gender,
@@ -86,7 +115,14 @@ class UserController extends Controller
             'role_id' => $active_role,
         ]))->assignRole($request->role);
 
-        js_activity_log(auth()->id() , "App\Models\User" , 'create' , $user->id , $active_role ,js_model_name("App\Models\User" , $add_user->id));
+        if($request->hasfile('file')){
+            $file =$request->file('file')->store( 'uploads/profile', 'public');
+            $add_user->file =$file ;
+            $add_user->save();
+        }
+
+
+        js_activity_log(auth()->id() , "App\Models\User" , 'created' , $user->id , $active_role ,js_model_name("App\Models\User" , $add_user->id));
 
 
         return redirect()->route('admin.users.index')
@@ -124,15 +160,30 @@ class UserController extends Controller
         
         $active_role = session()->get('active_role')['id']; 
 
-        $data = $request->validated();
-        $data['save_password'] = $request->password;
+        $data = $request->validated([
+            'file' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
+            'password' => 'nullable|string|min:6',
+            'gender' => 'nullable',
+        ]);
+
+        $data['save_password'] = $request->password; 
+        $data['password'] = $request->password;
+        $data['gender'] = $data['gender'];
+
         $data['added_by'] = auth()->id();
         $data['role_id'] = $active_role;
-        $user->update($data);
+        $user->update($data);   
+        
+        
+        if($request->hasfile('file')){
+            $file =$request->file('file')->store( 'uploads/profile', 'public');
+            $user->file =$file ;
+            $user->save();
+        }
 
         $user->syncRoles($request->get('role'));
 
-        js_activity_log(auth()->id() , "App\Models\User" , 'update' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
+        js_activity_log(auth()->id() , "App\Models\User" , 'updated' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
         
 
         return redirect()->route('admin.users.index')
@@ -154,7 +205,7 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id']; 
 
-        js_activity_log(auth()->id() , "App\Models\User" , 'delete' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
+        js_activity_log(auth()->id() , "App\Models\User" , 'deleted' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
 
         $user->delete();
         

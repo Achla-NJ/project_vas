@@ -9,6 +9,74 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-xl-6">
+        <div class="card widget widget-list">
+            <div class="card-header">
+                <h5 class="card-title">Last 10 Companies Added</h5>
+            </div>
+            
+            <div class="card-body">
+                @if (count($companies) > 0 ) 
+                <table  class="table table-striped" style="width:100%">                    
+                    <tbody>
+                        @foreach ($companies as $key => $project)
+                        <tr>
+                            <td>{{ $project->company_name }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="card widget widget-list">
+            <div class="card-header">
+                <h5 class="card-title">Due Dates</h5>
+            </div>
+            
+            <div class="card-body">
+                @if (count($due_date_companies) > 0 ) 
+                <table  class="table table-striped" style="width:100%">    
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Due Date</th>
+                        </tr>                        
+                    </thead>                
+                    <tbody>
+                        @foreach ($due_date_companies as $key => $project)
+                        <tr>
+                            <td>{{ $project->company_name }}</td>
+                            <td>{{ date('d M , Y',strtotime($project->due_date)) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="card widget widget-list">
+            <div class="card-header">
+                <h5 class="card-title">Last 10 Activities</h5>
+            </div>
+            
+            <div class="card-body">
+                @if (count($activities) > 0)
+                    <x-history :activities="$activities"/>
+                @else
+                    <p>No updates yet</p>
+                @endif
+            </div>
+        </div>
+    </div>
+
+
     {{-- <div class="col-xl-4">
         <div class="card widget widget-list">
             <div class="card-header">

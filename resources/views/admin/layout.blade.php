@@ -29,7 +29,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/images/neptune.png')}}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/neptune.png')}}" />
     <link rel="stylesheet" href="{{asset('assets/plugins/toast/css/toastr.min.css')}}">
-
+<style>
+    nav svg{
+        width:40px;
+    }
+</style>
     @yield('css')
 </head>
 <body>
