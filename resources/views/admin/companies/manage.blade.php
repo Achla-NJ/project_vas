@@ -12,7 +12,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="card company-form">
                     <div class="card-body">
                         <form method="POST" action="{{(isset($company->id)) ? route('admin.companies.update',[$company->id]) : route('admin.companies.store') }}" enctype="multipart/form-data" novalidate>
@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -65,8 +65,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="gst_file" class="form-label">GSTIN File:</label>
-                                        <input type="file" class="form-control" id="gst_file" name="gst_file" required  >
-                                        <a href="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        <div class="company-file-fields">
+                                            <input type="file" class="form-control" id="gst_file" name="gst_file" required  >
+                                            <a href="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" /></a>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -77,7 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <h5 class="mb-4 mt-4">Company Owners / Directors Details</h5>
 
                             <div class="row">
@@ -96,12 +98,14 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="aadhar_card_file" class="form-label">Aadhar Card File:</label>
-                                        <input type="file" class="form-control" id="aadhar_card_file" name="aadhar_card_file" required  >
-                                        <a href="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        <div class="company-file-fields">
+                                            <input type="file" class="form-control" id="aadhar_card_file" name="aadhar_card_file" required  >
+                                            <a href="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" /></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -112,8 +116,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="pan_card_file" class="form-label">Pan Card File:</label>
-                                        <input type="file" class="form-control" id="pan_card_file" name="pan_card_file" required  >
-                                        <a href="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        <div class="company-file-fields">
+                                            <input type="file" class="form-control" id="pan_card_file" name="pan_card_file" required  >
+                                            <a href="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" /></a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -127,11 +133,11 @@
                                         <label for="otp" class="form-label">Enter OTP:</label>
                                         <input type="text" class="form-control" id="otp" name="otp" >
                                     </div>
-                                    
+
                                     <input type="hidden" name="mobile_verified" id="mobile_verified" value="0">
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -146,7 +152,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             <h5 class="mb-4 mt-4">Authorised Person Details</h5>
 
@@ -159,27 +165,25 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="authorized_person_aadhar_file" class="form-label">Pan Card File:</label>
-                                        <input type="file" class="form-control" id="authorized_person_aadhar_file" name="authorized_person_aadhar_file" required  >
-                                        <a href="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
                                         <label for="contact_no" class="form-label">Contact No:</label>
                                         <input type="tel" class="form-control" id="contact_no" name="contact_no" required value="{{ $company->contact_no ?? old('contact_no')}}" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="authorized_person_pan_file" class="form-label">Pan Card File:</label>
-                                        <input type="file" class="form-control" id="authorized_person_pan_file" name="authorized_person_pan_file" required  >
-                                        <a href="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        <label for="authorized_person_pan" class="form-label">Pan Card:</label>
+                                        <input type="text" class="form-control" id="authorized_person_pan" name="authorized_person_pan" required value="{{ $company->authorized_person_pan ?? old('authorized_person_pan')}}" placeholder="ABCTY1234D">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="authorized_person_pan_file" class="form-label">Pan Card File:</label>
+                                        <div class="company-file-fields">
+                                            <input type="file" class="form-control" id="authorized_person_pan_file" name="authorized_person_pan_file" required  >
+                                            <a href="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="authorized_person_aadhar" class="form-label">Aadhar Card:</label>
@@ -188,8 +192,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="authorized_person_pan" class="form-label">Pan Card:</label>
-                                        <input type="text" class="form-control" id="authorized_person_pan" name="authorized_person_pan" required value="{{ $company->authorized_person_pan ?? old('authorized_person_pan')}}" placeholder="ABCTY1234D">
+                                        <label for="authorized_person_aadhar_file" class="form-label">Aadhar Card File:</label>
+                                        <div class="company-file-fields">
+                                            <input type="file" class="form-control" id="authorized_person_aadhar_file" name="authorized_person_aadhar_file" required  >
+                                            <a href="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -200,8 +207,10 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="work_agreement" class="form-label">Work Agreement:</label>
-                                        <input type="file" class="form-control" id="work_agreement" name="work_agreement" required  >
-                                        <a href="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        <div class="company-file-fields">
+                                            <input type="file" class="form-control" id="work_agreement" name="work_agreement" required  >
+                                            <a href="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -225,7 +234,7 @@
                                         <input type="text" class="form-control" id="aggregator_name" name="aggregator_name" value="{{ $company->aggregator_name ?? old('aggregator_name')}}" >
                                     </div>
                                     @endif
-        
+
                                     @if (session()->get('active_role')->slug == 'b2c')
                                         <div id="employee_name_container"    class="mb-3">
                                             <label for="employee_name" class="form-label">Vselek’s Employee Name:</label>
@@ -234,7 +243,7 @@
                                     @endif
                                 </div>
                             </div>
-                            
+
                             <div class="row">
                                 <div class="col-6">
                                     <a href="{{ route('admin.companies.index') }}" class="btn back-btn"> Back</a>
@@ -246,14 +255,14 @@
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
 
     </main>
-    
+
 @endsection
 @section('script')
     <script src="{{asset('assets/js/select2.min.js')}}"></script>
@@ -278,7 +287,7 @@
         });
 
         function generateAndSendOTP() {
-            
+
             document.getElementById('otp_verification').style.display = 'block';
         }
 
@@ -288,7 +297,7 @@
             $("form select").prop("disabled", false);
             $("form radio").prop("disabled", false);
             $("form checkbox").prop("disabled", false);
-            
+
         @else
             $("form input").prop("disabled", true);
             $("form textarea").prop("disabled", true);
@@ -298,7 +307,7 @@
             $("form checkbox").prop("disabled", true);
 
         @endif
-       
+
     </script>
 <script>
     $(function() {

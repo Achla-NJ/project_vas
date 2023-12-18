@@ -9,7 +9,7 @@
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
     <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    
+
     <!-- Title -->
     <title>Neptune - Responsive Admin Dashboard Template</title>
 
@@ -22,12 +22,12 @@
     <link href="{{ asset('assets/plugins/perfectscroll/perfect-scrollbar.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/pace/pace.css')}}" rel="stylesheet">
 
-    
+
     <!-- Theme Styles -->
     <link href="{{ asset('assets/css/main.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css')}}" rel="stylesheet">
 
-   
+
 </head>
 <body>
     <div class="app app-auth-sign-in align-content-stretch d-flex flex-wrap justify-content-end">
@@ -60,7 +60,12 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label">Password</label>
-					<input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+					<div class="password-wrapper">
+						<input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="Enter your password" />
+						<a href="javascript:void(0)" class="eye-icon" id="showLoginPassword">
+							<i class="material-icons-two-tone">visibility_off</i>
+						</a>
+					</div>
 					{{-- <small>
 						<a href="pages-reset-password.html">Forgot password?</a>
 					</small> --}}
@@ -78,10 +83,24 @@
 				</div>
 			</form>
 
-            
-            <div class="divider"></div> 
+
+            <div class="divider"></div>
         </div>
     </div>
+	<script src="{{asset('assets/plugins/jquery/jquery-3.5.1.min.js')}}"></script>
+	<script>
+		$(document).ready(function() {
+			$('#showLoginPassword').on('click',function(){
+				var input = $("#password");
+				input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+				if ($(this).find('i').text() == 'visibility_off'){
+					$(this).find('i').text('visibility');
+				} else {
+					$(this).find('i').text('visibility_off');
+				}
+			});
+    	});
+	</script>
 </body>
 </html>
 

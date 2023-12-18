@@ -38,21 +38,21 @@
                                     <label for="date_range" class="form-label">Date:</label>
                                     <input type="text" name="date_range" id="date_range" class="form-control" value="{{ request('date_range') }}" autocomplete="off">
                                 </div>
-                
-                                
+
+
                                 <div class="col-lg-4 mt-3">
-                                    <button type="submit" class="btn btn-info">Apply Filters</button>
-                                    <a href="{{ route('admin.companies.index')}}" class="btn btn-danger">Reset Filters</a>
+                                    <button type="submit" class="btn btn-info">Apply</button>
+                                    <a href="{{ route('admin.companies.index')}}" class="btn btn-danger">Reset</a>
                                 </div>
                             </div>
                         </form>
-                
+
                         <!-- ... existing code ... -->
                     </div>
                 </div>
             </div>
         </div>
-    
+
 
         <div class="row">
             <div class="col-12">
@@ -67,9 +67,9 @@
                                         <th>Company Name</th>
                                         @if(auth()->user()->hasRole('admin'))
                                         <th>Added By</th>
-                                        @endif 
-                                        <th>Firm Type</th> 
-                                        <th>Due Date</th> 
+                                        @endif
+                                        <th>Firm Type</th>
+                                        <th>Due Date</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -82,9 +82,9 @@
                                             <td><a href='{{ route('admin.users.show', $company->user_id) }}'><span class="badge badge-success badge-style-light form-control-sm">{{ $company->user->name }}</span></a></td>
                                         @endif
                                         {{-- <td><span class="badge badge-success badge-style-light form-control-sm">{{ $company->role->name }}</span></td> --}}
-                                        
-                                        <td>{{ ucwords(str_replace('_',' ',$company->firm_type)) }}</td> 
-                                        <td>{{ date('d M , Y',strtotime($company->due_date)) }}</td> 
+
+                                        <td>{{ ucwords(str_replace('_',' ',$company->firm_type)) }}</td>
+                                        <td>{{ date('d M , Y',strtotime($company->due_date)) }}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <a class="btn btn-success btn-sm" href="{{ route('admin.companies.show', $company->id) }}">Show</a>
@@ -96,11 +96,11 @@
                                                     $company->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
+                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                                     </form>
                                                 @endcan
                                             </div>
-                                            
+
                                         </td>
                                     </tr>
                                     @endforeach

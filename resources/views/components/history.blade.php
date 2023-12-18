@@ -1,28 +1,57 @@
-<ul class="widget-list-content list-unstyled"> 
-    @foreach ($activities as $activity) 
-        <li class="widget-list-item widget-list-item-green">                            
-            <h5 class="card-title history-wrapper">{{ $activity->user->name }}  
+<table class="widget-list-content table table-striped" style="width:100%">
+    <tbody>
+        @foreach ($activities as $activity)
+        <tr>
+            <td>{{ $activity->user->name }}
                 {{ $activity->operation}}
                 @php
-                    $model =  explode("\\" , $activity->model) ; 
+                    $model =  explode("\\" , $activity->model) ;
                     $model_name = end($model);
-                    $table = $activity->model::find($activity->model_id);                        
+                    $table = $activity->model::find($activity->model_id);
                 @endphp
                 {{$model_name}}
-                @if ($model_name == 'Company') 
+                @if ($model_name == 'Company')
                     ({{ $table->company_name ?? $activity->name }})
                 @endif
 
-                @if ($model_name == 'User') 
+                @if ($model_name == 'User')
                     ({{ $table->name ?? $activity->name }})
                 @endif
-                
-                
+            </td>
+            <td class="history-time">
+                {{ $activity->updated_at->diffForHumans()  }}
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+
+</table>
+
+{{-- <ul class="widget-list-content list-unstyled">
+    @foreach ($activities as $activity)
+        <li class="widget-list-item widget-list-item-green">
+            <h5 class="card-title history-wrapper">{{ $activity->user->name }}
+                {{ $activity->operation}}
+                @php
+                    $model =  explode("\\" , $activity->model) ;
+                    $model_name = end($model);
+                    $table = $activity->model::find($activity->model_id);
+                @endphp
+                {{$model_name}}
+                @if ($model_name == 'Company')
+                    ({{ $table->company_name ?? $activity->name }})
+                @endif
+
+                @if ($model_name == 'User')
+                    ({{ $table->name ?? $activity->name }})
+                @endif
+
+
                 <div class="history-time">
                     {{ $activity->updated_at->diffForHumans()  }}
                 </div>
 
             </h5>
-        </li>     
+        </li>
     @endforeach
-</ul>
+</ul> --}}

@@ -8,7 +8,7 @@
     <meta name="description" content="Responsive Admin Dashboard Template">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
-    
+
     <title>{{ env('APP_NAME') }}</title>
 
     <!-- Styles -->
@@ -21,7 +21,7 @@
     <link href="{{asset('assets/plugins/pace/pace.css')}}" rel="stylesheet">
     <link href="{{asset('assets/plugins/datatables/datatables.min.css')}}" rel="stylesheet">
 
-    
+
     <!-- Theme Styles -->
     <link href="{{asset('assets/css/main.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet">
@@ -40,12 +40,12 @@
     <div class="app align-content-stretch d-flex flex-wrap">
         @include('admin.includes.sidebar')
         <div class="app-container">
-            <div class="search">
+            {{-- <div class="search">
                 <form>
                     <input class="form-control" type="text" placeholder="Type here..." aria-label="Search">
                 </form>
                 <a href="#" class="toggle-search"><i class="material-icons">close</i></a>
-            </div>
+            </div> --}}
             <div class="app-header">
                 <nav class="navbar navbar-light navbar-expand-lg">
                     <div class="container-fluid">
@@ -57,25 +57,25 @@
                                 @php
                                     $roles = auth()->user()->roles;
                                 @endphp
-                                @if (isset($roles) && count($roles) >1 ) 
-                                    @foreach ($roles as $role) 
+                                @if (isset($roles) && count($roles) >1 )
+                                    @foreach ($roles as $role)
                                         @if($role->id != session()->get('active_role')['id'] && $role->id != 1)
                                             <li class="nav-item d-flex align-items-center">
-                                                
-                                                <span class="widget-list-item-description"> 
+
+                                                <span class="widget-list-item-description">
                                                     <a class="badge badge-success badge-style-light me-3 py-2 form-control-sm" href="{{ route('admin.switch' , $role['slug'])}}"> Switch : {{$role['name']}}</a>
                                                 </span>
-                                            </li>    
+                                            </li>
                                         @endif
                                     @endforeach
                                 @endif
-                                
+
                             </ul>
-            
+
                         </div>
                         <div class="d-flex">
                             <ul class="navbar-nav">
-                                <li class="nav-item"> 
+                                <li class="nav-item">
 
                                     <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown" data-bs-toggle="dropdown">
                                         <span class="badge badge-success badge-style-light form-control-sm me-2 d-none d-lg-inline">{{session()->get('active_role')['name']}}</span>
@@ -86,36 +86,36 @@
                                         <li class="d-block d-lg-none"><span class="badge badge-success badge-style-light form-control-sm">{{session()->get('active_role')['name']}}</span></li>
                                         <li><a class="dropdown-item" href="{{route('admin.profile')}}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{{route('admin.signout')}}">Log Out</a></li>
-                                        
-                                    </ul>                                
-                                </li>                                
+
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
             </div>
             <div class="app-content">
-               
+
                 <div class="content-wrapper">
                     <div class="container">
                         @yield('content')
-                                              
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Javascripts -->
     <script src="{{asset('assets/plugins/jquery/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/plugins/perfectscroll/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('assets/plugins/pace/pace.min.js')}}"></script>
-    
+
     <script src="{{asset('assets/js/main.min.js')}}"></script>
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <script src="{{asset('assets/js/pages/dashboard.js')}}"></script>
-	
+
     <script src="{{asset('assets/plugins/toast/js/toastr.min.js')}}"></script>
 
     <script src="{{asset('assets/plugins/datatables/datatables.min.js')}}"></script>
@@ -125,11 +125,11 @@
             time: 5000,
             // more options here
         });
-      
+
       function successToast(msg){
         $.toastr.success(msg);
       }
-      
+
       function errorToast(msg){
         $.toastr.error(msg);
       }
@@ -147,6 +147,6 @@
         @endforeach
       @endif
     @yield('script')
-    
+
     </body>
     </html>

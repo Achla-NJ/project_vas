@@ -7,13 +7,13 @@
 <div class="row">
     <div class="col">
         <div class="page-description">
-            <h1>Version History</h1> 
+            <h1>Version History</h1>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-xl-12">
-        <div class="card widget widget-list">
+        <div class="history-wrapper card widget widget-list">
             <div class="card-header">
                 <form action="{{ route('admin.history.index') }}" method="GET" class="mb-3">
                     <div class="row" style="align-items: end;">
@@ -32,11 +32,10 @@
                             <label for="date_range" class="form-label">Date:</label>
                             <input type="text" name="date_range" id="date_range" class="form-control" value="{{ request('date_range') }}" autocomplete="off">
                         </div>
-        
-                        
-                        <div class="col-md-4 mt-3">
-                            <button type="submit" class="btn btn-info">Apply Filters</button>
-                            <a href="{{ route('admin.history.index')}}" class="btn btn-danger">Reset Filters</a>
+
+                        <div class="col-md-4 mt-3 filter-btn">
+                            <button type="submit" class="btn btn-info">Apply</button>
+                            <a href="{{ route('admin.history.index')}}" class="btn btn-danger">Reset</a>
                         </div>
                     </div>
                 </form>
@@ -52,8 +51,8 @@
 
             </div>
         </div>
-    </div>    
-</div> 
+    </div>
+</div>
 
 @endsection
 
