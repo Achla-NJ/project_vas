@@ -53,6 +53,19 @@ class CompanyController extends Controller
             $companies = $companies->whereBetween('due_date', [$startDate, $endDate]);
             
         } 
+
+        if(request('search') && !empty(request('search'))){
+            // $companies = $companies->where('company_name', 'like', '%' . request('search') . '%')
+            // ->orWhere('firm_type', 'like', '%' . request('search') . '%');
+            $companies = $companies->where(function ($query) {
+                $searchTerm = request('search');
+                $firm_type = str_replace(' ' ,'_',$searchTerm);
+            
+                $query->where('company_name', 'like', '%'.$searchTerm.'%')
+                      ->orWhere('firm_type', 'like', '%'.$firm_type.'%');
+            });
+        }
+
         $companies = $companies->latest()->get();
  
 

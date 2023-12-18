@@ -20,7 +20,7 @@
                         <form action="{{ route('admin.companies.index') }}" method="GET" class="mb-3">
                             <div class="row" style="align-items: end;">
                                 @if(auth()->user()->hasRole('admin'))
-                                <div class="col-md-4">
+                                <div class="col-lg-4">
                                     <label for="user_id" class="form-label">Select User:</label>
                                     <select name="user_id" id="user_id" class="form-control">
                                         <option value="">All Users</option>
@@ -30,13 +30,17 @@
                                     </select>
                                 </div>
                                 @endif
-                                <div class="col-md-4">
+                                <div class="col-lg-4">
+                                    <label for="search" class="form-label">Search Company:</label>
+                                    <input type="text" name="search" id="search" class="form-control" value="{{ request('search') }}" >
+                                </div>
+                                <div class="col-lg-4">
                                     <label for="date_range" class="form-label">Date:</label>
                                     <input type="text" name="date_range" id="date_range" class="form-control" value="{{ request('date_range') }}" autocomplete="off">
                                 </div>
                 
                                 
-                                <div class="col-md-4 mt-3">
+                                <div class="col-lg-4 mt-3">
                                     <button type="submit" class="btn btn-info">Apply Filters</button>
                                     <a href="{{ route('admin.companies.index')}}" class="btn btn-danger">Reset Filters</a>
                                 </div>
@@ -114,8 +118,6 @@
 
 @section('script')
 <script src="{{asset('assets/js/datatables.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <!-- Include Date Range Picker JS from CDN -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/daterangepicker.min.js"></script>
