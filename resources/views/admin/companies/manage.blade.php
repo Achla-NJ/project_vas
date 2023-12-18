@@ -159,8 +159,22 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
+                                        <label for="authorized_person_aadhar_file" class="form-label">Pan Card File:</label>
+                                        <input type="file" class="form-control" id="authorized_person_aadhar_file" name="authorized_person_aadhar_file" required  >
+                                        <a href="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
                                         <label for="contact_no" class="form-label">Contact No:</label>
                                         <input type="tel" class="form-control" id="contact_no" name="contact_no" required value="{{ $company->contact_no ?? old('contact_no')}}" >
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="authorized_person_pan_file" class="form-label">Pan Card File:</label>
+                                        <input type="file" class="form-control" id="authorized_person_pan_file" name="authorized_person_pan_file" required  >
+                                        <a href="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
                                     </div>
                                 </div>
                             </div>
@@ -183,6 +197,13 @@
                             <h5 class="mb-4 mt-4">Sources of Sales</h5>
 
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="work_agreement" class="form-label">Work Agreement:</label>
+                                        <input type="file" class="form-control" id="work_agreement" name="work_agreement" required  >
+                                        <a href="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="due_date" class="form-label">Due Date:</label>

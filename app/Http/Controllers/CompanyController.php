@@ -111,6 +111,22 @@ class CompanyController extends Controller
             $file =$request->file('pan_card_file')->store( 'uploads/documents', 'public');
             $data['pan_card_file'] = $file;
         }
+
+
+        if($request->hasfile('authorized_person_aadhar_file')){
+            $file =$request->file('authorized_person_aadhar_file')->store( 'uploads/documents', 'public');
+            $data['authorized_person_aadhar_file'] = $file;
+        }
+
+        if($request->hasfile('authorized_person_pan_file')){
+            $file =$request->file('authorized_person_pan_file')->store( 'uploads/documents', 'public');
+            $data['authorized_person_pan_file'] = $file;
+        }
+
+        if($request->hasfile('work_agreement')){
+            $file =$request->file('work_agreement')->store( 'uploads/documents', 'public');
+            $data['work_agreement'] = $file;
+        }
         
         $company = Company::create($data);
 
@@ -165,6 +181,22 @@ class CompanyController extends Controller
             $file =$request->file('pan_card_file')->store( 'uploads/documents', 'public');
             $data['pan_card_file'] = $file;
         }
+
+        if($request->hasfile('authorized_person_aadhar_file')){
+            $file =$request->file('authorized_person_aadhar_file')->store( 'uploads/documents', 'public');
+            $data['authorized_person_aadhar_file'] = $file;
+        }
+
+        if($request->hasfile('authorized_person_pan_file')){
+            $file =$request->file('authorized_person_pan_file')->store( 'uploads/documents', 'public');
+            $data['authorized_person_pan_file'] = $file;
+        }
+
+        if($request->hasfile('work_agreement')){
+            $file =$request->file('work_agreement')->store( 'uploads/documents', 'public');
+            $data['work_agreement'] = $file;
+        }
+        
         
         $company->update($data);
 
