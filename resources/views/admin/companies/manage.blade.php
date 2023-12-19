@@ -209,7 +209,10 @@
                                         <label for="work_agreement" class="form-label">Work Agreement:</label>
                                         <div class="company-file-fields">
                                             <input type="file" class="form-control" id="work_agreement" name="work_agreement" required  >
-                                            <a href="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->work_agreement) ? asset('storage/'.$company->work_agreement) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
+                                            @if (!empty($company->work_agreement))
+                                            <a href="{{ $company->work_agreement}}" target="_blank">View</a>
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>

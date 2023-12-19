@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    @if(auth()->user()->hasRole('admin'))
+    @if(auth()->user()->hasRole('super_admin'))
     <div class="col-xl-12">
         <div class="card widget widget-list">
             <div class="card-header">

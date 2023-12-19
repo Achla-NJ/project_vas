@@ -41,21 +41,22 @@
                                         <div class="d-flex">
                                             <a href="{{ route('admin.users.show', $user->id) }}"
                                                 class="btn btn-success btn-sm">Show</a>
-                                            @if($user->id != 1)
+                                            
                                                 @can('user_update')
                                                     <a href="{{ route('admin.users.edit', $user->id) }}"
                                                     class="btn btn-info btn-sm">Edit</a>
                                                 @endcan
-                                                @can('user_delete')
-                                                    <form action="{{route('admin.users.destroy',
-                                                        $user->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        
-                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
-                                                    </form>
-                                                @endcan
-                                            @endif
+                                                @if($user->id != 1)
+                                                    @can('user_delete')
+                                                        <form action="{{route('admin.users.destroy',
+                                                            $user->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            
+                                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
+                                                        </form>
+                                                    @endcan
+                                                @endif
                                         </div>
                                     </td>
                                 </tr>

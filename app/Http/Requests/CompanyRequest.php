@@ -52,7 +52,7 @@ class CompanyRequest extends FormRequest
             'pan_card_file'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png', 
             'authorized_person_aadhar_file'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png',
             'authorized_person_pan_file'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png',
-            'work_agreement'=> $id ? "nullable|mimes:jpeg,jpg,png" : 'required|mimes:jpeg,jpg,png', 
+            'work_agreement'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'required|mimes:jpeg,jpg,png,doc,pdf,docx', 
         ];
     }
 }

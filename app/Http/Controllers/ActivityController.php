@@ -28,7 +28,7 @@ class ActivityController extends Controller
  
         $activities = Activity::query();
         
-        if(auth()->user()->hasRole('admin')){
+        if(auth()->user()->hasRole('super_admin')){
             if(request('user_id') && !empty(request('user_id'))){
                 $activities = $activities->where('user_id' , request('user_id'));
             }          

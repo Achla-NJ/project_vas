@@ -19,7 +19,7 @@
                         <!-- Add Filters Form -->
                         <form action="{{ route('admin.companies.index') }}" method="GET" class="mb-3">
                             <div class="row" style="align-items: end;">
-                                @if(auth()->user()->hasRole('admin'))
+                                @if(auth()->user()->hasRole('super_admin'))
                                 <div class="col-lg-4">
                                     <label for="user_id" class="form-label">Select User:</label>
                                     <select name="user_id" id="user_id" class="form-control">
@@ -65,7 +65,7 @@
                                     <tr>
                                         <th>Sr No.</th>
                                         <th>Company Name</th>
-                                        @if(auth()->user()->hasRole('admin'))
+                                        @if(auth()->user()->hasRole('super_admin'))
                                         <th>Added By</th>
                                         @endif
                                         <th>Firm Type</th>
@@ -78,7 +78,7 @@
                                     <tr>
                                         <td>{{ $company->id }}</td>
                                         <td>{{ $company->company_name }}</td>
-                                        @if(auth()->user()->hasRole('admin'))
+                                        @if(auth()->user()->hasRole('super_admin'))
                                             <td><a href='{{ route('admin.users.show', $company->user_id) }}'><span class="badge badge-success badge-style-light form-control-sm">{{ $company->user->name }}</span></a></td>
                                         @endif
                                         {{-- <td><span class="badge badge-success badge-style-light form-control-sm">{{ $company->role->name }}</span></td> --}}

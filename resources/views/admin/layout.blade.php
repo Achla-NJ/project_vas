@@ -59,7 +59,7 @@
                                 @endphp
                                 @if (isset($roles) && count($roles) >1 )
                                     @foreach ($roles as $role)
-                                        @if($role->id != session()->get('active_role')['id'] && $role->id != 1)
+                                        @if($role->id != session()->get('active_role')['id'] && ($role->id == 2 || $role->id==3))
                                             <li class="nav-item d-flex align-items-center">
 
                                                 <span class="widget-list-item-description">

@@ -17,7 +17,7 @@
             <div class="card-header">
                 <form action="{{ route('admin.history.index') }}" method="GET" class="mb-3">
                     <div class="row" style="align-items: end;">
-                        @if(auth()->user()->hasRole('admin'))
+                        @if(auth()->user()->hasRole('super_admin'))
                         <div class="col-md-4">
                             <label for="user_id" class="form-label">Select User:</label>
                             <select name="user_id" id="user_id" class="form-control">

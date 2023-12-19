@@ -33,7 +33,7 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
-        if(auth()->user()->hasRole('admin')){
+        if(auth()->user()->hasRole('super_admin')){
             $companies = Company::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
             $activities = Activity::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
 
@@ -62,7 +62,9 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
-        if(auth()->user()->hasRole('admin')){
+        
+
+        if(auth()->user()->hasRole('super_admin')){
             if($active_role == '1'){
                 $users = User::query()->latest()->get();
             }else{
@@ -87,8 +89,9 @@ class UserController extends Controller
     public function create()
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $roles = Role::query()->where('id' , '!=' ,'1')->latest()->get();
 
-        return view('admin.users.manage',['roles' => Role::latest()->get(),'disp'=>'1']);
+        return view('admin.users.manage',['roles' => $roles,'disp'=>'1']);
     }
 
     /**
@@ -105,6 +108,14 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
+        
+        
+        if (in_array('4', $request->role)) {
+            $roles = collect(Role::query()->where('id' , '!=' , '1')->get('id'))->pluck('id')->toArray();
+        } else { 
+            $roles = $request->role;
+        }
+
         $add_user = $user->create(array_merge($request->validated([
             'file' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
         ]), [
@@ -113,7 +124,7 @@ class UserController extends Controller
             'gender'=>$request->gender,
             'added_by' => auth()->id(),
             'role_id' => $active_role,
-        ]))->assignRole($request->role);
+        ]))->assignRole($roles);
 
         if($request->hasfile('file')){
             $file =$request->file('file')->store( 'uploads/profile', 'public');
@@ -139,10 +150,12 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $roles = Role::query()->where('id' , '!=' ,'1')->latest()->get();
+
         return view('admin.users.manage', [
             'user' => $user,
             'userRole' => $user->roles->pluck('name')->toArray(),
-            'roles' => Role::latest()->get(),'disp'=>'1'
+            'roles' => $roles,'disp'=>'1'
         ]);
     }
 
@@ -181,7 +194,14 @@ class UserController extends Controller
             $user->save();
         }
 
-        $user->syncRoles($request->get('role'));
+        if (in_array('4', $request->get('role'))) {
+            $roles = collect(Role::query()->where('id' , '!=' , '1')->get('id'))->pluck('id')->toArray();
+        } else { 
+            $roles = $request->get('role');
+        }
+ 
+
+        $user->syncRoles($roles);
 
         js_activity_log(auth()->id() , "App\Models\User" , 'updated' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
 
