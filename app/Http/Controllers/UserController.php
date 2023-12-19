@@ -38,7 +38,7 @@ class UserController extends Controller
             $activities = Activity::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
 
             // Your Eloquent query
-            $due_date_companies = Company::query()->where('role_id' , $active_role)->whereMonth('created_at', $currentMonth)
+            $due_date_companies = Company::query()->where('role_id' , $active_role)->whereMonth('due_date', $currentMonth)
                 ->whereYear('due_date', Carbon::now()->year)
                 ->orderBy('due_date')
                 ->get();
