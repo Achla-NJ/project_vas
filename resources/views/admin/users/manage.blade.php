@@ -11,6 +11,7 @@
     <div class="mb-3 pt-5 pb-4">
         <h1 class="h3 d-inline align-middle">Manage Users</h1>
     </div>
+    @if (isset($disp) && $disp =='1')
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -128,104 +129,71 @@
             </div>
         </div>
     </div>
+    
+    @else
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="user-profile-view">
+                            <img src="{{profile($user->id ?? '')}}" alt="">
+                            <div class="user-detail">
+                                <table class="table table-borderless mb-0">
+                                    <tr>
+                                        <th>Full Name:</th>
+                                        <td>{{ $user->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Gender:</th>
+                                        <td>{{ $user->gender }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Email:</th>
+                                        <td>{{ $user->email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Mobile:</th>
+                                        <td>{{ $user->mobile }}</td>
+                                    </tr>
+                                </table>
+                            </div>
 
-    <div class="row">
-        <div class="col-lg-4 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="user-profile-view">
-                        <img src="{{asset('assets/images/avatars/avatar.png')}}" alt="">
-                        <div class="user-detail">
-                            <table class="table table-borderless mb-0">
-                                <tr>
-                                    <th>Full Name:</th>
-                                    <td>Chhavi Nanchahal</td>
-                                </tr>
-                                <tr>
-                                    <th>Gender:</th>
-                                    <td>Female</td>
-                                </tr>
-                                <tr>
-                                    <th>Email:</th>
-                                    <td>chhavi@njgraphica.com</td>
-                                </tr>
-                                <tr>
-                                    <th>Mobile:</th>
-                                    <td>89562300</td>
-                                </tr>
-                            </table>
-                        </div>
+                            <div class="user-role-wrapper">
+                                <h5>Role</h5>
+                                <div class="user-role">
 
-                        <div class="user-role-wrapper">
-                            <h5>Role</h5>
-                            <div class="user-role">
-                                <div class="widget-list-item-description">
-                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Customer</span>
-                                </div>
-                                <div class="widget-list-item-description">
-                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Super Admin</span>
-                                </div>
-                                <div class="widget-list-item-description">
-                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Business</span>
+                                    @foreach ($roles as $role)
+                                    <div class="widget-list-item-description">
+                                        <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">{{$role->name}}</span>
+                                    </div> 
+                                    @endforeach 
                                 </div>
                             </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+                <div class="col-lg-8 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>User History</h4>
+                            @if (isset($activities) && count($activities) > 0) 
+                                <x-history :activities="$activities" />
+                                {{ $activities->links() }}
+                            @else
+                            No updates yet
+                            @endif
                         </div>
                     </div>
-                    {{-- <div class="user-profile-view">
-                        <div class="user-header-wrapper">
-                            <div class="user-detail-wrapper">
-                                <img src="{{asset('assets/images/avatars/avatar.png')}}" alt="">
-                                <div class="info-detail">
-                                    <div class="user-name user-info">Achla</div>
-                                    <div class="user-email user-info">admin@gmail.com</div>
-                                    <div class="user-mobile user-info">89562300</div>
-                                </div>
-                            </div>
-                            <div class="user-role">
-                                <div class="widget-list-item-description">
-                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Customer</span>
-                                </div>
-                                <div class="widget-list-item-description">
-                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Super Admin</span>
-                                </div>
-                                <div class="widget-list-item-description">
-                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Business</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="other-profile-detail">
-                        <li>Password: abc@12345</li>
-                        <li>Gender: Male</li>
-                    </ul> --}}
-                </div>
-            </div>
+                </div> 
+            
         </div>
-        <div class="col-lg-8 col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4>User History</h4>
-                    <x-history :activities="$activities" />
-                    {{ $activities->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    @if (isset($activities) && count($activities) > 0)
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4>User History</h4>
-                    <x-history :activities="$activities" />
-                    {{ $activities->links() }}
-                </div>
-            </div>
-        </div>
-    </div>
     @endif
+
+
+    
 
 </main>
 

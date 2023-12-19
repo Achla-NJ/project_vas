@@ -178,6 +178,7 @@
     border-radius: 50px;
     border: 1px solid var(--green);
     padding: 5px;
+    width: 70px;
 }
 .user-detail{
     margin-top: 20px;

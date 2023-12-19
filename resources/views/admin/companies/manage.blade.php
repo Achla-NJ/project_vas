@@ -66,7 +66,9 @@
                                     <div class="mb-3">
                                         <label for="gst_file" class="form-label">GSTIN File:</label>
                                         <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
                                             <input type="file" class="form-control" id="gst_file" name="gst_file" required  >
+                                        @endif
                                             <a href="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->gst_file) ? asset('storage/'.$company->gst_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" /></a>
                                         </div>
                                     </div>
@@ -99,7 +101,9 @@
                                     <div class="mb-3">
                                         <label for="aadhar_card_file" class="form-label">Aadhar Card File:</label>
                                         <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
                                             <input type="file" class="form-control" id="aadhar_card_file" name="aadhar_card_file" required  >
+                                        @endif
                                             <a href="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->aadhar_card_file) ? asset('storage/'.$company->aadhar_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" /></a>
                                         </div>
                                     </div>
@@ -117,7 +121,9 @@
                                     <div class="mb-3">
                                         <label for="pan_card_file" class="form-label">Pan Card File:</label>
                                         <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
                                             <input type="file" class="form-control" id="pan_card_file" name="pan_card_file" required  >
+                                        @endif
                                             <a href="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" /></a>
                                         </div>
                                     </div>
@@ -179,7 +185,9 @@
                                     <div class="mb-3">
                                         <label for="authorized_person_pan_file" class="form-label">Pan Card File:</label>
                                         <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
                                             <input type="file" class="form-control" id="authorized_person_pan_file" name="authorized_person_pan_file" required  >
+                                        @endif
                                             <a href="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_pan_file) ? asset('storage/'.$company->authorized_person_pan_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
                                         </div>
                                     </div>
@@ -194,7 +202,9 @@
                                     <div class="mb-3">
                                         <label for="authorized_person_aadhar_file" class="form-label">Aadhar Card File:</label>
                                         <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
                                             <input type="file" class="form-control" id="authorized_person_aadhar_file" name="authorized_person_aadhar_file" required  >
+                                        @endif
                                             <a href="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : 'javascript:void(0)'}}" target="_blank"><img id="imgPreview" src="{{ !empty($company->authorized_person_aadhar_file) ? asset('storage/'.$company->authorized_person_aadhar_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" style="width:50px; height:50px;"/></a>
                                         </div>
                                     </div>
@@ -208,9 +218,11 @@
                                     <div class="mb-3">
                                         <label for="work_agreement" class="form-label">Work Agreement:</label>
                                         <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
                                             <input type="file" class="form-control" id="work_agreement" name="work_agreement" required  >
+                                        @endif
                                             @if (!empty($company->work_agreement))
-                                            <a href="{{ $company->work_agreement}}" target="_blank">View</a>
+                                            <a href="{{ asset('storage/'.$company->work_agreement)}}" target="_blank" class="badge badge-success badge-style-light me-3 py-2 form-control-sm">View Document</a>
                                             @endif
                                             
                                         </div>

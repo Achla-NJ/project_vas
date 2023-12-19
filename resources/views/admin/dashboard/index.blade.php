@@ -34,7 +34,7 @@
     <div class="col-xl-6">
         <div class="card widget widget-list">
             <div class="card-header">
-                <h5 class="card-title">Due Dates</h5>
+                <h5 class="card-title">Upcoming Due Dates</h5>
             </div>
 
             <div class="card-body">

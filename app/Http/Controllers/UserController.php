@@ -33,14 +33,14 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
-        if(auth()->user()->hasRole('super_admin')){
+        if(auth()->user()->hasRole('super_admin') || auth()->user()->hasRole('admin')){
             $companies = Company::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
             $activities = Activity::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
 
             // Your Eloquent query
             $due_date_companies = Company::query()->where('role_id' , $active_role)->whereMonth('due_date', $currentMonth)
                 ->whereYear('due_date', Carbon::now()->year)
-                ->orderBy('due_date')
+                ->orderBy('due_date')->limit(10)
                 ->get();
         }
         else{
@@ -62,20 +62,32 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
+        if(auth()->user()->hasRole('super_admin') ){ 
+            $users = User::whereHas('userRoles', function ($query) use ($active_role) {
+                $query->where('role_id', $active_role);
+            })->latest()->get();           
+        }
+
+        elseif(auth()->user()->hasRole('admin') ){ 
+            $users = User::query()->where('id', '!=' , '1')->whereHas('userRoles', function ($query) use ($active_role) {
+                $query->where('role_id', $active_role);
+            })->latest()->get();           
+        }
+
         
 
-        if(auth()->user()->hasRole('super_admin')){
-            if($active_role == '1'){
-                $users = User::query()->latest()->get();
-            }else{
-                $users = User::whereHas('userRoles', function ($query) use ($active_role) {
-                    $query->where('role_id', $active_role);
-                })->latest()->get();
+        // if(auth()->user()->hasRole('super_admin')  || auth()->user()->hasRole('admin')){
+        //     if($active_role == '1'){
+        //         $users = User::query()->latest()->get();
+        //     }else{
+        //         $users = User::whereHas('userRoles', function ($query) use ($active_role) {
+        //             $query->where('role_id', $active_role);
+        //         })->latest()->get();
 
-            }
-        }
+        //     }
+        // }
         else{
-            $users = User::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->latest()->get();
+            $users = User::query()->where(['id'=> auth()->id() , 'role_id' => $active_role ])->latest()->get();
         }
 
         return view('admin.users.index', compact('users'));
@@ -194,14 +206,15 @@ class UserController extends Controller
             $user->save();
         }
 
-        if (in_array('4', $request->get('role'))) {
-            $roles = collect(Role::query()->where('id' , '!=' , '1')->get('id'))->pluck('id')->toArray();
-        } else { 
-            $roles = $request->get('role');
-        }
- 
 
-        $user->syncRoles($roles);
+        if(!auth()->user()->hasRole('super_admin')  || auth()->user()->hasRole('admin')){
+            if (in_array('4', $request->get('role'))) {
+                $roles = collect(Role::query()->where('id' , '!=' , '1')->get('id'))->pluck('id')->toArray();
+            } else { 
+                $roles = $request->get('role');
+            }
+            $user->syncRoles($roles);
+        }
 
         js_activity_log(auth()->id() , "App\Models\User" , 'updated' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
 
@@ -237,7 +250,7 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $activities = Activity::query()->where(['user_id' => $user->id ])->latest()->paginate(10);
+        $activities = Activity::query()->where(['user_id' => $user->id ])->latest()->paginate(8);
 
 
         return view('admin.users.manage', [
