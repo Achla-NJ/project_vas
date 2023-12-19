@@ -174,3 +174,25 @@
     position: relative;
     z-index: 10;
 }
+.user-profile-view img{
+    border-radius: 50px;
+    border: 1px solid var(--green);
+    padding: 5px;
+}
+.user-detail{
+    margin-top: 20px;
+}
+.user-detail table th{
+    padding: 15px 0 !important;
+}
+.user-role-wrapper{
+    border-top: 1px dashed #000;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+.user-role-wrapper .user-role{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 10px;
+}

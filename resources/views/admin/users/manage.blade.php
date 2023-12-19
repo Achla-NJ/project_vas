@@ -129,6 +129,90 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-lg-4 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="user-profile-view">
+                        <img src="{{asset('assets/images/avatars/avatar.png')}}" alt="">
+                        <div class="user-detail">
+                            <table class="table table-borderless mb-0">
+                                <tr>
+                                    <th>Full Name:</th>
+                                    <td>Chhavi Nanchahal</td>
+                                </tr>
+                                <tr>
+                                    <th>Gender:</th>
+                                    <td>Female</td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td>chhavi@njgraphica.com</td>
+                                </tr>
+                                <tr>
+                                    <th>Mobile:</th>
+                                    <td>89562300</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="user-role-wrapper">
+                            <h5>Role</h5>
+                            <div class="user-role">
+                                <div class="widget-list-item-description">
+                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Customer</span>
+                                </div>
+                                <div class="widget-list-item-description">
+                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Super Admin</span>
+                                </div>
+                                <div class="widget-list-item-description">
+                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Business</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="user-profile-view">
+                        <div class="user-header-wrapper">
+                            <div class="user-detail-wrapper">
+                                <img src="{{asset('assets/images/avatars/avatar.png')}}" alt="">
+                                <div class="info-detail">
+                                    <div class="user-name user-info">Achla</div>
+                                    <div class="user-email user-info">admin@gmail.com</div>
+                                    <div class="user-mobile user-info">89562300</div>
+                                </div>
+                            </div>
+                            <div class="user-role">
+                                <div class="widget-list-item-description">
+                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Customer</span>
+                                </div>
+                                <div class="widget-list-item-description">
+                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Super Admin</span>
+                                </div>
+                                <div class="widget-list-item-description">
+                                    <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">Business to Business</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="other-profile-detail">
+                        <li>Password: abc@12345</li>
+                        <li>Gender: Male</li>
+                    </ul> --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4>User History</h4>
+                    <x-history :activities="$activities" />
+                    {{ $activities->links() }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @if (isset($activities) && count($activities) > 0)
     <div class="row">
         <div class="col-12">
