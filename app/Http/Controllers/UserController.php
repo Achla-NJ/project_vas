@@ -30,30 +30,31 @@ class UserController extends Controller
         $currentMonth = Carbon::now()->format('m'); // Get the current month
 
         $roles = $user->roles;
+        if(session()->has('active_role')){
+            $active_role = session()->get('active_role')['id'];
 
-        $active_role = session()->get('active_role')['id'];
+            if(auth()->user()->hasRole('super_admin') || auth()->user()->hasRole('admin')){
+                $companies = Company::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
+                $activities = Activity::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
 
-        if(auth()->user()->hasRole('super_admin') || auth()->user()->hasRole('admin')){
-            $companies = Company::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
-            $activities = Activity::query()->where(['role_id' => $active_role ])->latest()->limit(10)->get();
+                // Your Eloquent query
+                $due_date_companies = Company::query()->where('role_id' , $active_role)->whereMonth('due_date', $currentMonth)
+                    ->whereYear('due_date', Carbon::now()->year)
+                    ->orderBy('due_date')->limit(10)
+                    ->get();
+            }
+            else{
+                $companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->latest()->limit(10)->get();
+                $activities = Activity::query()->where(['user_id' => $user->id , 'role_id' => $active_role ])->latest()->latest()->limit(10)->get();
+                $due_date_companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->whereMonth('created_at', $currentMonth)
+                    ->whereYear('due_date', Carbon::now()->year)
+                    ->orderBy('due_date')
+                    ->get();
+            }
 
-            // Your Eloquent query
-            $due_date_companies = Company::query()->where('role_id' , $active_role)->whereMonth('due_date', $currentMonth)
-                ->whereYear('due_date', Carbon::now()->year)
-                ->orderBy('due_date')->limit(10)
-                ->get();
+            return view('admin.dashboard.index', compact('roles' , 'companies' ,'activities' , 'due_date_companies'));
         }
-        else{
-            $companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->latest()->limit(10)->get();
-            $activities = Activity::query()->where(['user_id' => $user->id , 'role_id' => $active_role ])->latest()->latest()->limit(10)->get();
-            $due_date_companies = Company::query()->where(['user_id'=> auth()->id() , 'role_id' => $active_role ])->whereMonth('created_at', $currentMonth)
-                ->whereYear('due_date', Carbon::now()->year)
-                ->orderBy('due_date')
-                ->get();
-        }
-
-
-        return view('admin.dashboard.index', compact('roles' , 'companies' ,'activities' , 'due_date_companies'));
+        return redirect()->route('admin.join');
     }
 
     public function index()

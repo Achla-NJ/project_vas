@@ -132,9 +132,13 @@
                                     <div class="mb-3">
                                         <label for="mobile_no" class="form-label">Mobile No (OTP Verified):</label>
                                         <input type="tel" class="form-control" id="mobile_no" name="mobile_no" required value="{{ $company->mobile_no ?? old('mobile_no')}}" >
-                                        {{-- <button class="btn btn-sm btn-primary" type="button" onclick="generateAndSendOTP()">Get OTP</button> --}}
+                                        <button class="btn btn-sm btn-primary" type="button" onclick="generateAndSendOTP()">Get OTP</button>
                                     </div>
-                                    <!-- OTP Verification Section (Initially Hidden) -->
+                                    
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    
                                     <div id="otp_verification" style="display: none;" class="mb-3">
                                         <label for="otp" class="form-label">Enter OTP:</label>
                                         <input type="text" class="form-control" id="otp" name="otp" >
@@ -265,7 +269,7 @@
                                 </div>
                                 <div class="col-6 text-end">
                                     @if (isset($disp) && $disp =='1')
-                                        <button type="submit" class="btn btn-success mt-2">Save</button>
+                                        <button type="submit" class="btn btn-success mt-2" disabled>Save</button>
                                     @endif
                                 </div>
                             </div>
@@ -302,8 +306,21 @@
         });
 
         function generateAndSendOTP() {
-
             document.getElementById('otp_verification').style.display = 'block';
+
+            $.ajax({
+                type: "post",
+                url:"",
+                data: {},                
+                beforeSend: function() {
+                },
+                success:function(response){
+                    
+                },
+                error:function(response){
+                    
+                }
+            });
         }
 
         @if (isset($disp) && $disp =='1')
