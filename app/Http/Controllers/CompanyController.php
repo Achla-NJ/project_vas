@@ -6,10 +6,12 @@ use App\Http\Requests\CompanyRequest;
 use App\Models\Activity;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\OtpVerification;
 use Auth;
 use Gate;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 class CompanyController extends Controller
 {
@@ -22,21 +24,20 @@ class CompanyController extends Controller
     {
         abort_if(Gate::denies('company_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $active_role = session()->get('active_role')['id'];   
-        
+        $active_role = session()->get('active_role')['id'];
          // Retrieve users with the specified role
         $users = User::whereHas('roles', function ($query) use ($active_role) {
             $query->where('id', $active_role);
         })->get();
- 
+
         $companies = Company::query();
-        
-        if(auth()->user()->hasRole('super_admin')){
+
+        if(auth()->user()->hasRole('admin')){
             if(request('user_id') && !empty(request('user_id'))){
                 $companies = $companies->where('user_id' , request('user_id'));
             }else{
                 $companies = $companies->where('role_id' , $active_role);
-            }            
+            }
         }
         else{
             $companies = $companies->where(['user_id'=> auth()->id() , 'role_id' => $active_role ]);
@@ -51,8 +52,8 @@ class CompanyController extends Controller
             $endDate = Carbon::parse($endDate)->endOfDay();
 
             $companies = $companies->whereBetween('due_date', [$startDate, $endDate]);
-            
-        } 
+
+        }
 
         if(request('search') && !empty(request('search'))){
             // $companies = $companies->where('company_name', 'like', '%' . request('search') . '%')
@@ -60,14 +61,13 @@ class CompanyController extends Controller
             $companies = $companies->where(function ($query) {
                 $searchTerm = request('search');
                 $firm_type = str_replace(' ' ,'_',$searchTerm);
-            
+
                 $query->where('company_name', 'like', '%'.$searchTerm.'%')
                       ->orWhere('firm_type', 'like', '%'.$firm_type.'%');
             });
         }
 
         $companies = $companies->latest()->get();
- 
 
         return view('admin.companies.index', compact('companies' , 'users'));
     }
@@ -140,11 +140,11 @@ class CompanyController extends Controller
             $file =$request->file('work_agreement')->store( 'uploads/documents', 'public');
             $data['work_agreement'] = $file;
         }
-        
+
         $company = Company::create($data);
 
         js_activity_log(auth()->id() , "App\Models\Company" , 'created' , $company->id , $data['role_id'] , js_model_name("App\Models\Company" , $company->id));
-        
+
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company created successfully.'));
 
@@ -209,13 +209,13 @@ class CompanyController extends Controller
             $file =$request->file('work_agreement')->store( 'uploads/documents', 'public');
             $data['work_agreement'] = $file;
         }
-        
-        
+
+
         $company->update($data);
 
         js_activity_log(auth()->id() ,  "App\Models\Company" , 'updated' , $company->id ,$data['role_id'] , js_model_name("App\Models\Company" , $company->id));
 
-        
+
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company updated successfully.'));
 
@@ -234,9 +234,9 @@ class CompanyController extends Controller
         $role_id  = $company->role_id;
 
         js_activity_log(auth()->id() ,  "App\Models\Company" , 'deleted' , $company->id ,$role_id ,js_model_name("App\Models\Company" , $company->id));
-        
+
         $company->delete();
-       
+
 
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('Company deleted successfully.'));
@@ -249,5 +249,63 @@ class CompanyController extends Controller
 
         return view('admin.companies.manage', compact('company'));
     }
-    
+
+    public function sendCompanyOTP(Request $request)
+    {
+        // Validate incoming request data
+        $data = $request->validate([
+            'phone_number' => 'required|string',
+        ]);
+
+        // Generate OTP
+        $otp = mt_rand(100000, 999999);
+        // $apiKey = env('MTALKZ_API_KEY');
+        // $senderId = env('MTALKZ_SENDER_ID');
+        $response = Http::post('https://msgn.mtalkz.com/api', [
+            'apikey' => "ejJEAleYwg0Qf4rZ",
+            'message' => 'Welcome to VSELEK. Your OTP is ' . $otp . '. Thank you for choosing us. For any assistance, feel free to contact us.',
+            'senderid' => "VSELEK",
+            'number' => $data['phone_number'],
+        ]);
+
+        if ($response->successful()) {
+            $responseData = $response->json();
+            // Check if the response indicates success based on your API's structure
+            if ($responseData['status'] === 'OK') {
+                // Save OTP details in the database
+                $otpDetail = new OtpVerification();
+                $otpDetail->phone_number = $data['phone_number'];
+                $otpDetail->otp = $otp;
+                $otpDetail->save();
+
+                return response()->json(['message' => 'OTP sent successfully'], 200);
+            } else {
+                return response()->json(['message' => 'Failed to send OTP via mTalks API: ' . $responseData['message']], 500);
+            }
+        } else {
+            return response()->json(['message' => 'Failed to send OTP via mTalks API'], $response->status());
+        }
+    }
+
+    public function verifyCompanyOTP(Request $request)
+    {
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'phone_number' => 'required|string',
+            'otp' => 'required|string',
+        ]);
+
+        // Check if OTP matches
+        $otpDetail = OtpVerification::where('phone_number', $validatedData['phone_number'])
+            ->where('otp', $validatedData['otp'])
+            ->first();
+
+        if ($otpDetail) {
+            $otpDetail->update(['verified' => 'yes']);
+            return response()->json(['message' => 'OTP verified successfully'], 200);
+        } else {
+            return response()->json(['message' => 'Invalid OTP'], 400);
+        }
+    }
+
 }

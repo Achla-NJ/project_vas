@@ -5,8 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\CompanyController; 
-use App\Http\Controllers\ActivityController; 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ActivityController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,15 +36,17 @@ Route::as('admin.')->middleware(['is_admin', 'is_join'])->prefix('admin')->group
     Route::post('company-user',[CompanyController::class,'getCompanyUser'])->name('company-user');
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
-    
+
     // Route::get('companies/{sale_type}',[CompanyController::class,'index'])->name('company.index');
     // Route::get('company/create/{sale_type}',[CompanyController::class,'create'])->name('company.create');
     Route::resource('companies', CompanyController::class);
+    Route::post('send-company-otp', [CompanyController::class,'sendCompanyOTP'])->name('send-company-otp');
+    Route::post('verify-company-otp', [CompanyController::class,'verifyCompanyOTP'])->name('verify-company-otp');
     // Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
     Route::get('history',[ActivityController::class,'index'])->name('history.index');
 
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
-    
+
 });
 
 
@@ -77,5 +79,5 @@ Route::get('command/{command}', function ($command){
         $result = \Illuminate\Support\Facades\Artisan::output();
     }
     dd($result);
-    
+
 })->name('command.run');

@@ -63,19 +63,19 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
-        if(auth()->user()->hasRole('super_admin') ){ 
+        if(auth()->user()->hasRole('super_admin') ){
             $users = User::whereHas('userRoles', function ($query) use ($active_role) {
                 $query->where('role_id', $active_role);
-            })->latest()->get();           
+            })->latest()->get();
         }
 
-        elseif(auth()->user()->hasRole('admin') ){ 
+        if(auth()->user()->hasRole('admin') ){
             $users = User::query()->where('id', '!=' , '1')->whereHas('userRoles', function ($query) use ($active_role) {
                 $query->where('role_id', $active_role);
-            })->latest()->get();           
+            })->latest()->get();
         }
 
-        
+
 
         // if(auth()->user()->hasRole('super_admin')  || auth()->user()->hasRole('admin')){
         //     if($active_role == '1'){
@@ -121,11 +121,11 @@ class UserController extends Controller
 
         $active_role = session()->get('active_role')['id'];
 
-        
-        
+
+
         if (in_array('4', $request->role)) {
             $roles = collect(Role::query()->where('id' , '!=' , '1')->get('id'))->pluck('id')->toArray();
-        } else { 
+        } else {
             $roles = $request->role;
         }
 
@@ -185,7 +185,7 @@ class UserController extends Controller
         abort_if(Gate::denies('user_update'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $active_role = session()->get('active_role')['id'];
-
+        // dd($active_role);
         $data = $request->validated([
             'file' => 'nullable|file|mimes:jpg,png,jpeg|max:2048',
             'password' => 'nullable|string|min:6',
@@ -198,7 +198,9 @@ class UserController extends Controller
 
         $data['added_by'] = auth()->id();
         $data['role_id'] = $active_role;
+        $user->roles()->sync($request->input('role', []));
         $user->update($data);
+
 
 
         if($request->hasfile('file')){
@@ -211,7 +213,7 @@ class UserController extends Controller
         if(!auth()->user()->hasRole('super_admin')  || auth()->user()->hasRole('admin')){
             if (in_array('4', $request->get('role'))) {
                 $roles = collect(Role::query()->where('id' , '!=' , '1')->get('id'))->pluck('id')->toArray();
-            } else { 
+            } else {
                 $roles = $request->get('role');
             }
             $user->syncRoles($roles);
@@ -235,10 +237,8 @@ class UserController extends Controller
     {
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-
-
         $active_role = session()->get('active_role')['id'];
-
+        $user->roles()->sync($request->input('role', []));
         js_activity_log(auth()->id() , "App\Models\User" , 'deleted' , $user->id , $active_role ,js_model_name("App\Models\User" , $user->id));
 
         $user->delete();

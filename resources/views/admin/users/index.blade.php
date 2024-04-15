@@ -2,7 +2,7 @@
 @section('css')
 
 @endsection
-@section('content') 
+@section('content')
     <main class="content">
         <div class="d-flex justify-content-between align-items-center mb-3 pt-5 pb-3">
             <h1 class="fw-bold d-inline align-middle">Users</h1>
@@ -11,7 +11,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12"> 
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <table id="datatables-reponsive"  class="table table-striped" style="width:100%">
@@ -41,19 +41,19 @@
                                         <div class="d-flex">
                                             <a href="{{ route('admin.users.show', $user->id) }}"
                                                 class="btn btn-success btn-sm">Show</a>
-                                            
+
                                                 @can('user_update')
                                                     <a href="{{ route('admin.users.edit', $user->id) }}"
                                                     class="btn btn-info btn-sm">Edit</a>
                                                 @endcan
-                                                @if($user->id != 1)
+                                                @if($user->id != 37)
                                                     @can('user_delete')
                                                         <form action="{{route('admin.users.destroy',
                                                             $user->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
                                                             @csrf
                                                             @method('DELETE')
-                                                            
-                                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>    
+
+                                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                                         </form>
                                                     @endcan
                                                 @endif

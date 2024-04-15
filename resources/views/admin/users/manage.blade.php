@@ -67,6 +67,7 @@
 
                         </div>
                         <div class="row mb-3">
+
                             <div class="col-lg-6">
                                 <label for="username"
                                     class="form-label">Role</label>
@@ -107,7 +108,7 @@
                                     name="file">
                             </div>
 
-                            <img id="blah" src="{{profile($user->id ?? '')}}"
+                            <img id="blah" src="{{profile($user->id ?? 'src')}}"
                                 alt="your image" style="width: 100px;"
                                 class="my-2" />
                         </div>
@@ -129,7 +130,7 @@
             </div>
         </div>
     </div>
-    
+
     @else
         <div class="row">
             <div class="col-lg-4 col-md-12">
@@ -162,24 +163,24 @@
                                 <h5>Role</h5>
                                 <div class="user-role">
 
-                                    @foreach ($roles as $role)
+                                    @foreach($user->roles as $role)
                                     <div class="widget-list-item-description">
                                         <span class="badge badge-success badge-style-light me-3 py-2 form-control-sm">{{$role->name}}</span>
-                                    </div> 
-                                    @endforeach 
+                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
-            
+
                 <div class="col-lg-8 col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <h4>User History</h4>
-                            @if (isset($activities) && count($activities) > 0) 
+                            @if (isset($activities) && count($activities) > 0)
                                 <x-history :activities="$activities" />
                                 {{ $activities->links() }}
                             @else
@@ -187,13 +188,13 @@
                             @endif
                         </div>
                     </div>
-                </div> 
-            
+                </div>
+
         </div>
     @endif
 
 
-    
+
 
 </main>
 

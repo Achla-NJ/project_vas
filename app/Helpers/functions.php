@@ -3,6 +3,7 @@ use App\Models\Activity;
 use App\Jobs\SendEmail;
 use App\Models\User;
 use App\Mail\CompanyMail;
+use App\Mail\CompanyOwnerMail;
 
 if (!function_exists('js_activity_log')) {
     function js_activity_log($user_id ,  $model , $operation , $model_id ,  $role_id =NULL,$name =NULL)
@@ -148,19 +149,25 @@ function js_send_email($subject, $data, $email, $view = 'general', DateTimeInter
 }
 
 if(!function_exists("js_email")) {
-    function js_email($subject, $data, $email, $view  , $files = []) { 
+    function js_email($subject, $data, $email, $view  , $files = []) {
         return \Mail::to($email)->send(new CompanyMail($data,$subject , $view ,$files));
     }
 }
 
+if(!function_exists("js_owner_email")) {
+    function js_owner_email($subject, $data, $email, $view  , $files = []) {
+        return \Mail::to($email)->send(new CompanyOwnerMail($data,$subject , $view ,$files));
+    }
+}
+
 if(!function_exists("profile")) {
-    function profile($id ='') { 
+    function profile($id ='') {
         if(empty($id)){
             $user = User::find(auth()->id());
         }else{
             $user = User::find($id);
         }
-        
+
         if(!empty($user->file)){
             return asset('storage/'.$user->file);
         }else{
@@ -172,18 +179,18 @@ if(!function_exists("profile")) {
 function js_active_role_id(){
     if(session()->has('active_role')){
         return session()->get('active_role')['id'];
-    }   
+    }
 }
 
 function js_model_name($model_full_name , $model_id){
-    $model =  explode("\\" , $model_full_name) ; 
+    $model =  explode("\\" , $model_full_name) ;
     $model_name = end($model);
     $table = $model_full_name::find($model_id);
 
     if ($model_name == 'Company') {
         return $table->company_name;
     }
- 
+
     if ($model_name == 'User') {
        return  $table->name ;
     }

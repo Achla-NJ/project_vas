@@ -197,3 +197,16 @@
     gap: 0.8rem;
     margin-top: 10px;
 }
+.success{
+    color: #4BAD48;
+}
+.danger{
+    color: rgb(245, 77, 77);
+}
+.get-otp-btn, .verify-otp-btn{
+    position: absolute;
+    right: 0;
+    top: 43%;
+    padding: 10px 20px;
+}
+
