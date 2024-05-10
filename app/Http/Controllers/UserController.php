@@ -62,7 +62,6 @@ class UserController extends Controller
         abort_if(Gate::denies('user_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $active_role = session()->get('active_role')['id'];
-
         if(auth()->user()->hasRole('super_admin') ){
             $users = User::whereHas('userRoles', function ($query) use ($active_role) {
                 $query->where('role_id', $active_role);

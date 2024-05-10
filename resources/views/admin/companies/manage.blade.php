@@ -102,6 +102,23 @@
                                         <input type="text" class="form-control" id="industry_field" name="industry_field" value="{{ $company->industry_field ?? old('industry_field')}}" >
                                     </div>
                                 </div>
+                                @if (session()->get('active_role')->slug == 'workspace-partners')
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <label class="form-label">Property Type:</label>
+                                        <div class="d-flex property-type-wrapper">
+                                            <div>
+                                                <input type="radio" name="property_type" value="owned" {{isset($company->property_type) && !empty($company->property_type) && $company->property_type == 'owned' ? 'checked' : ''}} />
+                                                <label for="">Owned</label>
+                                            </div>
+                                            <div>
+                                                <input type="radio" name="property_type" value="not-owned" {{isset($company->property_type) && !empty($company->property_type) && $company->property_type == 'not-owned' ? 'checked' : ''}} />
+                                                <label for="">Not Owned</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
 
                             <h5 class="mb-4 mt-4">Company Owners / Directors Details</h5>
@@ -158,7 +175,7 @@
                                                 @if(pathinfo(!empty($company->pan_card_file), PATHINFO_EXTENSION) === 'pdf')
                                                     <img src="{{asset('assets/images/icons/pdf-thumbnail.png')}}" alt="pdf" style="width:50px">
                                                 @elseif(pathinfo(!empty($company->pan_card_file), PATHINFO_EXTENSION) === 'doc' || pathinfo(!empty($company->pan_card_file), PATHINFO_EXTENSION) === 'docx')
-                                                <img src="{{asset('assets/images/icons/doc.png')}}" alt="pdf" style="width:50px">
+                                                    <img src="{{asset('assets/images/icons/doc.png')}}" alt="pdf" style="width:50px">
                                                 @else
                                                     <img id="imgPreview" src="{{ !empty($company->pan_card_file) ? asset('storage/'.$company->pan_card_file) : asset('assets/images/images_preview.png')}}" class="img-thumbnail" src="#" alt="pic" />
                                                 @endif
@@ -186,6 +203,13 @@
                                     <div class="otp-verified"></div>
 
                                     <input type="hidden" name="mobile_verified" id="mobile_verified" value="0">
+                                </div>
+                                @else
+                                <div class="col-md-6">
+                                    <div class="mb-3 position-relative">
+                                        <label for="mobile_no" class="form-label">Mobile No:</label>
+                                        <input type="tel" class="form-control" id="mobile_no" name="mobile_no" minlength="10" maxlength="10" required value="{{ $company->mobile_no ?? old('mobile_no')}}" readonly>
+                                    </div>
                                 </div>
                                 @endif
                             </div>
@@ -320,6 +344,85 @@
                                     @endif
                                 </div>
                             </div>
+
+                            @if (session()->get('active_role')->slug == 'workspace-partners')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="electricity_bill" class="form-label">Electricity Bill:</label>
+                                        <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
+                                            <input type="file" class="form-control" id="electricity_bill" name="electricity_bill">
+                                        @endif
+                                            @if (!empty($company->electricity_bill))
+                                            <a href="{{ asset('storage/'.$company->electricity_bill)}}" target="_blank" class="badge badge-success badge-style-light me-3 py-2 form-control-sm">View Document</a>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="agreement" class="form-label">Agreement:</label>
+                                        <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
+                                            <input type="file" class="form-control" id="agreement" name="agreement">
+                                        @endif
+                                            @if (!empty($company->agreement))
+                                            <a href="{{ asset('storage/'.$company->agreement)}}" target="_blank" class="badge badge-success badge-style-light me-3 py-2 form-control-sm">View Document</a>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="private_bill" class="form-label">Private Bill:</label>
+                                        <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
+                                            <input type="file" class="form-control" id="private_bill" name="private_bill">
+                                        @endif
+                                            @if (!empty($company->private_bill))
+                                            <a href="{{ asset('storage/'.$company->private_bill)}}" target="_blank" class="badge badge-success badge-style-light me-3 py-2 form-control-sm">View Document</a>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="property_tax_receipt" class="form-label">Property Tax Receipt:</label>
+                                        <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
+                                            <input type="file" class="form-control" id="property_tax_receipt" name="property_tax_receipt">
+                                        @endif
+                                            @if (!empty($company->property_tax_receipt))
+                                            <a href="{{ asset('storage/'.$company->property_tax_receipt)}}" target="_blank" class="badge badge-success badge-style-light me-3 py-2 form-control-sm">View Document</a>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="municipal_khata" class="form-label">Municipal Khata:</label>
+                                        <div class="company-file-fields">
+                                        @if (isset($disp) && $disp =='1')
+                                            <input type="file" class="form-control" id="municipal_khata" name="municipal_khata">
+                                        @endif
+                                            @if (!empty($company->municipal_khata))
+                                            <a href="{{ asset('storage/'.$company->municipal_khata)}}" target="_blank" class="badge badge-success badge-style-light me-3 py-2 form-control-sm">View Document</a>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
 
                             <div class="row">
                                 <div class="col-6">

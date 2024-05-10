@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,11 +43,13 @@ Route::as('admin.')->middleware(['is_admin', 'is_join'])->prefix('admin')->group
     Route::resource('companies', CompanyController::class);
     Route::post('send-company-otp', [CompanyController::class,'sendCompanyOTP'])->name('send-company-otp');
     Route::post('verify-company-otp', [CompanyController::class,'verifyCompanyOTP'])->name('verify-company-otp');
+    Route::get('filter-data', [CompanyController::class,'filterData'])->name('filter-data');
     // Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
     Route::get('history',[ActivityController::class,'index'])->name('history.index');
 
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
-
+    Route::post('comment',[CommentController::class,'store'])->name('comment');
+    Route::get('fetch-comments/{companyId}', [CommentController::class, 'fetchComments'])->name('fetch-comments');
 });
 
 

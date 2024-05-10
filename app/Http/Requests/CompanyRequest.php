@@ -33,6 +33,7 @@ class CompanyRequest extends FormRequest
             'business_website' => 'nullable|url',
             'industry' => 'nullable|max:255',
             'industry_field' => 'nullable|max:255',
+            'property_type' => 'nullable|max:255',
             'director_name' => 'nullable|max:255',
             'aadhar_card_no' => 'nullable|max:20',
             'pan_card_no' => 'nullable|max:20',
@@ -43,7 +44,7 @@ class CompanyRequest extends FormRequest
             'contact_no' => 'nullable',
             'authorized_person_aadhar' => 'nullable|max:20',
             'authorized_person_pan' => 'nullable|max:20',
-            'sales_type' => 'nullable|in:b2b,b2c',
+            'sales_type' => 'nullable|in:b2b,b2c,workspace-partners',
             'aggregator_name' => 'nullable|max:255',
             'employee_name' => 'nullable|max:255',
             'due_date' => 'nullable',
@@ -55,6 +56,11 @@ class CompanyRequest extends FormRequest
             'authorized_person_aadhar_file'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
             'authorized_person_pan_file'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
             'work_agreement'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
+            'electricity_bill'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
+            'agreement'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
+            'private_bill'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
+            'property_tax_receipt'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
+            'municipal_khata'=> $id ? "nullable|mimes:jpeg,jpg,png,doc,pdf,docx" : 'mimes:jpeg,jpg,png,doc,pdf,docx',
         ];
     }
 }

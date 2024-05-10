@@ -67,6 +67,11 @@ class CompanyController extends Controller
             });
         }
 
+        if(request('property_type') && !empty(request('property_type'))){
+            $propertyType = request('property_type');
+            $companies = $companies->where('property_type', $propertyType);
+        }
+
         $companies = $companies->latest()->get();
 
         return view('admin.companies.index', compact('companies' , 'users'));
@@ -141,6 +146,31 @@ class CompanyController extends Controller
             $data['work_agreement'] = $file;
         }
 
+        if($request->hasfile('electricity_bill')){
+            $file =$request->file('electricity_bill')->store( 'uploads/documents', 'public');
+            $data['electricity_bill'] = $file;
+        }
+
+        if($request->hasfile('agreement')){
+            $file =$request->file('agreement')->store( 'uploads/documents', 'public');
+            $data['agreement'] = $file;
+        }
+
+        if($request->hasfile('private_bill')){
+            $file =$request->file('private_bill')->store( 'uploads/documents', 'public');
+            $data['private_bill'] = $file;
+        }
+
+        if($request->hasfile('property_tax_receipt')){
+            $file =$request->file('property_tax_receipt')->store( 'uploads/documents', 'public');
+            $data['property_tax_receipt'] = $file;
+        }
+
+        if($request->hasfile('municipal_khata')){
+            $file =$request->file('municipal_khata')->store( 'uploads/documents', 'public');
+            $data['municipal_khata'] = $file;
+        }
+
         $company = Company::create($data);
 
         js_activity_log(auth()->id() , "App\Models\Company" , 'created' , $company->id , $data['role_id'] , js_model_name("App\Models\Company" , $company->id));
@@ -208,6 +238,31 @@ class CompanyController extends Controller
         if($request->hasfile('work_agreement')){
             $file =$request->file('work_agreement')->store( 'uploads/documents', 'public');
             $data['work_agreement'] = $file;
+        }
+
+        if($request->hasfile('electricity_bill')){
+            $file =$request->file('electricity_bill')->store( 'uploads/documents', 'public');
+            $data['electricity_bill'] = $file;
+        }
+
+        if($request->hasfile('agreement')){
+            $file =$request->file('agreement')->store( 'uploads/documents', 'public');
+            $data['agreement'] = $file;
+        }
+
+        if($request->hasfile('private_bill')){
+            $file =$request->file('private_bill')->store( 'uploads/documents', 'public');
+            $data['private_bill'] = $file;
+        }
+
+        if($request->hasfile('property_tax_receipt')){
+            $file =$request->file('property_tax_receipt')->store( 'uploads/documents', 'public');
+            $data['property_tax_receipt'] = $file;
+        }
+
+        if($request->hasfile('municipal_khata')){
+            $file =$request->file('municipal_khata')->store( 'uploads/documents', 'public');
+            $data['municipal_khata'] = $file;
         }
 
 
@@ -306,6 +361,23 @@ class CompanyController extends Controller
         } else {
             return response()->json(['message' => 'Invalid OTP'], 400);
         }
+    }
+
+    public function filterData(Request $request) {
+        if(request('property_type') && !empty(request('property_type'))){
+            // $companies = $companies->where('company_name', 'like', '%' . request('search') . '%')
+            // ->orWhere('firm_type', 'like', '%' . request('search') . '%');
+            $companies = $companies->where(function ($query) {
+                $searchTerm = request('property_type');
+                $firm_type = str_replace(' ' ,'_',$searchTerm);
+
+                $query->where('property_type', 'like', '%'.$searchTerm.'%');
+            });
+        }
+
+        $companies = $companies->latest()->get();
+
+        return view('admin.companies.index', compact('companies'));
     }
 
 }

@@ -47,7 +47,26 @@
                             </div>
                         </form>
 
+                        @if(auth()->user()->hasRole('Workspace Partners'))
+                            <?php
+                            $propertyType = request()->input('property_type');
+                            ?>
                         <!-- ... existing code ... -->
+                        <form action="{{ route('admin.companies.index') }}" method="GET" class="mb-3">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6">
+                                    <select name="property_type" id="property_type" class="form-control">
+                                        <option value="">Select Property Type</option>
+                                        <option value="owned" {{ $propertyType === 'owned' ? 'selected' : '' }}>Owned</option>
+                                        <option value="not-owned" {{ $propertyType === 'not-owned' ? 'selected' : '' }}>Not Owned</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-3">
+                                    <button type="submit" class="btn btn-info">Apply</button>
+                                </div>
+                            </div>
+                        </form>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -87,6 +106,7 @@
                                         <td>{{ date('d M , Y',strtotime($company->due_date)) }}</td>
                                         <td>
                                             <div class="d-flex">
+                                                <a class="btn btn-primary btn-sm add-comment-btn" href="javascript:void()" data-company-id="{{ $company->id }}"  data-bs-toggle="modal" data-bs-target="#commentModal">Add Comment</a>
                                                 <a class="btn btn-success btn-sm" href="{{ route('admin.companies.show', $company->id) }}">Show</a>
                                                 @can('company_update')
                                                 <a class="btn btn-info btn-sm" href="{{ route('admin.companies.edit', $company->id) }}">Edit</a>
@@ -100,7 +120,6 @@
                                                     </form>
                                                 @endcan
                                             </div>
-
                                         </td>
                                     </tr>
                                     @endforeach
@@ -112,6 +131,38 @@
             </div>
         </div>
 
+        <div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        {{-- <h5 class="modal-title" id="exampleModalLabel">Comments</h5> --}}
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" id="commentForm">
+                            <input type="hidden" name="company_id" id="modal-company-id">
+                            <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
+                            {{-- <input type="text" name="user_id" id="modal-user-id"> --}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <textarea class="form-control" name="comment" required></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mt-3">
+                                        <button type="button" class="comment-btn btn btn-primary" id="submitCommentBtn">Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="comment-list" style="display: none;">
+                            <h3>Comments</h3>
+                            <div class="comment-list-wrapper" id="commentListWrapper">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
 @endsection
@@ -146,6 +197,81 @@
         $('#date_range').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
+
+        $('.add-comment-btn').on('click', function () {
+            var companyId = $(this).data('company-id');
+            // var userId = $(this).data('user-id');
+            $('#modal-company-id').val(companyId);
+            // $('#modal-user-id').val(userId);
+        });
+
+        $('#submitCommentBtn').click(function(e){
+            e.preventDefault()
+            let html ='';
+            let url = "{{route('admin.comment')}}";
+            var formData = $('#commentForm').serialize();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'post',
+                url:url,
+                data: formData,
+                dataType: "json",
+                success:function(res){
+                    $("#commentListWrapper").html(res.data);
+                    if (res.data.trim() !== '') {
+                        $('.comment-list').css('display', 'block');
+                    } else {
+                        $('.comment-list').css('display', 'none');
+                    }
+                    successToast(res.msg);
+                },
+                error:function(res){
+                    let errors = Object.values(res.responseJSON.errors);
+                    errors.map((er)=>{
+                        errorToast(er);
+                    })
+                },
+            });
+        });
+
+        $('.add-comment-btn').click(function(e){
+            var companyId = $(this).data('company-id');
+            $.ajax({
+                url: '{{ route("admin.fetch-comments", ":companyId") }}'.replace(':companyId', companyId),
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    var comments = response.comments;
+                    var commentHtml = '';
+                    $.each(comments, function(index, comment) {
+                        var createdAt = new Date(comment.created_at);
+                        var formattedDate = createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                        commentHtml += '<div class="comment-main-div">';
+                        commentHtml += '<div class="comment-name-date">';
+                        commentHtml += '<div class="user-name">' + comment.user_name + '</div>';
+                        commentHtml += '<h6>' + formattedDate + '</h6>';
+                        commentHtml += '</div>';
+                        commentHtml += '<h5>' + comment.comment + '</h5>';
+                        commentHtml += '</div>';
+                    });
+                    $('#commentListWrapper').html(commentHtml);
+                    if (comments.length > 0) {
+                        $('.comment-list').css('display','block');
+                    } else {
+                        $('.comment-list').css('display','none');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
     });
 </script>
 @endsection

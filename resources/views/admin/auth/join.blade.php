@@ -10,7 +10,7 @@
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
     <!-- The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    
+
     <!-- Title -->
     <title>{{ env('APP_NAME') }}</title>
 
@@ -23,12 +23,12 @@
     <link href="{{ asset('assets/plugins/perfectscroll/perfect-scrollbar.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/pace/pace.css')}}" rel="stylesheet">
 
-    
+
     <!-- Theme Styles -->
     <link href="{{ asset('assets/css/main.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css')}}" rel="stylesheet">
 
-   
+
 </head>
 <body>
     <div class="app app-auth-sign-in align-content-center d-flex flex-wrap justify-content-center">
@@ -41,10 +41,10 @@
             <h3 class="my-3">Login As </h3>
             <div class="d-flex justify-content-center flex-wrap">
                 @foreach ($user->roles as $role)
-                    @if($role->id == 2 || $role->id==3)
+                    @if($role->id == 2 || $role->id==3 || $role->id == 5)
                         <a href="{{ route('admin.join-as' , $role->slug)}}"><span class="badge badge-success badge-style-light form-control-lg my-2 login-btn"> {{$role->name}} </span></a>
                     @endif
-                @endforeach 
+                @endforeach
             </div>
         </div>
     </div>
@@ -52,4 +52,3 @@
 </html>
 
 
- 

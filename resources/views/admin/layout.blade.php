@@ -8,7 +8,7 @@
     <meta name="description" content="Responsive Admin Dashboard Template">
     <meta name="keywords" content="admin,dashboard">
     <meta name="author" content="stacks">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ env('APP_NAME') }}</title>
 
     <!-- Styles -->
@@ -60,9 +60,8 @@
                                 @endphp
                                 @if (isset($roles) && count($roles) >1 )
                                     @foreach ($roles as $role)
-                                        @if($role->id != session()->get('active_role')['id'] && ($role->id == 2 || $role->id==3))
+                                        @if($role->id != session()->get('active_role')['id'] && ($role->id == 2 || $role->id==3 || $role->id==5))
                                             <li class="nav-item d-flex align-items-center">
-
                                                 <span class="widget-list-item-description">
                                                     <a class="badge badge-success badge-style-light me-3 py-2 form-control-sm" href="{{ route('admin.switch' , $role['slug'])}}"> Switch : {{$role['name']}}</a>
                                                 </span>

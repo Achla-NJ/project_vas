@@ -17,7 +17,7 @@ use App\Models\PasswordReset;
 
 class AuthController extends Controller
 {
-    
+
     public function signin(Request $request)
     {
         $request->validate([
@@ -31,18 +31,17 @@ class AuthController extends Controller
 
         if( $login){
             $user = Auth::user();
-
             if(count($user->roles) > 1 ){
 
                 return redirect()->route('admin.join');
             }
 
-            else{ 
+            else{
 
                 $active_role = $user->roles->first();
-                
+
                 session()->put('active_role' ,$active_role);
-        
+
                 return redirect()->route('admin.dashboard');
             }
         }
@@ -55,13 +54,13 @@ class AuthController extends Controller
 
     public function join() {
         $user = User::find(auth()->id());
+
         return view('admin.auth.join' , compact('user'));
     }
 
     public function joinAs( $role) {
-        $role = Role::query()->where('slug',$role)->first(); 
+        $role = Role::query()->where('slug',$role)->first();
         session()->put('active_role' , $role);
-        
         return redirect()->route('admin.dashboard');
     }
 
