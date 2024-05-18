@@ -7,12 +7,16 @@ use App\Models\Activity;
 use App\Models\Company;
 use App\Models\User;
 use App\Models\OtpVerification;
+use App\Models\Workspace;
+use App\Mail\WorkspaceMail;
 use Auth;
 use Gate;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 class CompanyController extends Controller
 {
     /**
@@ -378,6 +382,50 @@ class CompanyController extends Controller
         $companies = $companies->latest()->get();
 
         return view('admin.companies.index', compact('companies'));
+    }
+
+    public function workspaceAggrement($id) {
+        $company = Company::find($id);
+        $workspace_agreement = Workspace::where('company_id', $id)->latest()->first();
+        return view('admin.companies.workspace-agreement',compact('company','workspace_agreement'));
+    }
+
+    public function workspaceAggrementUpdate(Request $request){
+        $data = $request->validate([
+            'company_id' => 'string',
+            'agreement_date' => 'nullable',
+            'effective_from' => 'nullable',
+            'effective_to' => 'nullable',
+        ]);
+
+        $company = Company::findOrFail($data['company_id']);
+
+        $workspace = Workspace::create($data);
+        $email = $company->email_address;
+        $details = [
+            'agreement_date'  =>  $data['agreement_date'],
+            'company_name' => $company->company_name,
+            'registered_address' => $company->registered_address,
+            'pan_number' => $company->pan_card_no,
+            'mobile_number' => $company->mobile_no,
+            'effective_from' => $data['effective_from'],
+            'effective_to' => $data['effective_to'],
+        ];
+        $pdf = PDF::loadView('emails.workspace-agreement', ['details' => $details]);
+
+        $fileName = 'workspace_agreement_' . uniqid() . '.pdf';
+
+        Storage::put('public/pdfs/' . $fileName, $pdf->output());
+
+        $workspace->pdf = $fileName;
+
+        $workspace->update(['pdf' => $fileName]);
+
+        \Mail::to($email)->send(new WorkspaceMail('Thank you for your Inquiry', $pdf));
+
+        return redirect()->route('admin.companies.index')
+            ->withSuccess(__('workspace aggrement updated successfully.'));
+
     }
 
 }

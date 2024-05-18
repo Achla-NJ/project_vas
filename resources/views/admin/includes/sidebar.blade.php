@@ -3,7 +3,7 @@
         <a href="{{route('admin.dashboard')}}" class="logo-icon"><span class="logo-text">{{ env('APP_NAME') }}</span></a>
         {{-- <div class="sidebar-user-switcher user-activity-online">
             <a href="#">
-                <img src="{{asset('assets/images/avatars/avatar.png')}}"> 
+                <img src="{{asset('assets/images/avatars/avatar.png')}}">
             </a>
         </div> --}}
     </div>
@@ -22,53 +22,79 @@
                 <li class="{{ $route_name == 'admin.dashboard' ?  'active-page' : '' }}">
                     <a href="{{route('admin.dashboard')}}" class="active"><i class="material-icons-two-tone">dashboard</i>Dashboard</a>
                 </li>
-            @endcan           
+            @endcan
 
             {{-- @can('permission_access')
             <li class="">
                 <a href="{{route('admin.permissions.index')}}" >
                     <i class="material-icons-two-tone">grid_on</i>Permissions
-                </a>               
+                </a>
             </li>
             @endcan         --}}
-                 
+
             @can('company_access')
             <li class="{{ $route_name == 'admin.companies.index' ?  'active-page' : '' }}">
                 <a href="{{route('admin.companies.index')}}" >
                     <i class="material-icons-two-tone">analytics</i>Companies
-                </a>               
+                </a>
             </li>
-            @endcan 
+            @endcan
+
+            @can('company_access')
+            <li>
+                <a href="javascript:void(0)" >
+                    <i class="material-icons-two-tone">analytics</i>Agreement
+                </a>
+                <ul class="sub-menu">
+                    <li class="">
+                        <a href="{{route('admin.aggrement.workspace')}}" >
+                            Workspace
+                        </a>
+                    </li>
+                    {{-- <li class="">
+                        <a href="javascript:void(0)" >
+                            Aggrement2
+                        </a>
+                    </li> --}}
+                </ul>
+            </li>
+            @endcan
 
             @can('history')
             <li class="{{ $route_name == 'admin.history.index' ?  'active-page' : '' }}">
                 <a href="{{route('admin.history.index')}}" >
                     <i class="material-icons-two-tone">analytics</i>History
-                </a>               
+                </a>
             </li>
-            @endcan 
+            @endcan
 
             @can('user_access')
             <li class="{{ $route_name == 'admin.users.index' ?  'active-page' : '' }}">
                 <a href="{{route('admin.users.index')}}" >
                     <i class="material-icons-two-tone">sentiment_satisfied_alt</i>Users
-                </a>               
+                </a>
             </li>
-            @endcan        
+            @endcan
 
             @can('role_access')
             <li class="{{ $route_name == 'admin.roles.index' ?  'active-page' : '' }}">
                 <a href="{{route('admin.roles.index')}}" >
                     <i class="material-icons-two-tone">edit</i>Roles
-                </a>               
+                </a>
             </li>
-            @endcan 
-            
+            @endcan
+
+            <li class="{{ $route_name == 'admin.email-template.edit' ?  'active-page' : '' }}">
+                <a href="{{route('admin.email-template.edit')}}" >
+                    <i class="material-icons-two-tone">analytics</i>Setting
+                </a>
+            </li>
+
             <li>
                 <a href="{{route('admin.signout')}}" >
                     <i class="material-icons-two-tone">done</i>Log out
-                </a>               
-            </li>            
+                </a>
+            </li>
         </ul>
     </div>
 </div>

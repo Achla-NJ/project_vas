@@ -8,6 +8,9 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AggrementController;
+use App\Http\Controllers\SettingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,11 +47,16 @@ Route::as('admin.')->middleware(['is_admin', 'is_join'])->prefix('admin')->group
     Route::post('send-company-otp', [CompanyController::class,'sendCompanyOTP'])->name('send-company-otp');
     Route::post('verify-company-otp', [CompanyController::class,'verifyCompanyOTP'])->name('verify-company-otp');
     Route::get('filter-data', [CompanyController::class,'filterData'])->name('filter-data');
+    Route::get('workspace-agreement/{id}', [CompanyController::class,'workspaceAggrement'])->name('companies.workspace-agreement');
+    Route::post('workspace-agreement-update',[CompanyController::class,'workspaceAggrementUpdate'])->name('companies.workspace-agreement.update');
     // Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
     Route::get('history',[ActivityController::class,'index'])->name('history.index');
 
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
     Route::post('comment',[CommentController::class,'store'])->name('comment');
+    Route::get('workspace',[AggrementController::class,'workspace'])->name('aggrement.workspace');
+    Route::get('email-templates/edit', [SettingController::class, 'edit'])->name('email-template.edit');
+    Route::post('email-templates/update', [SettingController::class, 'update'])->name('email-template.update');
     Route::get('fetch-comments/{companyId}', [CommentController::class, 'fetchComments'])->name('fetch-comments');
 });
 

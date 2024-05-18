@@ -83,7 +83,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr No.</th>
-                                        <th>Company Name</th>
+                                        <th style="width: 270px">Company Name</th>
                                         @if(auth()->user()->hasRole('super_admin'))
                                         <th>Added By</th>
                                         @endif
@@ -106,19 +106,20 @@
                                         <td>{{ date('d M , Y',strtotime($company->due_date)) }}</td>
                                         <td>
                                             <div class="d-flex">
-                                                <a class="btn btn-primary btn-sm add-comment-btn" href="javascript:void()" data-company-id="{{ $company->id }}"  data-bs-toggle="modal" data-bs-target="#commentModal">Add Comment</a>
                                                 <a class="btn btn-success btn-sm" href="{{ route('admin.companies.show', $company->id) }}">Show</a>
                                                 @can('company_update')
                                                 <a class="btn btn-info btn-sm" href="{{ route('admin.companies.edit', $company->id) }}">Edit</a>
                                                 @endcan
                                                 @can('company_delete')
-                                                    <form action="{{route('admin.companies.destroy',
+                                                <form action="{{route('admin.companies.destroy',
                                                     $company->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                    </form>
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
                                                 @endcan
+                                                <a class="btn btn-primary btn-sm add-comment-btn" href="javascript:void()" data-company-id="{{ $company->id }}"  data-bs-toggle="modal" data-bs-target="#commentModal">Add Comment</a>
+                                                <a class="btn btn-info btn-sm" href="{{ route('admin.companies.workspace-agreement', ['id' => $company->id]) }}">Work Agreement</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -9,13 +9,18 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $guarded =[]; 
+    protected $guarded =[];
 
     protected $dates = ['due_date'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function workspaces()
+    {
+        return $this->hasMany(Workspace::class);
     }
 
     public function role()
