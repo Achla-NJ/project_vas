@@ -49,12 +49,15 @@ Route::as('admin.')->middleware(['is_admin', 'is_join'])->prefix('admin')->group
     Route::get('filter-data', [CompanyController::class,'filterData'])->name('filter-data');
     Route::get('workspace-agreement/{id}', [CompanyController::class,'workspaceAggrement'])->name('companies.workspace-agreement');
     Route::post('workspace-agreement-update',[CompanyController::class,'workspaceAggrementUpdate'])->name('companies.workspace-agreement.update');
+    Route::get('noc/{id}', [CompanyController::class,'noc'])->name('companies.noc');
+    Route::post('noc-update',[CompanyController::class,'nocUpdate'])->name('companies.noc.update');
     // Route::get('company/register',[CompanyController::class,'register'])->name('register-company');
     Route::get('history',[ActivityController::class,'index'])->name('history.index');
 
     Route::post('send-otp/{method}', [AuthController::class,'sendOtp'])->where('method', 'register|login')->name('send-otp');
     Route::post('comment',[CommentController::class,'store'])->name('comment');
     Route::get('workspace',[AggrementController::class,'workspace'])->name('aggrement.workspace');
+    Route::get('noc',[AggrementController::class,'noc'])->name('aggrement.noc');
     Route::get('email-templates/edit', [SettingController::class, 'edit'])->name('email-template.edit');
     Route::post('email-templates/update', [SettingController::class, 'update'])->name('email-template.update');
     Route::get('fetch-comments/{companyId}', [CommentController::class, 'fetchComments'])->name('fetch-comments');

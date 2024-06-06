@@ -83,7 +83,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr No.</th>
-                                        <th style="width: 270px">Company Name</th>
+                                        <th>Company Name</th>
                                         @if(auth()->user()->hasRole('super_admin'))
                                         <th>Added By</th>
                                         @endif
@@ -112,7 +112,7 @@
                                                 @endcan
                                                 @can('company_delete')
                                                 <form action="{{route('admin.companies.destroy',
-                                                    $company->id)}}" method="post" onsubmit="return confirm('Are You Sure?')">
+                                                    $company->id)}}" method="post" onsubmit="return confirm('Are You Sure?')" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -120,6 +120,7 @@
                                                 @endcan
                                                 <a class="btn btn-primary btn-sm add-comment-btn" href="javascript:void()" data-company-id="{{ $company->id }}"  data-bs-toggle="modal" data-bs-target="#commentModal">Add Comment</a>
                                                 <a class="btn btn-info btn-sm" href="{{ route('admin.companies.workspace-agreement', ['id' => $company->id]) }}">Work Agreement</a>
+                                                <a class="btn btn-info btn-sm" href="{{ route('admin.companies.noc', ['id' => $company->id]) }}">NOC</a>
                                             </div>
                                         </td>
                                     </tr>

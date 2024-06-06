@@ -15,7 +15,7 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         abort_if(Gate::denies('permission_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $permissions = Permission::all();
@@ -27,11 +27,11 @@ class PermissionController extends Controller
 
     /**
      * Show form for creating permissions
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
-    public function create() 
-    {   
+    public function create()
+    {
         abort_if(Gate::denies('permission_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('admin.permissions.manage');
@@ -44,7 +44,7 @@ class PermissionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         abort_if(Gate::denies('permission_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate([

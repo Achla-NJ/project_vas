@@ -29,8 +29,8 @@ class SettingOptions
      public static function emailsInfo(): array
      {
          return [
-            'workspace-agreement.blade.php' =>''
-
+            'workspace-agreement.blade.php' =>'',
+            'noc.blade.php' =>''
          ];
      }
 
@@ -38,6 +38,7 @@ class SettingOptions
      {
          return [
             'workspace-agreement.blade.php' => true,
+            'noc.blade.php' => true,
          ];
      }
 }

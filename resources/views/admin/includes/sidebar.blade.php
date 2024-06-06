@@ -1,6 +1,9 @@
 <div class="app-sidebar">
     <div class="logo">
-        <a href="{{route('admin.dashboard')}}" class="logo-icon"><span class="logo-text">{{ env('APP_NAME') }}</span></a>
+        {{-- <a href="{{route('admin.dashboard')}}" class="logo-icon"></a> --}}
+        <a href="" class="main-logo">
+            <img src="{{asset('assets/images/logo.png')}}" alt="logo">
+        </a>
         {{-- <div class="sidebar-user-switcher user-activity-online">
             <a href="#">
                 <img src="{{asset('assets/images/avatars/avatar.png')}}">
@@ -51,11 +54,11 @@
                             Workspace
                         </a>
                     </li>
-                    {{-- <li class="">
-                        <a href="javascript:void(0)" >
-                            Aggrement2
+                    <li class="">
+                        <a href="{{route('admin.aggrement.noc')}}" >
+                            NOC
                         </a>
-                    </li> --}}
+                    </li>
                 </ul>
             </li>
             @endcan

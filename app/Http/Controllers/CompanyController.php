@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\User;
 use App\Models\OtpVerification;
 use App\Models\Workspace;
+use App\Models\Noc;
 use App\Mail\WorkspaceMail;
 use Auth;
 use Gate;
@@ -421,10 +422,52 @@ class CompanyController extends Controller
 
         $workspace->update(['pdf' => $fileName]);
 
-        \Mail::to($email)->send(new WorkspaceMail('Thank you for your Inquiry', $pdf));
+        \Mail::to([$email,'gaurav@vselek.com'])->send(new WorkspaceMail('Thank you for your Inquiry', $pdf));
 
         return redirect()->route('admin.companies.index')
             ->withSuccess(__('workspace aggrement updated successfully.'));
+
+    }
+
+    public function noc($id) {
+        $company = Company::find($id);
+        $noc = Noc::where('company_id', $id)->latest()->first();
+        return view('admin.companies.noc',compact('company','noc'));
+    }
+
+    public function nocUpdate(Request $request){
+        $data = $request->validate([
+            'company_id' => 'string',
+            'noc_date' => 'nullable',
+            'noc_time' => 'nullable',
+        ]);
+
+        $company = Company::findOrFail($data['company_id']);
+
+        $noc = Noc::create($data);
+        $email = $company->email_address;
+        $details = [
+            'noc_date'  =>  $data['noc_date'],
+            'noc_time'  =>  $data['noc_time'],
+            'company_name' => $company->company_name,
+            'registered_address' => $company->registered_address,
+            'pan_card_no' => $company->pan_card_no,
+            'mobile_no' => $company->mobile_no,
+        ];
+        $pdf = PDF::loadView('emails.noc', ['details' => $details]);
+
+        $fileName = 'noc_' . uniqid() . '.pdf';
+
+        Storage::put('public/pdfs/' . $fileName, $pdf->output());
+
+        $noc->pdf = $fileName;
+
+        $noc->update(['pdf' => $fileName]);
+
+        \Mail::to([$email,'gaurav@vselek.com'])->send(new WorkspaceMail('Thank you for your Inquiry', $pdf));
+
+        return redirect()->route('admin.companies.index')
+            ->withSuccess(__('noc aggrement updated successfully.'));
 
     }
 

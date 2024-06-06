@@ -8,7 +8,7 @@
 
     <main class="content">
         <div class="d-flex justify-content-between align-items-center mb-0 mb-md-3 pt-5 pb-3">
-            <h1 class="fw-bold d-inline align-middle">Workspace Agreement</h1>
+            <h1 class="fw-bold d-inline align-middle">NOC Agreement</h1>
         </div>
 
         <div class="row">
@@ -28,13 +28,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($workspaces as $workspace)
+                                    @foreach ($nocs as $noc)
                                     <tr>
-                                        <td>{{ $workspace->id }}</td>
-                                        <td>{{ $workspace->company->company_name }}</td>
-                                        <td>{{ date('d M , Y',strtotime($workspace->agreement_date)) }}</td>
-                                        <td>{{ date('d M , Y',strtotime($workspace->created_at)) }}</td>
-                                        <td><a class="btn btn-info btn-sm" href="{{ asset('storage/pdfs/'. $workspace->pdf) }}" target="_blank" download>Download PDF</a></td>
+                                        <td>{{ $noc->id }}</td>
+                                        <td>{{ $noc->company->company_name }}</td>
+                                        <td>{{ date('d M , Y',strtotime($noc->noc_date)) }}</td>
+                                        <td>{{ date('d M , Y',strtotime($noc->created_at)) }}</td>
+                                        <td><a class="btn btn-info btn-sm" href="{{ asset('storage/pdfs/'. $noc->pdf) }}" target="_blank" download>Download PDF</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>

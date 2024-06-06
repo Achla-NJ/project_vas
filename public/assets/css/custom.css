@@ -268,4 +268,10 @@
 }
 .btn-sm{
     height: max-content;
+    width: max-content;
+}
+.main-logo img{
+    width: 100px;
+    /* margin: 0 auto; */
+    display: block;
 }

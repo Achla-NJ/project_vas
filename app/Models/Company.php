@@ -23,6 +23,11 @@ class Company extends Model
         return $this->hasMany(Workspace::class);
     }
 
+    public function nocs()
+    {
+        return $this->hasMany(Noc::class);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);
